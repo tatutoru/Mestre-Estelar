@@ -1,68 +1,14 @@
+/* ===== RESET ===== */
 body {
     margin: 0;
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
-    display: flex;
     background: #f7f7f7;
     color: #222;
+    display: flex;
 }
 
-.sidebar {
-    width: 260px;
-    background: #1e1e1e;
-    color: #fff;
-    height: 100vh;
-    padding: 20px;
-    box-sizing: border-box;
-    position: fixed;
-    overflow-y: auto;
-}
-
-.sidebar h2 {
-    font-size: 20px;
-    margin-bottom: 20px;
-}
-
-.sidebar ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.sidebar ul li {
-    margin: 12px 0;
-}
-
-.sidebar a {
-    color: #d0d0d0;
-    text-decoration: none;
-    font-size: 16px;
-}
-
-.sidebar a:hover {
-    color: #fff;
-}
-
-.content {
-    margin-left: 260px;
-    padding: 30px;
-    max-width: 900px;
-}
-
-h1, h2, h3 {
-    color: #333;
-}
-
-.card {
-    background: #fff;
-    padding: 16px;
-    margin: 16px 0;
-    border-left: 4px solid #0084ff;
-    border-radius: 6px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
 /* ===== SIDEBAR ===== */
-
 .sidebar {
     width: 240px;
     background: #1e1e1e;
@@ -73,6 +19,7 @@ h1, h2, h3 {
     left: 0;
     top: 0;
     box-shadow: 4px 0 12px rgba(0,0,0,0.25);
+    overflow-y: auto;
 }
 
 .sidebar h2 {
@@ -84,6 +31,7 @@ h1, h2, h3 {
 .sidebar ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 .sidebar ul li {
@@ -102,9 +50,24 @@ h1, h2, h3 {
     font-weight: bold;
 }
 
-/* ===== AJUSTA O CONTEÚDO PARA NÃO FICAR EM CIMA DA SIDEBAR ===== */
-
+/* ===== CONTEÚDO PRINCIPAL ===== */
 .content {
-    margin-left: 260px;
-    padding: 20px 40px;
+    margin-left: 260px; /* espaço para a sidebar */
+    padding: 30px 40px;
+    max-width: 900px;
+}
+
+/* ===== TEXTOS ===== */
+h1, h2, h3 {
+    color: #333;
+}
+
+/* ===== CARDS ===== */
+.card {
+    background: #fff;
+    padding: 16px;
+    margin: 16px 0;
+    border-left: 4px solid #0084ff;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
