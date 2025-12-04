@@ -73,11 +73,42 @@ h1, h2, h3 {
 }
 
 /* ===== TOOLTIP DE ITEM ===== */
-
 .item-tooltip {
     position: relative;
-    display: inline-block;/* ===== TOOLTIP ESTILO RAGNAROK ===== */
+    display: inline-block;
+    cursor: pointer;
+}
 
+/* estilo da caixa usada pelo primeiro tipo de tooltip */
+.item-tooltip-box {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    z-index: 50;
+    top: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    background: #f8e7c8;
+    border: 2px solid #2b4f8c;
+    color: #2b2b2b;
+    padding: 12px;
+    border-radius: 6px;
+    width: 230px;
+
+    font-size: 14px;
+    line-height: 1.4;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+    transition: opacity 0.2s ease-in-out;
+}
+
+.item-tooltip:hover .item-tooltip-box {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* ===== TOOLTIP ESTILO RAGNAROK ===== */
 .ro-tooltip {
     position: relative;
     display: inline-block;
@@ -92,7 +123,7 @@ h1, h2, h3 {
     top: 120%;
     left: 50%;
     transform: translateX(-50%);
-    
+
     background: #f8e7c8; /* Fundo bege clássico */
     border: 2px solid #2b4f8c; /* Azul RO */
     color: #2b2b2b;
@@ -131,4 +162,3 @@ h1, h2, h3 {
     border-top: 1px solid #2b4f8c;
     margin: 8px 0;
 }
-
