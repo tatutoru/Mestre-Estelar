@@ -5,7 +5,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   background: #f7f7f7;
   color: #222;
-  /* removi display:flex para evitar restrições inesperadas no layout */
 }
 
 /* ===== SIDEBAR ===== */
@@ -26,7 +25,7 @@ body {
 .content {
   margin-left: 260px; /* espaço para a sidebar */
   padding: 30px 40px;
-  max-width: 1200px; /* aumentei para caber a janela de equipamentos maior */
+  max-width: 1200px;
   box-sizing: border-box;
 }
 
@@ -34,12 +33,9 @@ body {
 h1, h2, h3 { color: #333; }
 
 /* ===== TOOLTIP (CONSOLIDADO) ===== */
-.item-tooltip,
-.ro-tooltip { position: relative; display: inline-block; cursor: pointer; }
+.item-tooltip, .ro-tooltip { position: relative; display: inline-block; cursor: pointer; }
 
-/* Tooltip comum */
-.item-tooltip-box,
-.ro-tooltip-box {
+.item-tooltip-box, .ro-tooltip-box {
   visibility: hidden;
   opacity: 0;
   position: absolute;
@@ -59,6 +55,7 @@ h1, h2, h3 { color: #333; }
   transition: opacity .12s ease, transform .12s ease;
   pointer-events: none;
 }
+
 .item-tooltip:hover .item-tooltip-box,
 .ro-tooltip:hover .ro-tooltip-box,
 .ro-tooltip.touch-open .ro-tooltip-box {
@@ -67,21 +64,16 @@ h1, h2, h3 { color: #333; }
   transform: translateX(-50%) translateY(0);
   pointer-events: auto;
 }
-.ro-tooltip-box img { float:left; margin-right:8px; width:40px; height:40px; border:1px solid #2b4f8c; border-radius:4px; }
-.ro-tooltip-title{ font-weight:700; color:#14385f; margin-bottom:6px; }
-.ro-tooltip-line{ border-top:1px solid #2b4f8c; margin:8px 0; }
 
-/* Quando precisarmos abrir para a esquerda (classe adicionada por JS) */
-.ro-tooltip.flip-left .ro-tooltip-box {
-  left: auto;
-  right: 50%;
-  transform: translateX(50%);
-}
+.ro-tooltip-box img { float: left; margin-right: 8px; width: 40px; height: 40px; border: 1px solid #2b4f8c; border-radius: 4px; }
+.ro-tooltip-title { font-weight: 700; color: #14385f; margin-bottom: 6px; }
+.ro-tooltip-line { border-top: 1px solid #2b4f8c; margin: 8px 0; }
+.ro-tooltip.flip-left .ro-tooltip-box { left: auto; right: 50%; transform: translateX(50%); }
 
 /* ===== EQUIP WINDOW ===== */
 .equip-window {
   width: 100%;
-  max-width: 650px;
+  max-width: 1100px;
   margin: 12px 0;
   background: linear-gradient(#f7fafc,#eef6f9);
   border: 1px solid #c9d6df;
@@ -96,130 +88,26 @@ h1, h2, h3 { color: #333; }
 .equip-tabs .tab { background:#fff; border:1px solid #cfcfcf; padding:6px 10px; border-radius:6px; font-weight:600; cursor:pointer; }
 .equip-tabs .tab.active { background:#efefef; }
 
-/* Grid das colunas: slots / char / item / extra */
+/* ===== GRID: left | center | right =====
+   Escolhi uma estrutura simétrica: laterais fixas, centro flexível.
+*/
 .equip-body {
   display: grid;
-  grid-template-columns: 220px 250px 220px;
+  grid-template-columns: 160px minmax(260px, 1fr) 160px;
   gap: 18px;
   align-items: start;
 }
 
-/* -------- LEFT: slots -------- */
-.slots-col { padding:6px 4px; }
-.slot-row { display:flex; gap:8px; align-items:center; margin:8px 0; }
-.slot-label { width:68px; color:#6b7780; font-size:13px; text-transform:capitalize; }
-
-/* Slot (moldura) */
-.slot-box {
-  width:56px;
-  height:52px;
-  background: linear-gradient(180deg,#f8fbff,#eef6fb);
-  border:1px solid #9fb5c6;
-  border-radius:8px;
-  display:flex; align-items:center; justify-content:center;
-  box-shadow: inset 0 2px 0 rgba(255,255,255,0.6);
-  overflow: visible;
-}
-.slot-box.empty { color:#98a6ad; font-weight:700; }
-
-/* ícone dentro do slot */
-.slot-icon { width:34px; height:34px; object-fit:contain; image-rendering: pixelated; transition: transform .12s ease; }
-.slot-box:hover .slot-icon { transform: translateY(-3px); }
-
-/* -------- CENTER: quadro do boneco -------- */
-.char-col { display:flex; align-items:center; justify-content:center; padding:6px; }
-.char-frame {
-  width: 260px;
-  height: 300px;
-  border-radius:8px;
-  background: linear-gradient(180deg,#ffffff,#f2f8ff);
-  border:2px solid #cfdfe8;
-  box-shadow: 0 10px 24px rgba(0,0,0,0.14), inset 0 2px 0 rgba(255,255,255,0.6);
-  display:flex; align-items:center; justify-content:center;
-  position:relative; overflow: visible; /* visible para permitir tooltips se necessário */
-  box-sizing: border-box;
-}
-
-/* char frame usando background-image (preenche a moldura) */ 
-.char-frame { display:flex; align-items:center; justify-content:center; position:relative; } 
-.char-sprite-bg { 
-  width: 220px; /* ajuste o tamanho desejado */ 
-  height: 300px; aspect-ratio: 1/1.9; /* aproximação; ajuste conforme proporção do sprite */ 
-  background-size: contain; background-repeat: no-repeat; background-position: center; image-rendering: pixelated; display:block; }
-
-/* pequena sombra sob o boneco */
-.char-frame::after {
-  content:"";
-  position:absolute; bottom:8px; left:50%; transform:translateX(-50%);
-  width:70%; height:28%; background: radial-gradient(ellipse at center, rgba(0,0,0,0.18), transparent 60%);
-  filter: blur(6px); z-index:1; pointer-events:none;
-}
-
-/* -------- RIGHT: item card -------- */
-.item-col { padding:6px; }
-.item-card { background:#fff; border:1px solid #d6e2e8; border-radius:8px; padding:12px; box-shadow: 0 6px 14px rgba(0,0,0,0.08); }
-.item-card .item-top { display:flex; gap:12px; align-items:center; }
-.item-card img { width:72px; height:72px; object-fit:contain; image-rendering: pixelated; border:1px solid #cbd8e2; background:#fcfbf5; border-radius:6px; }
-.item-title{ font-weight:700; color:#173e60; font-size:16px; }
-
-/* -------- EXTRA COLUNA -------- */
-.extra-col { padding:6px; }
-.extra-card { background:#fff; border:1px solid #d6e2e8; border-radius:8px; padding:12px; box-shadow: 0 6px 14px rgba(0,0,0,0.06); }
-
-/* responsivo */
-@media (max-width: 980px) {
-  .equip-body { grid-template-columns: 200px 1fr; grid-auto-rows: auto; }
-  .item-col { grid-column: 1 / -1; }
-}
-@media (max-width: 720px) {
-  .equip-body { grid-template-columns: 1fr; }
-  .char-frame { width:200px; height:260px; margin:0 auto; }
-  .char-frame img { max-width:160px; max-height:220px; }
-}
-
-/* Correção para garantir que o fundo do sprite apareça dentro da moldura */
-.char-frame { position: relative; } /* já existe, mas reforça o contexto de empilhamento */
-.char-sprite-bg {
-  width: 170px;               /* largura desejada — ajuste (200/240/260) */
-  height: 175px;              /* altura explícita para evitar colapso */
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  image-rendering: pixelated;
-  display: block;
-  position: relative;         /* cria empilhamento local */
-  z-index: 3;                 /* acima do ::after da moldura (que tem z-index:1) */
-  box-sizing: border-box;
-}
-
-/* opcional: tornar responsivo em telas pequenas */
-@media (max-width: 720px) {
-  .char-sprite-bg {
-    width: 160px;
-    height: 220px;
-  }
-}
-
-/* === Layout ajustado: colunas mais proporcionais e coluna direita de slots === */
-
-/* Grid: left slots (140) / center char (flex) / item card (320) / right slots (140) */
-.equip-body {
-  display: grid;
-  grid-template-columns: 140px 1fr 320px 140px;
-  gap: 18px;
-  align-items: start;
-}
-
-/* Ajustes para colunas de slots (esquerda e direita) */
+/* -------- LEFT / RIGHT: slots -------- */
 .slots-col,
 .slots-col-right {
-  padding: 6px 6px;
+  padding: 6px 4px;
 }
 
 .slot-row { display:flex; gap:8px; align-items:center; margin:8px 0; }
-.slot-label { width:56px; color:#6b7780; font-size:13px; text-transform:capitalize; }
+.slot-label { width:64px; color:#6b7780; font-size:13px; text-transform:capitalize; }
 
-/* Slot (moldura) reduzido para colunas menores */
+/* slot box (moldura) */
 .slot-box {
   width:52px;
   height:48px;
@@ -232,35 +120,89 @@ h1, h2, h3 { color: #333; }
 }
 .slot-box.empty { color:#98a6ad; font-weight:700; }
 
-/* ícone dentro do slot reduzido também */
+/* ícone dentro do slot */
 .slot-icon { width:32px; height:32px; object-fit:contain; image-rendering: pixelated; transition: transform .12s ease; }
 .slot-box:hover .slot-icon { transform: translateY(-3px); }
 
-/* Right-side small tweaks so item-col stays same but grid looks balanced */
-.item-col { padding:6px; }
-.extra-col { padding:6px; }
+/* Ajuste específico: coluna direita com ícone à esquerda e label à direita */
+.slots-col-right .slot-row { display:flex; flex-direction: row; align-items:center; gap:8px; }
+.slots-col-right .slot-label { width:auto; min-width:40px; max-width:88px; text-align:left; font-size:13px; color:#6b7780; }
+.slots-col-right .slot-box { order: 1; }
+.slots-col-right .slot-label { order: 2; }
 
-/* responsivo: quando a tela for pequena, empilha centrando tudo */
+/* -------- CENTER: quadro do boneco -------- */
+.char-col { display:flex; align-items:center; justify-content:center; padding:6px; }
+
+.char-frame {
+  width: 260px;           /* ajuste o tamanho da moldura aqui */
+  height: 300px;
+  border-radius:8px;
+  background: linear-gradient(180deg,#ffffff,#f2f8ff);
+  border:2px solid #cfdfe8;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.14), inset 0 2px 0 rgba(255,255,255,0.6);
+  display:flex; align-items:center; justify-content:center;
+  position:relative;
+  overflow: visible;     /* visible pra tooltips */
+  box-sizing: border-box;
+}
+
+/* background-based sprite inside the frame */
+.char-sprite-bg {
+  width: 180px;           /* largura do sprite dentro da moldura */
+  height: 220px;          /* altura fixa evita colapso */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  image-rendering: pixelated;
+  display:block;
+  position: relative;
+  z-index: 3;
+  box-sizing: border-box;
+}
+
+/* sombra do boneco */
+.char-frame::after {
+  content: "";
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 28%;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.18), transparent 60%);
+  filter: blur(6px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* -------- RIGHT: item card -------- */
+.item-col { padding:6px; }
+
+.item-card {
+  background:#fff;
+  border:1px solid #d6e2e8;
+  border-radius:8px;
+  padding:12px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+}
+.item-card .item-top { display:flex; gap:12px; align-items:center; }
+.item-card img { width:72px; height:72px; object-fit:contain; image-rendering: pixelated; border:1px solid #cbd8e2; background:#fcfbf5; border-radius:6px; }
+.item-title { font-weight:700; color:#173e60; font-size:16px; }
+
+/* -------- EXTRA COLUNA (se usada) -------- */
+.extra-col { padding:6px; }
+.extra-card { background:#fff; border:1px solid #d6e2e8; border-radius:8px; padding:12px; box-shadow: 0 6px 14px rgba(0,0,0,0.06); }
+
+/* ===== Responsividade consolidada ===== */
 @media (max-width: 980px) {
   .equip-body { grid-template-columns: 200px 1fr; grid-auto-rows: auto; }
   .item-col { grid-column: 1 / -1; }
-  .slots-col-right { display:none; } /* esconder coluna direita em telas pequenas */
-}
-@media (max-width: 720px) {
-  .equip-body { grid-template-columns: 1fr; }
-  .char-frame { width:200px; height:260px; margin:0 auto; }
-  .char-frame img { max-width:160px; max-height:220px; }
-  .slots-col, .slots-col-right { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-start; }
-}
-/* Ajustes exclusivos da coluna direita */
-.slots-col-right .slot-row {
-    display: flex;
-    flex-direction: row-reverse; /* inverte a ordem dos elementos */
-    justify-content: flex-start;
-    gap: 10px;
+  .slots-col-right { display: none; } /* esconder coluna direita em telas menores */
 }
 
-/* Deixar label alinhado certinho */
-.slots-col-right .slot-label {
-    text-align: left;
+@media (max-width: 720px) {
+  .equip-body { grid-template-columns: 1fr; }
+  .char-frame { width: 200px; height: 260px; margin: 0 auto; }
+  .char-sprite-bg { width: 160px; height: 220px; }
+  .slots-col, .slots-col-right { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-start; }
 }
