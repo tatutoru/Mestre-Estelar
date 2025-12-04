@@ -140,17 +140,19 @@ h1, h2, h3 { color: #333; }
   box-sizing: border-box;
 }
 
-/* Regra que garante que a imagem possa crescer (aumentei limites) */
-.char-frame img {
-  width: 200px !important;   /* defina o tamanho desejado */
-  height: auto !important;
-  max-width: none !important;
-  max-height: none !important;
-  image-rendering: pixelated;  /* mantém pixel art */
-  display: block;
-  position: relative;
-  z-index: 2;
+/* char frame usando background-image (preenche a moldura) */
+.char-frame { display:flex; align-items:center; justify-content:center; position:relative; }
+.char-sprite-bg {
+  width: 220px;        /* ajuste o tamanho desejado */
+  height: auto;
+  aspect-ratio: 1/1.9; /* aproximação; ajuste conforme proporção do sprite */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  image-rendering: pixelated;
+  display:block;
 }
+
 
 /* pequena sombra sob o boneco */
 .char-frame::after {
@@ -181,3 +183,4 @@ h1, h2, h3 { color: #333; }
   .char-frame { width:200px; height:260px; margin:0 auto; }
   .char-frame img { max-width:160px; max-height:220px; }
 }
+
