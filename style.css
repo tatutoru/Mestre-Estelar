@@ -203,6 +203,6 @@ h1, h2, h3 { color: #333; }
 @media (max-width: 720px) {
   .char-sprite-bg {
     width: 160px;
-    height: 220px;
+    height: 170px;
   }
 }
