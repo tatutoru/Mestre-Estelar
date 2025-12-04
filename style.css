@@ -145,4 +145,82 @@ h1, h2, h3 {
     float: left;
     margin-right: 10px;
     border: 1px solid #2b4f8c;
+/* ===== NOTICE/TOAST PARA A PÁGINA DE EQUIPAMENTOS ===== */
+.equip-notice {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 320px;
+    max-width: calc(100% - 40px);
+    background: linear-gradient(180deg, #fffdf6, #fff3d9);
+    border: 1px solid #e0cfa0;
+    color: #1b2b3b;
+    padding: 14px 14px 12px 14px;
+    box-shadow: 0 8px 30px rgba(15, 30, 45, 0.18);
+    border-radius: 10px;
+    z-index: 9999;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    transform: translateY(10px);
+    opacity: 0;
+    transition: opacity 240ms ease, transform 240ms ease;
+    font-size: 14px;
+}
+
+/* Ícone pequeno */
+.equip-notice .notice-icon {
+    flex: 0 0 36px;
+    height: 36px;
+    border-radius: 6px;
+    background: #f0e1b8;
+    display: grid;
+    place-items: center;
+    font-size: 18px;
+}
+
+/* Texto */
+.equip-notice .notice-body {
+    flex: 1;
+    line-height: 1.35;
+}
+
+/* Botões (fechar) */
+.equip-notice .notice-actions {
+    flex: 0 0 auto;
+    display: flex;
+    gap: 8px;
+}
+
+.equip-notice .notice-close {
+    background: transparent;
+    border: none;
+    color: #6b5b3a;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+}
+.equip-notice .notice-close:hover {
+    background: rgba(11,22,33,0.04);
+}
+
+/* mostra o notice */
+.equip-notice.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* versão compacta para telas pequenas */
+@media (max-width: 480px) {
+    .equip-notice {
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        width: auto;
+        padding: 12px;
+        font-size: 13px;
+    }
+}
 
