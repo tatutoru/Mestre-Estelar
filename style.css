@@ -81,7 +81,7 @@ h1, h2, h3 { color: #333; }
 /* ===== EQUIP WINDOW ===== */
 .equip-window {
   width: 100%;
-  max-width: 1100px;
+  max-width: 650px;
   margin: 12px 0;
   background: linear-gradient(#f7fafc,#eef6f9);
   border: 1px solid #c9d6df;
@@ -99,7 +99,7 @@ h1, h2, h3 { color: #333; }
 /* Grid das colunas: slots / char / item / extra */
 .equip-body {
   display: grid;
-  grid-template-columns: 220px 1fr 360px 240px;
+  grid-template-columns: 220px 250px 220px;
   gap: 18px;
   align-items: start;
 }
@@ -213,7 +213,7 @@ h1, h2, h3 { color: #333; }
 /* Ajustes para colunas de slots (esquerda e direita) */
 .slots-col,
 .slots-col-right {
-  padding: 6px 4px;
+  padding: 6px 35px;
 }
 
 .slot-row { display:flex; gap:8px; align-items:center; margin:8px 0; }
