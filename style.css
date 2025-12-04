@@ -142,14 +142,14 @@ h1, h2, h3 { color: #333; }
 
 /* Regra que garante que a imagem possa crescer (aumentei limites) */
 .char-frame img {
-  max-width: 220px;
-  max-height: 320px;
-  width: auto;
-  height: auto;
-  image-rendering: pixelated;
-  display:block;
-  position:relative;
-  z-index:2;
+  width: 200px !important;   /* defina o tamanho desejado */
+  height: auto !important;
+  max-width: none !important;
+  max-height: none !important;
+  image-rendering: pixelated;  /* mantém pixel art */
+  display: block;
+  position: relative;
+  z-index: 2;
 }
 
 /* pequena sombra sob o boneco */
