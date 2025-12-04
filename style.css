@@ -61,3 +61,50 @@ h1, h2, h3 {
     border-radius: 6px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
+/* ===== SIDEBAR ===== */
+
+.sidebar {
+    width: 240px;
+    background: #1e1e1e;
+    color: #fff;
+    min-height: 100vh;
+    padding: 20px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    box-shadow: 4px 0 12px rgba(0,0,0,0.25);
+}
+
+.sidebar h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 12px 0;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #cfcfcf;
+    font-size: 15px;
+    transition: 0.2s;
+}
+
+.sidebar ul li a:hover {
+    color: #fff;
+    font-weight: bold;
+}
+
+/* ===== AJUSTA O CONTEÚDO PARA NÃO FICAR EM CIMA DA SIDEBAR ===== */
+
+.content {
+    margin-left: 260px;
+    padding: 20px 40px;
+}
