@@ -254,7 +254,7 @@
                                     <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/310328" alt="Melee Stone">
                                     <div class="ro-tooltip-box">
                                         <img src="https://www.divine-pride.net/img/items/collection/kROZ/310328" alt="">
-                                        <div class="ro-tooltip-title">Melee Stoneo</div>
+                                        <div class="ro-tooltip-title">Melee Stone</div>
                                         <div class="ro-tooltip-line"></div>
                                         <p>+X Dano físico.</p>
                                     </div>
@@ -466,18 +466,16 @@
       const parent = tooltipEl.parentElement;
       if (parent && parent.tagName.toLowerCase() === 'a') return;
 
-      // cria o <a> e move o nó tooltip para dentro dele (move preserve listeners)
+      // cria o <a>
       const a = document.createElement("a");
       a.href = url;
       a.target = "_blank";
       a.className = "item-link";
-      // move o nó (não clona)
-      a.appendChild(tooltipEl);
 
-      // limpa apenas o que restou e insere o <a>
-      // se houver outros nós (texto/ícones extra) você pode querer preservá-los — aqui limpamos e colocamos só o <a>
-      container.textContent = "";
-      container.appendChild(a);
+      // substitui o tooltip pelo <a> e então coloca o tooltip dentro do <a>
+      // isso evita limpar outros nós e mantém a ordem original no DOM
+      container.replaceChild(a, tooltipEl);
+      a.appendChild(tooltipEl);
     });
   }
 
@@ -488,6 +486,7 @@
     aplicarLinksAutomaticosPreservandoListeners();
   }
 })();
+
 
 
     </script>
