@@ -140,6 +140,13 @@ h1, h2, h3 { color: #333; }
   box-sizing: border-box;
 }
 
+/* char frame usando background-image (preenche a moldura) */ 
+.char-frame { display:flex; align-items:center; justify-content:center; position:relative; } 
+.char-sprite-bg { 
+  width: 220px; /* ajuste o tamanho desejado */ 
+  height: 300px; aspect-ratio: 1/1.9; /* aproximação; ajuste conforme proporção do sprite */ 
+  background-size: contain; background-repeat: no-repeat; background-position: center; image-rendering: pixelated; display:block; }
+
 /* pequena sombra sob o boneco */
 .char-frame::after {
   content:"";
