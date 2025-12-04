@@ -236,12 +236,6 @@ h1, h2, h3 { color: #333; }
 .slot-icon { width:32px; height:32px; object-fit:contain; image-rendering: pixelated; transition: transform .12s ease; }
 .slot-box:hover .slot-icon { transform: translateY(-3px); }
 
-/* Center: ampliar moldura do boneco se quiser (mantém centralizado) */
-.char-frame {
-  width: 360px;
-  height: 400px;
-}
-
 /* Right-side small tweaks so item-col stays same but grid looks balanced */
 .item-col { padding:6px; }
 .extra-col { padding:6px; }
