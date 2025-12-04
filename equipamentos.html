@@ -116,15 +116,40 @@
                 <div class="char-col">
                     <div class="char-frame">
                         <!-- substitua por assets/sprites/char_idle.png ou URL remota -->
-                        <img src="assets/Sprites/char-iddle.png" alt="Sprite personagem">
+                        <img src="assets/Sprites/char-iddle.png" alt="Sprite personagem" class="char-sprite">
                     </div>
                 </div>
-                    <div style="height:12px"></div>
-                </div> <!-- fim equip-body -->
-            </div> <!-- fim equip-window -->
-        </div> <!-- fim content -->
 
-    <!-- scripts: abas simples e suporte touch para tooltips -->
+                <!-- RIGHT: item card placeholder (vazio, você pode preencher depois) -->
+                <div class="item-col">
+                    <div class="item-card">
+                        <div class="item-top">
+                            <img src="https://www.divine-pride.net/img/items/item/kROZ/19362" alt="preview">
+                            <div>
+                                <div class="item-title">—</div>
+                                <div class="item-sub">Selecione um slot</div>
+                            </div>
+                        </div>
+                        <div class="item-line"></div>
+                        <div class="item-stats">Informações do item aparecerão aqui.</div>
+                    </div>
+                </div>
+
+                <!-- EXTRA COLUNA (opcional) -->
+                <div class="extra-col">
+                    <div class="extra-card">
+                        <h3>Extras</h3>
+                        <p>Espaço livre para notas ou links.</p>
+                    </div>
+                </div>
+
+            </div> <!-- fim equip-body -->
+
+        </div> <!-- fim equip-window -->
+
+    </div> <!-- fim content -->
+
+    <!-- scripts: abas simples, suporte touch para tooltips e reposicionamento -->
     <script>
       // Abas visuais (apenas estilização local)
       document.querySelectorAll('.equip-tabs .tab').forEach(btn => {
@@ -149,6 +174,44 @@
           document.querySelectorAll('.ro-tooltip.touch-open').forEach(o=>o.classList.remove('touch-open'));
         }
       });
+
+      // Reposiciona tooltips para a esquerda se ultrapassarem a viewport
+      (function(){
+        const margin = 12; // margem mínima da viewport
+
+        function updateTooltipPlacement(el) {
+          const box = el.querySelector('.ro-tooltip-box');
+          if(!box) return;
+          el.classList.remove('flip-left');
+
+          // tornar visível temporariamente para medir largura se necessário
+          const prevVis = box.style.visibility;
+          box.style.visibility = 'hidden';
+          box.style.display = 'block';
+          const boxWidth = box.offsetWidth || 220;
+          box.style.display = '';
+          box.style.visibility = prevVis || '';
+
+          const rect = el.getBoundingClientRect();
+          const predictedRight = rect.left + rect.width/2 + boxWidth/2;
+
+          if (predictedRight > (window.innerWidth - margin)) {
+            el.classList.add('flip-left');
+          } else {
+            el.classList.remove('flip-left');
+          }
+        }
+
+        document.querySelectorAll('.ro-tooltip').forEach(el=>{
+          el.addEventListener('mouseenter', ()=> updateTooltipPlacement(el));
+          el.addEventListener('focus', ()=> updateTooltipPlacement(el)); // acessibilidade
+          el.addEventListener('touchstart', ()=> updateTooltipPlacement(el));
+        });
+
+        window.addEventListener('resize', () => {
+          document.querySelectorAll('.ro-tooltip').forEach(el=> updateTooltipPlacement(el));
+        });
+      })();
     </script>
 
 </body>
