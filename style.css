@@ -71,3 +71,36 @@ h1, h2, h3 {
     border-radius: 6px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
+
+/* ===== TOOLTIP DE ITEM ===== */
+
+.item-tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    color: #4da3ff;
+    font-weight: bold;
+}
+
+.item-tooltip-box {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    z-index: 20;
+    top: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1e1e1e;
+    color: #fff;
+    padding: 12px;
+    border-radius: 8px;
+    width: 200px;
+    text-align: left;
+    transition: opacity 0.2s ease-in-out;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+}
+
+.item-tooltip:hover .item-tooltip-box {
+    visibility: visible;
+    opacity: 1;
+}
