@@ -206,3 +206,16 @@ h1, h2, h3 { color: #333; }
   .char-sprite-bg { width: 160px; height: 220px; }
   .slots-col, .slots-col-right { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-start; }
 }
+
+/* Garante que o <a> não quebre o layout */
+.item { display: inline-block; }
+.item > a.item-link { 
+  display: inline-block;         /* mantém o espaço do item */
+  width: 100%;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* garante que o .ro-tooltip continue com seu comportamento visual */
+.item .ro-tooltip { display: inline-block; width: 100%; height: 100%; }
