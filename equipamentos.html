@@ -11,55 +11,6 @@
     <!-- MENU AUTOMÁTICO -->
     <div id="menu-container"></div>
     <script src="menu.js"></script>
-    <!-- NOTICE: aparece quando a página de equipamentos é aberta -->
-<div id="equip-notice" class="equip-notice" role="dialog" aria-live="polite" aria-label="Dica de Equipamentos" hidden>
-    <div class="notice-icon">💡</div>
-    <div class="notice-body">
-        <strong>Passe o mouse nos nomes dos itens</strong>
-        <div style="margin-top:6px; color:#5a503d;">
-            Passe o mouse sobre o nome do item para ver seus detalhes (tooltip). Clique no X para fechar — não aparecerá novamente.
-        </div>
-    </div>
-    <div class="notice-actions">
-        <button id="equip-notice-close" class="notice-close" aria-label="Fechar aviso">✕</button>
-    </div>
-</div>
-
-<script>
-(function(){
-    const NOTICE_KEY = 'equipNoticeDismissed_v1';
-    const notice = document.getElementById('equip-notice');
-    const closeBtn = document.getElementById('equip-notice-close');
-
-    function showNotice() {
-        if(!notice) return;
-        // garante que os children estejam com conteúdo
-        const body = notice.querySelector('.notice-body');
-        if(!body) return;
-        notice.hidden = false;
-        requestAnimationFrame(() => notice.classList.add('show'));
-    }
-
-    function hideNotice(persist=true) {
-        if(!notice) return;
-        notice.classList.remove('show');
-        setTimeout(() => { if(notice) notice.hidden = true; }, 260);
-        if(persist) localStorage.setItem(NOTICE_KEY, '1');
-    }
-
-    const dismissed = localStorage.getItem(NOTICE_KEY) === '1';
-
-    document.addEventListener('DOMContentLoaded', () => {
-        // mostra só na página de equipamentos (opcional proteção)
-        // se quiser garantir que o script só rode aqui, checar URL:
-        // if(!location.pathname.includes('equipamentos')) return;
-        if(!dismissed) setTimeout(showNotice, 600);
-    });
-
-    if(closeBtn) closeBtn.addEventListener('click', () => hideNotice(true));
-    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') hideNotice(true); });
-})();
-</script>
 
     <!-- CONTEÚDO -->
     <div class="content">
