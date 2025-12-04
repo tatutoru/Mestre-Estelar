@@ -187,8 +187,8 @@ h1, h2, h3 { color: #333; }
 /* Correção para garantir que o fundo do sprite apareça dentro da moldura */
 .char-frame { position: relative; } /* já existe, mas reforça o contexto de empilhamento */
 .char-sprite-bg {
-  width: 220px;               /* largura desejada — ajuste (200/240/260) */
-  height: 320px;              /* altura explícita para evitar colapso */
+  width: 170px;               /* largura desejada — ajuste (200/240/260) */
+  height: 175px;              /* altura explícita para evitar colapso */
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -203,6 +203,6 @@ h1, h2, h3 { color: #333; }
 @media (max-width: 720px) {
   .char-sprite-bg {
     width: 160px;
-    height: 170px;
+    height: 220px;
   }
 }
