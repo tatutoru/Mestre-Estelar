@@ -1,158 +1,215 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Equipamentos – Mestre Estelar</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipamentos – Mestre Estelar</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- MENU AUTOMÁTICO -->
-  <div id="menu-container"></div>
-  <script src="menu.js"></script>
+    <!-- MENU AUTOMÁTICO -->
+    <div id="menu-container"></div>
+    <script src="menu.js"></script>
 
-  <div class="content">
-    <h1>⚔️ Equipamentos – Mestre Estelar</h1>
+    <!-- CONTEÚDO -->
+    <div class="content">
+        <h1>⚔️ Equipamentos Recomendados</h1>
+        <p>Lista de equipamentos focados no ciclo Solar/Lunar, priorizando dano, ASPD e sustain.</p>
 
-    <div class="equip-window">
+        <hr>
 
-      <!-- Top tabs -->
-      <div class="equip-header">
-        <div class="tabs">
-          <button class="tab active" data-tab="equip">Equip.</button>
-          <button class="tab" data-tab="visual">Visual</button>
-          <button class="tab" data-tab="title">Título</button>
-          <button class="tab" data-tab="titles">Títulos</button>
+        <!-- CABEÇA -->
+        <h2>🎩 Equips de Cabeça</h2>
+
+        <h3>Topo</h3>
+        <table>
+            <tr><th>Item</th><th>Descrição</th></tr>
+            <tr>
+    <td>
+        <div class="item-tooltip">
+            🎩 Chapéu X
+            <div class="item-tooltip-box">
+                <strong>Chapéu X</strong><br>
+                Tesão no paaaaau <br>
+            </div>
         </div>
-      </div>
+    </td>
+    <td>+Dano físico / aumenta dano Solar/Lunar.</td>
+</tr>
 
-<!-- LEFT + CENTER + RIGHT (usando imagens remotas do Divine-Pride para itens) -->
-<div class="equip-body">
-
-  <!-- Left column: slots (fundo criado via CSS) -->
-  <div class="equip-left">
-    <div class="slot" data-slot="head">
-      <div class="slot-name">head</div>
-      <div class="slot-box">
-        <!-- imagem do item vinda do Divine-Pride -->
+<tr>
+    <td>
         <div class="ro-tooltip">
-          <img src="https://www.divine-pride.net/img/items/item/bRO/420449" alt="Chapéu Solar" class="slot-icon">
-          <div class="ro-tooltip-box">
-            <div class="ro-tooltip-title">Chapéu Solar</div>
-            <div class="ro-tooltip-line"></div>
-            <p>+15% Dano vs Neutro/Fogo. +5% ASPD (União Solar)</p>
-          </div>
+            🎩 Chapéu Solar
+            <div class="ro-tooltip-box">
+                <img src="https://www.divine-pride.net/img/items/item/bRO/420449" width="40" alt="Ícone Chapéu Solar">
+
+                <div class="ro-tooltip-title">Chapéu Solar</div>
+
+                <div class="ro-tooltip-line"></div>
+
+                <p>
+                    Aumenta em <b>15%</b> o dano físico contra monstros de propriedade 
+                    <b>Neutro e Fogo</b>.
+                </p>
+
+                <p>
+                    Concede +5% ASPD enquanto estiver sob efeito de União Solar.
+                </p>
+
+                <div class="ro-tooltip-line"></div>
+
+                <p><b>Classe:</b> Equipamento para a Cabeça</p>
+                <p><b>Tipo:</b> Topo</p>
+                <p><b>Nível necessário:</b> 100</p>
+            </div>
         </div>
-      </div>
-    </div>
+    </td>
+    <td><b>Capuz Y</b></td>
+    <td>ASPD + sustain.</td>
+</tr>
 
-    <div class="slot" data-slot="r-hand">
-      <div class="slot-name">R-hand</div>
-      <div class="slot-box">
-        <div class="ro-tooltip">
-          <img src="https://www.divine-pride.net/img/items/item/bRO/101000" alt="Espada Exemplo" class="slot-icon">
-          <div class="ro-tooltip-box">
-            <div class="ro-tooltip-title">Espada Exemplo</div>
-            <div class="ro-tooltip-line"></div>
-            <p>+X Dano físico.</p>
-          </div>
-        </div>
-      </div>
-    </div>
+        </table>
 
-    <div class="slot" data-slot="robe">
-      <div class="slot-name">robe</div>
-      <div class="slot-box empty">—</div>
-    </div>
+        <h3>Meio</h3>
+        <table>
+            <tr><th>Item</th><th>Descrição</th></tr>
+            <tr>
+                <td><b>Óculos Sombrios</b></td>
+                <td>Slot para carta de aumento de dano.</td>
+            </tr>
+        </table>
 
-    <div class="slot" data-slot="accessory">
-      <div class="slot-name">accessory</div>
-      <div class="slot-box">
-        <div class="ro-tooltip">
-          <img src="https://www.divine-pride.net/img/items/item/bRO/221010" alt="Anel Exemplo" class="slot-icon">
-          <div class="ro-tooltip-box">
-            <div class="ro-tooltip-title">Anel Exemplo</div>
-            <div class="ro-tooltip-line"></div>
-            <p>Bônus elemental.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+        <h3>Baixo</h3>
+        <table>
+            <tr><th>Item</th><th>Descrição</th></tr>
+            <tr>
+                <td><b>Cachecol Elemental</b></td>
+                <td>Bônus elemental útil com Brisa Leve.</td>
+            </tr>
+        </table>
 
-  <!-- center: quadro com fundo (aqui o boneco ficará no meio) -->
-  <div class="equip-center">
-    <div class="char-frame frame-with-border">
-      <!-- Se você tem o sprite local, coloque aqui -->
-      <img src="assets/sprites/char_idle.png" alt="Sprite personagem" class="char-sprite" />
-      <!-- ou use sprite remoto se quiser -->
-      <!-- <img src="https://meu.cdn/sprites/char1.png" ...> -->
-    </div>
-  </div>
+        <hr>
 
-  <!-- right: card com informações (imagem do item também do Divine-Pride é aceita) -->
-  <div class="equip-right">
-    <div class="item-card">
-      <img src="https://www.divine-pride.net/img/items/item/bRO/420449" alt="Chapéu Solar" class="item-img">
-      <div class="item-info">
-        <div class="item-title">Chapéu Solar</div>
-        <div class="item-sub">Topo — Nível 100</div>
-        <div class="item-line"></div>
-        <ul class="item-stats">
-          <li>+15% Dano físico vs Neutro/Fogo</li>
-          <li>+5% ASPD (União Solar)</li>
-          <li>Classe: Equipamento para a Cabeça</li>
+        <!-- ARMADURA -->
+        <h2>🛡️ Armadura</h2>
+        <table>
+            <tr><th>Item</th><th>Descrição</th></tr>
+            <tr>
+                <td><b>Armadura Z</b></td>
+                <td>Ataque + resistência / ideal para up e mvps.</td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <!-- ARMA -->
+        <h2>⚔️ Arma</h2>
+        <table>
+            <tr><th>Item</th><th>Descrição</th></tr>
+            <tr>
+                <td><b>Arma Solar/Lunar +X</b></td>
+                <td>Dano físico, aspd e sinergia com União Solar/Lunar.</td>
+            </tr>
+            <tr>
+                <td><b>Alternativa barata</b></td>
+                <td>Boa para iniciar build sem gastar muito.</td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <!-- ESCUDO -->
+        <h2>🛡️ Escudo</h2>
+        <table>
+            <tr><th>Item</th><th>Descrição</th></tr>
+            <tr>
+                <td><b>Escudo da Virtude</b></td>
+                <td>Boa defesa e sustain.</td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <!-- CAPA -->
+        <h2>🧥 Capa</h2>
+        <table>
+            <tr><th>Item</th><th>Descrição</th></tr>
+            <tr>
+                <td><b>Capa Vento Celestial</b></td>
+                <td>ASPD e redução de delay.</td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <!-- BOTAS -->
+        <h2>🥾 Botas</h2>
+        <table>
+            <tr><th>Item</th><th>Descrição</th></tr>
+            <tr>
+                <td><b>Botas Cósmicas</b></td>
+                <td>Boa sinergia com dano Solar/Lunar.</td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <!-- ACESSÓRIOS -->
+        <h2>💍 Acessórios</h2>
+        <table>
+            <tr><th>Item</th><th>Descrição</th></tr>
+            <tr>
+                <td><b>Anel Estelar</b></td>
+                <td>Principal fonte de dano e bônus elementais.</td>
+            </tr>
+            <tr>
+                <td><b>Anel Alternativo</b></td>
+                <td>Versão mais barata para early game.</td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <!-- CARTAS -->
+        <h2>🃏 Cartas Recomendadas</h2>
+
+        <h3>Arma</h3>
+        <ul>
+            <li>Carta A – Dano físico</li>
+            <li>Carta B – Crítico/aspd</li>
         </ul>
-      </div>
+
+        <h3>Armadura</h3>
+        <ul>
+            <li>Carta C – Resistência</li>
+            <li>Carta D – Alternativa</li>
+        </ul>
+
+        <h3>Escudo</h3>
+        <ul>
+            <li>Carta E – Defesa</li>
+        </ul>
+
+        <h3>Capa</h3>
+        <ul>
+            <li>Carta F – ASPD ou esquiva</li>
+        </ul>
+
+        <h3>Botas</h3>
+        <ul>
+            <li>Carta G – Dano em tamanho</li>
+        </ul>
+
+        <h3>Acessórios</h3>
+        <ul>
+            <li>Carta H – Dano físico</li>
+        </ul>
+
+        <br><br>
+
     </div>
-  </div>
-
-</div>
-
-
-          <!-- lista rápida com outros slots/descrições -->
-          <div class="quick-list">
-            <div><strong>Capuz Y</strong> — ASPD + sustain</div>
-            <div><strong>Armadura Z</strong> — Ideal para up e mvps</div>
-            <div><strong>Botas Cósmicas</strong> — Sinergia Solar/Lunar</div>
-          </div>
-        </div>
-
-      </div> <!-- equip-body -->
-
-    </div> <!-- equip-window -->
-
-  </div> <!-- content -->
-
-  <script>
-    // Tabs simples
-    document.querySelectorAll('.tab').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-        btn.classList.add('active');
-        // aqui você pode alternar conteúdo conforme data-tab
-      });
-    });
-
-    // Touch support for tooltips: toggle class 'touch-open' on tap
-    document.querySelectorAll('.ro-tooltip').forEach(el => {
-      el.addEventListener('touchstart', function(e) {
-        // close other open tooltips
-        document.querySelectorAll('.ro-tooltip.touch-open').forEach(o => {
-          if (o !== el) o.classList.remove('touch-open');
-        });
-        el.classList.toggle('touch-open');
-      });
-    });
-
-    // click outside to close touch tooltips
-    document.addEventListener('touchstart', function(e){
-      if (!e.target.closest('.ro-tooltip')) {
-        document.querySelectorAll('.ro-tooltip.touch-open').forEach(o => o.classList.remove('touch-open'));
-      }
-    });
-  </script>
 
 </body>
 </html>
