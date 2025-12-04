@@ -336,3 +336,110 @@ h1, h2, h3 {
   pointer-events: none;
 }
 .frame-with-border img { z-index: 2; position: relative; }
+
+/* ===== Janela de Equipamentos (layout estilo cliente) ===== */
+.equip-window {
+  width: 980px;
+  max-width: 98%;
+  margin: 12px 0;
+  background: linear-gradient(#f7fafc,#eef6f9);
+  border: 1px solid #c9d6df;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  padding: 12px;
+}
+
+/* topo: abas compactas */
+.equip-tabs { display:flex; gap:8px; margin-bottom:12px; }
+.equip-tabs .tab {
+  background:#fff; border:1px solid #cfcfcf; padding:6px 10px; border-radius:6px;
+  font-weight:600; color:#222; cursor:pointer;
+}
+.equip-tabs .tab.active { background:#efefef; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.03); }
+
+/* corpo: 3 colunas (left slots / center sprite / right item card) */
+.equip-body {
+  display: grid;
+  grid-template-columns: 220px 1fr 340px;
+  gap: 18px;
+  align-items: start;
+}
+
+/* -------- LEFT: slots column -------- */
+.slots-col { padding:6px 4px; }
+.slot-row { display:flex; gap:10px; align-items:center; margin:10px 0; }
+.slot-label { width:68px; color:#6b7780; font-size:13px; text-transform:capitalize; }
+.slot-box {
+  width:60px; height:56px;
+  background: linear-gradient(180deg,#f8fbff,#eef6fb);
+  border:1px solid #9fb5c6;
+  border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.6);
+  overflow: visible;
+}
+.slot-box.empty { color:#98a6ad; font-weight:700; }
+
+/* ícone dentro do slot (remoto do Divine-Pride) */
+.slot-icon { width:40px; height:40px; object-fit:contain; image-rendering: pixelated; display:block; }
+
+/* pequenas legendas (baixo da coluna) */
+.slots-note { margin-top:10px; font-size:13px; color:#203746; }
+
+/* -------- CENTER: quadro do boneco -------- */
+.char-col { display:flex; align-items:center; justify-content:center; padding:6px; }
+.char-frame {
+  width: 260px; height:320px; border-radius:8px;
+  background: linear-gradient(180deg,#ffffff,#f2f8ff);
+  border:2px solid #cfdfe8;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.14), inset 0 2px 0 rgba(255,255,255,0.6);
+  display:flex; align-items:center; justify-content:center;
+  position:relative; overflow:hidden;
+}
+.char-frame img { max-width:160px; max-height:260px; image-rendering: pixelated; }
+
+/* opcional blur/sombra no fundo */
+.char-frame::after {
+  content:""; position:absolute; bottom:8px; left:50%; transform:translateX(-50%);
+  width:70%; height:28%; background: radial-gradient(ellipse at center, rgba(0,0,0,0.18), transparent 60%);
+  filter: blur(6px); z-index:1; pointer-events:none;
+}
+.char-frame img { position:relative; z-index:2; }
+
+/* -------- RIGHT: info do item -------- */
+.item-col { padding:6px; }
+.item-card {
+  background:#fff; border:1px solid #d6e2e8; border-radius:8px; padding:12px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+}
+.item-card .item-top { display:flex; gap:12px; align-items:center; }
+.item-card img { width:72px; height:72px; object-fit:contain; image-rendering: pixelated; border:1px solid #cbd8e2; background:#fcfbf5; border-radius:6px; }
+.item-title{ font-weight:700; color:#173e60; font-size:16px; }
+.item-sub{ color:#6b7780; font-size:13px; margin-top:4px; }
+.item-line{ height:1px; background:#e1eef6; margin:10px 0; }
+.item-stats{ margin:0; padding-left:16px; color:#333; }
+
+/* -------- tooltips -------- */
+.ro-tooltip { position: relative; display:inline-block; cursor: pointer; }
+.ro-tooltip-box {
+  visibility: hidden; opacity: 0; pointer-events:none;
+  position: absolute; top:110%; left:50%; transform:translateX(-50%);
+  z-index:9999; width:240px; padding:10px; border-radius:6px;
+  background:#f8e7c8; border:2px solid #2b4f8c; color:#222;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25); transition:opacity .12s ease, transform .12s ease;
+}
+.ro-tooltip:hover .ro-tooltip-box { visibility:visible; opacity:1; pointer-events:auto; transform:translateX(-50%) translateY(0); }
+.ro-tooltip-box img { float:left; margin-right:8px; width:40px; height:40px; border:1px solid #2b4f8c; border-radius:4px; }
+.ro-tooltip-title{ font-weight:700; color:#14385f; margin-bottom:6px; }
+.ro-tooltip-line{ border-top:1px solid #2b4f8c; margin:8px 0; }
+
+/* responsivo */
+@media (max-width: 980px) {
+  .equip-body { grid-template-columns: 200px 1fr; grid-auto-rows: auto; }
+  .item-col { grid-column: 1 / -1; }
+}
+@media (max-width: 720px) {
+  .equip-body { grid-template-columns: 1fr; }
+  .char-frame { width:200px; height:260px; margin:0 auto; }
+}
+
