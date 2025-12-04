@@ -346,7 +346,7 @@
                         <div class="slot-row">
                             <div class="slot-label">Anel do Mercador</div>
                             <div class="slot-box">
-                                <div class="item" data-id="490404">
+                                <div class="item" data-id="50205">
                                 <div class="ro-tooltip" tabindex="0">
                                     <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/iRO/490404" alt="Anel do Mercador">
                                     <div class="ro-tooltip-box" role="tooltip">
@@ -445,32 +445,50 @@
         });
       })();
     
-function aplicarLinksAutomaticosPreservandoListeners() {
+(function () {
   const baseURL = "https://www.pathofisgard.com.br/database/item/";
 
-  document.querySelectorAll(".item[data-id]").forEach(container => {
-    const id = container.getAttribute("data-id");
-    const url = baseURL + id;
+  function aplicarLinksAutomaticosPreservandoListeners() {
+    document.querySelectorAll(".item[data-id]").forEach(container => {
+      // evita já-envolvidos
+      if (container.querySelector(":scope > a.item-link")) return;
 
-    // encontra o elemento tooltip existente (preserva listeners)
-    const tooltipEl = container.querySelector(".ro-tooltip");
-    if (!tooltipEl) return; // nada a fazer
+      const id = container.getAttribute("data-id");
+      if (!id) return;
 
-    // cria o <a> e move o nó tooltip para dentro dele
-    const a = document.createElement("a");
-    a.href = url;
-    a.target = "_blank";
-    a.className = "item-link";
-    // move o nó (não clona) - preserva event listeners
-    a.appendChild(tooltipEl);
+      const url = baseURL + id;
 
-    // remove qualquer coisa restante e insere o <a>
-    container.textContent = "";   // limpa, sem recriar tooltip
-    container.appendChild(a);
-  });
-}
+      // encontra o elemento tooltip existente (preserva listeners)
+      const tooltipEl = container.querySelector(".ro-tooltip");
+      if (!tooltipEl) return;
 
-aplicarLinksAutomaticosPreservandoListeners();
+      // se o tooltip já estiver dentro de um <a>, pula
+      const parent = tooltipEl.parentElement;
+      if (parent && parent.tagName.toLowerCase() === 'a') return;
+
+      // cria o <a> e move o nó tooltip para dentro dele (move preserve listeners)
+      const a = document.createElement("a");
+      a.href = url;
+      a.target = "_blank";
+      a.className = "item-link";
+      // move o nó (não clona)
+      a.appendChild(tooltipEl);
+
+      // limpa apenas o que restou e insere o <a>
+      // se houver outros nós (texto/ícones extra) você pode querer preservá-los — aqui limpamos e colocamos só o <a>
+      container.textContent = "";
+      container.appendChild(a);
+    });
+  }
+
+  // Execute após DOM carregado
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", aplicarLinksAutomaticosPreservandoListeners);
+  } else {
+    aplicarLinksAutomaticosPreservandoListeners();
+  }
+})();
+
 
     </script>
     
