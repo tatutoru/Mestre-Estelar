@@ -38,14 +38,15 @@
                         <div class="slot-row">
                             <div class="slot-label">Topo</div>
                             <div class="slot-box">
+                                <div class="item" data-id="19362">
                                 <div class="ro-tooltip">
-                                    <!-- troque a URL abaixo pela do Divine-Pride que quiser -->
                                     <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/19362" alt="Elmo do Xogum">
                                     <div class="ro-tooltip-box">
                                         <img src="https://www.divine-pride.net/img/items/collection/kROZ/19362" alt="">
                                         <div class="ro-tooltip-title">Elmo do Xogum</div>
                                         <div class="ro-tooltip-line"></div>
                                         <p>+15% Dano físico vs Neutro/Fogo<br>+5% ASPD (União Solar)</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -415,7 +416,35 @@
           document.querySelectorAll('.ro-tooltip').forEach(el=> updateTooltipPlacement(el));
         });
       })();
-    </script>
+    
+function aplicarLinksAutomaticosPreservandoListeners() {
+  const baseURL = "https://www.pathofisgard.com.br/database/item/";
 
+  document.querySelectorAll(".item[data-id]").forEach(container => {
+    const id = container.getAttribute("data-id");
+    const url = baseURL + id;
+
+    // encontra o elemento tooltip existente (preserva listeners)
+    const tooltipEl = container.querySelector(".ro-tooltip");
+    if (!tooltipEl) return; // nada a fazer
+
+    // cria o <a> e move o nó tooltip para dentro dele
+    const a = document.createElement("a");
+    a.href = url;
+    a.target = "_blank";
+    a.className = "item-link";
+    // move o nó (não clona) - preserva event listeners
+    a.appendChild(tooltipEl);
+
+    // remove qualquer coisa restante e insere o <a>
+    container.textContent = "";   // limpa, sem recriar tooltip
+    container.appendChild(a);
+  });
+}
+
+aplicarLinksAutomaticosPreservandoListeners();
+
+    </script>
+    
 </body>
 </html>
