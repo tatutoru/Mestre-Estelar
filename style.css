@@ -442,3 +442,74 @@ h1, h2, h3 {
   .equip-body { grid-template-columns: 1fr; }
   .char-frame { width:200px; height:260px; margin:0 auto; }
 }
+
+/* ---------- Ajustes de tamanho e espaçamento ---------- */
+
+/* garante que tooltips não sejam cortadas pelo container */
+.equip-window,
+.equip-body,
+.slots-col,
+.char-col,
+.item-col,
+.extra-col {
+  overflow: visible;
+}
+
+/* reduz gap e tamanho dos slots da coluna esquerda */
+.slot-row { gap: 6px; margin: 6px 0; }
+.slot-label { width:64px; font-size:13px; }
+.slot-box {
+  width:52px;
+  height:48px;
+  border-radius:8px;
+  padding:6px;
+}
+.slot-icon { width:34px; height:34px; }
+
+/* aumenta um pouco o quadro do boneco (se quiser ainda maior ajuste abaixo) */
+.char-frame {
+  width: 300px;     /* aumenta a moldura do boneco */
+  height: 360px;
+}
+
+/* aumenta o sprite para ficar proporcional */
+.char-frame img {
+  max-width: 200px;
+  max-height: 300px;
+  image-rendering: pixelated;
+}
+
+/* se quiser o boneco ainda maior, aumente max-width/max-height acima */
+
+/* ---------- Grid para adicionar coluna extra à direita ---------- */
+/* modifica a grid para 4 colunas: slots / char / item / extra */
+.equip-body {
+  display: grid;
+  grid-template-columns: 220px 1fr 360px 240px; /* ajuste larguras conforme desejar */
+  gap: 18px;
+  align-items: start;
+}
+
+/* estilo básico para a nova coluna extra (você pode personalizar) */
+.extra-col {
+  padding: 6px;
+}
+.extra-card {
+  background:#fff; border:1px solid #d6e2e8; border-radius:8px; padding:12px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+}
+
+/* ---------- Tooltip: pequenas melhorias visuais ---------- */
+.ro-tooltip-box {
+  /* largura reduzida pra evitar overflow desnecessário */
+  width: 220px;
+  transition: opacity .12s ease, transform .12s ease, right .05s ease, left .05s ease;
+}
+
+/* quando a tooltip precisar abrir para a esquerda, aplicaremos classe via JS */
+.ro-tooltip.flip-left .ro-tooltip-box {
+  left: auto;
+  right: 50%;
+  transform: translateX(50%); /* empurra pra esquerda do elemento */
+}
+
