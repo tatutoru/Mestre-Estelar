@@ -73,7 +73,7 @@ h1, h2, h3 { color: #333; }
 /* ===== EQUIP WINDOW ===== */
 .equip-window {
   width: 100%;
-  max-width: 1100px;
+  max-width: 650px;
   margin: 12px 0;
   background: linear-gradient(#f7fafc,#eef6f9);
   border: 1px solid #c9d6df;
