@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Equipamentos – Mestre Estelar</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -17,199 +17,75 @@
         <h1>⚔️ Equipamentos Recomendados</h1>
         <p>Lista de equipamentos focados no ciclo Solar/Lunar, priorizando dano, ASPD e sustain.</p>
 
-        <hr>
+        <!-- ===== Janela principal de equipamentos ===== -->
+        <div class="equip-window">
 
-        <!-- CABEÇA -->
-        <h2>🎩 Equips de Cabeça</h2>
-
-        <h3>Topo</h3>
-        <table>
-            <tr><th>Item</th><th>Descrição</th></tr>
-            <tr>
-    <td>
-        <div class="item-tooltip">
-            🎩 Chapéu X
-            <div class="item-tooltip-box">
-                <strong>Chapéu X</strong><br>
-                Tesão no paaaaau <br>
+            <!-- abas -->
+            <div class="equip-tabs">
+                <button class="tab active">Equip.</button>
+                <button class="tab">Visual</button>
+                <button class="tab">Título</button>
+                <button class="tab">Títulos</button>
             </div>
-        </div>
-    </td>
-    <td>+Dano físico / aumenta dano Solar/Lunar.</td>
-</tr>
 
-<tr>
-    <td>
-        <div class="ro-tooltip">
-            🎩 Chapéu Solar
-            <div class="ro-tooltip-box">
-                <img src="https://www.divine-pride.net/img/items/item/bRO/420449" width="40" alt="Ícone Chapéu Solar">
+            <div class="equip-body">
 
-                <div class="ro-tooltip-title">Chapéu Solar</div>
+                <!-- LEFT: col de slots -->
+                <div class="slots-col">
+                    <!-- Head -->
+                    <div class="slot-row">
+                        <div class="slot-label">Head</div>
+                        <div class="slot-box">
+                            <div class="ro-tooltip">
+                                <!-- troque a URL abaixo pela do Divine-Pride que quiser -->
+                                <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/bRO/420449" alt="Chapéu Solar">
+                                <div class="ro-tooltip-box">
+                                    <img src="https://www.divine-pride.net/img/items/item/bRO/420449" alt="">
+                                    <div class="ro-tooltip-title">Chapéu Solar</div>
+                                    <div class="ro-tooltip-line"></div>
+                                    <p>+15% Dano físico vs Neutro/Fogo<br>+5% ASPD (União Solar)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                <div class="ro-tooltip-line"></div>
+                    <!-- R-Hand -->
+                    <div class="slot-row">
+                        <div class="slot-label">R-Hand</div>
+                        <div class="slot-box">
+                            <div class="ro-tooltip">
+                                <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/bRO/101000" alt="Exemplo">
+                                <div class="ro-tooltip-box">
+                                    <div class="ro-tooltip-title">Espada Exemplo</div>
+                                    <div class="ro-tooltip-line"></div>
+                                    <p>+X Dano físico.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                <p>
-                    Aumenta em <b>15%</b> o dano físico contra monstros de propriedade 
-                    <b>Neutro e Fogo</b>.
-                </p>
+                    <!-- Robe (meio) -->
+                    <div class="slot-row">
+                        <div class="slot-label">Robe</div>
+                        <div class="slot-box empty">—</div>
+                    </div>
 
-                <p>
-                    Concede +5% ASPD enquanto estiver sob efeito de União Solar.
-                </p>
+                    <!-- Accessory -->
+                    <div class="slot-row">
+                        <div class="slot-label">Accessory</div>
+                        <div class="slot-box">
+                            <div class="ro-tooltip">
+                                <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/bRO/221010" alt="Anel Exemplo">
+                                <div class="ro-tooltip-box">
+                                    <div class="ro-tooltip-title">Anel Exemplo</div>
+                                    <div class="ro-tooltip-line"></div>
+                                    <p>Bônus elemental.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                <div class="ro-tooltip-line"></div>
-
-                <p><b>Classe:</b> Equipamento para a Cabeça</p>
-                <p><b>Tipo:</b> Topo</p>
-                <p><b>Nível necessário:</b> 100</p>
-            </div>
-        </div>
-    </td>
-    <td><b>Capuz Y</b></td>
-    <td>ASPD + sustain.</td>
-</tr>
-
-        </table>
-
-        <h3>Meio</h3>
-        <table>
-            <tr><th>Item</th><th>Descrição</th></tr>
-            <tr>
-                <td><b>Óculos Sombrios</b></td>
-                <td>Slot para carta de aumento de dano.</td>
-            </tr>
-        </table>
-
-        <h3>Baixo</h3>
-        <table>
-            <tr><th>Item</th><th>Descrição</th></tr>
-            <tr>
-                <td><b>Cachecol Elemental</b></td>
-                <td>Bônus elemental útil com Brisa Leve.</td>
-            </tr>
-        </table>
-
-        <hr>
-
-        <!-- ARMADURA -->
-        <h2>🛡️ Armadura</h2>
-        <table>
-            <tr><th>Item</th><th>Descrição</th></tr>
-            <tr>
-                <td><b>Armadura Z</b></td>
-                <td>Ataque + resistência / ideal para up e mvps.</td>
-            </tr>
-        </table>
-
-        <hr>
-
-        <!-- ARMA -->
-        <h2>⚔️ Arma</h2>
-        <table>
-            <tr><th>Item</th><th>Descrição</th></tr>
-            <tr>
-                <td><b>Arma Solar/Lunar +X</b></td>
-                <td>Dano físico, aspd e sinergia com União Solar/Lunar.</td>
-            </tr>
-            <tr>
-                <td><b>Alternativa barata</b></td>
-                <td>Boa para iniciar build sem gastar muito.</td>
-            </tr>
-        </table>
-
-        <hr>
-
-        <!-- ESCUDO -->
-        <h2>🛡️ Escudo</h2>
-        <table>
-            <tr><th>Item</th><th>Descrição</th></tr>
-            <tr>
-                <td><b>Escudo da Virtude</b></td>
-                <td>Boa defesa e sustain.</td>
-            </tr>
-        </table>
-
-        <hr>
-
-        <!-- CAPA -->
-        <h2>🧥 Capa</h2>
-        <table>
-            <tr><th>Item</th><th>Descrição</th></tr>
-            <tr>
-                <td><b>Capa Vento Celestial</b></td>
-                <td>ASPD e redução de delay.</td>
-            </tr>
-        </table>
-
-        <hr>
-
-        <!-- BOTAS -->
-        <h2>🥾 Botas</h2>
-        <table>
-            <tr><th>Item</th><th>Descrição</th></tr>
-            <tr>
-                <td><b>Botas Cósmicas</b></td>
-                <td>Boa sinergia com dano Solar/Lunar.</td>
-            </tr>
-        </table>
-
-        <hr>
-
-        <!-- ACESSÓRIOS -->
-        <h2>💍 Acessórios</h2>
-        <table>
-            <tr><th>Item</th><th>Descrição</th></tr>
-            <tr>
-                <td><b>Anel Estelar</b></td>
-                <td>Principal fonte de dano e bônus elementais.</td>
-            </tr>
-            <tr>
-                <td><b>Anel Alternativo</b></td>
-                <td>Versão mais barata para early game.</td>
-            </tr>
-        </table>
-
-        <hr>
-
-        <!-- CARTAS -->
-        <h2>🃏 Cartas Recomendadas</h2>
-
-        <h3>Arma</h3>
-        <ul>
-            <li>Carta A – Dano físico</li>
-            <li>Carta B – Crítico/aspd</li>
-        </ul>
-
-        <h3>Armadura</h3>
-        <ul>
-            <li>Carta C – Resistência</li>
-            <li>Carta D – Alternativa</li>
-        </ul>
-
-        <h3>Escudo</h3>
-        <ul>
-            <li>Carta E – Defesa</li>
-        </ul>
-
-        <h3>Capa</h3>
-        <ul>
-            <li>Carta F – ASPD ou esquiva</li>
-        </ul>
-
-        <h3>Botas</h3>
-        <ul>
-            <li>Carta G – Dano em tamanho</li>
-        </ul>
-
-        <h3>Acessórios</h3>
-        <ul>
-            <li>Carta H – Dano físico</li>
-        </ul>
-
-        <br><br>
-
-    </div>
-
-</body>
-</html>
+                    <!-- L-hand -->
+                    <div class="slot-row">
+                        <div class="slot-label">L-hand</div>
+                        <div class="slot-box empty">—</div>
