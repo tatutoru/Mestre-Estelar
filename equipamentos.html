@@ -27,81 +27,89 @@
         </div>
       </div>
 
-      <div class="equip-body">
+<!-- LEFT + CENTER + RIGHT (usando imagens remotas do Divine-Pride para itens) -->
+<div class="equip-body">
 
-        <!-- Left column: slots -->
-        <div class="equip-left">
-          <div class="slot" data-slot="head">
-            <div class="slot-name">head</div>
-            <div class="slot-box">
-              <div class="ro-tooltip">
-                <img src="assets/icons/slot_head.png" alt="head" class="slot-icon">
-                <div class="ro-tooltip-box">
-                  <div class="ro-tooltip-title">Chapéu Solar</div>
-                  <div class="ro-tooltip-line"></div>
-                  <p>Aumenta em <b>15%</b> o dano contra Neutro e Fogo.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="slot" data-slot="r-hand">
-            <div class="slot-name">R-hand</div>
-            <div class="slot-box">
-              <div class="ro-tooltip">
-                <img src="assets/icons/slot_rhand.png" alt="r-hand" class="slot-icon">
-                <div class="ro-tooltip-box">
-                  <div class="ro-tooltip-title">Espada Celeste +9</div>
-                  <div class="ro-tooltip-line"></div>
-                  <p>+X Dano físico, Bônus Lunar.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="slot" data-slot="robe">
-            <div class="slot-name">robe</div>
-            <div class="slot-box empty">—</div>
-          </div>
-
-          <div class="slot" data-slot="accessory">
-            <div class="slot-name">accessary</div>
-            <div class="slot-box">
-              <div class="ro-tooltip">
-                <img src="assets/icons/slot_ring.png" alt="ring" class="slot-icon">
-                <div class="ro-tooltip-box">
-                  <div class="ro-tooltip-title">Anel Estelar</div>
-                  <div class="ro-tooltip-line"></div>
-                  <p>Principal fonte de dano e bônus elementais.</p>
-                </div>
-              </div>
-            </div>
+  <!-- Left column: slots (fundo criado via CSS) -->
+  <div class="equip-left">
+    <div class="slot" data-slot="head">
+      <div class="slot-name">head</div>
+      <div class="slot-box">
+        <!-- imagem do item vinda do Divine-Pride -->
+        <div class="ro-tooltip">
+          <img src="https://www.divine-pride.net/img/items/item/bRO/420449" alt="Chapéu Solar" class="slot-icon">
+          <div class="ro-tooltip-box">
+            <div class="ro-tooltip-title">Chapéu Solar</div>
+            <div class="ro-tooltip-line"></div>
+            <p>+15% Dano vs Neutro/Fogo. +5% ASPD (União Solar)</p>
           </div>
         </div>
+      </div>
+    </div>
 
-        <!-- Center column: character sprite -->
-        <div class="equip-center">
-          <div class="char-frame">
-            <!-- coloque aqui o sprite do personagem (PNG com fundo transparente) -->
-            <img src="assets/sprites/char_idle.png" alt="Sprite personagem" class="char-sprite">
+    <div class="slot" data-slot="r-hand">
+      <div class="slot-name">R-hand</div>
+      <div class="slot-box">
+        <div class="ro-tooltip">
+          <img src="https://www.divine-pride.net/img/items/item/bRO/101000" alt="Espada Exemplo" class="slot-icon">
+          <div class="ro-tooltip-box">
+            <div class="ro-tooltip-title">Espada Exemplo</div>
+            <div class="ro-tooltip-line"></div>
+            <p>+X Dano físico.</p>
           </div>
         </div>
+      </div>
+    </div>
 
-        <!-- Right column: item info -->
-        <div class="equip-right">
-          <div class="item-card">
-            <img src="assets/items/hat_solar.png" alt="Chapéu Solar" class="item-img">
-            <div class="item-info">
-              <div class="item-title">Chapéu Solar</div>
-              <div class="item-sub">Topo — Nível 100</div>
-              <div class="item-line"></div>
-              <ul class="item-stats">
-                <li>+15% Dano físico vs Neutro/Fogo</li>
-                <li>+5% ASPD sob União Solar</li>
-                <li>Classe: Equipamento para a Cabeça</li>
-              </ul>
-            </div>
+    <div class="slot" data-slot="robe">
+      <div class="slot-name">robe</div>
+      <div class="slot-box empty">—</div>
+    </div>
+
+    <div class="slot" data-slot="accessory">
+      <div class="slot-name">accessory</div>
+      <div class="slot-box">
+        <div class="ro-tooltip">
+          <img src="https://www.divine-pride.net/img/items/item/bRO/221010" alt="Anel Exemplo" class="slot-icon">
+          <div class="ro-tooltip-box">
+            <div class="ro-tooltip-title">Anel Exemplo</div>
+            <div class="ro-tooltip-line"></div>
+            <p>Bônus elemental.</p>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- center: quadro com fundo (aqui o boneco ficará no meio) -->
+  <div class="equip-center">
+    <div class="char-frame frame-with-border">
+      <!-- Se você tem o sprite local, coloque aqui -->
+      <img src="assets/sprites/char_idle.png" alt="Sprite personagem" class="char-sprite" />
+      <!-- ou use sprite remoto se quiser -->
+      <!-- <img src="https://meu.cdn/sprites/char1.png" ...> -->
+    </div>
+  </div>
+
+  <!-- right: card com informações (imagem do item também do Divine-Pride é aceita) -->
+  <div class="equip-right">
+    <div class="item-card">
+      <img src="https://www.divine-pride.net/img/items/item/bRO/420449" alt="Chapéu Solar" class="item-img">
+      <div class="item-info">
+        <div class="item-title">Chapéu Solar</div>
+        <div class="item-sub">Topo — Nível 100</div>
+        <div class="item-line"></div>
+        <ul class="item-stats">
+          <li>+15% Dano físico vs Neutro/Fogo</li>
+          <li>+5% ASPD (União Solar)</li>
+          <li>Classe: Equipamento para a Cabeça</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
 
           <!-- lista rápida com outros slots/descrições -->
           <div class="quick-list">
