@@ -11,7 +11,7 @@
     <!-- MENU AUTOMÁTICO -->
     <div id="menu-container"></div>
     <script src="menu.js"></script>
-<!-- NOTICE: aparece quando a página de equipamentos é aberta -->
+    <!-- NOTICE: aparece quando a página de equipamentos é aberta -->
 <div id="equip-notice" class="equip-notice" role="dialog" aria-live="polite" aria-label="Dica de Equipamentos" hidden>
     <div class="notice-icon">💡</div>
     <div class="notice-body">
@@ -27,55 +27,40 @@
 
 <script>
 (function(){
-    const NOTICE_KEY = 'equipNoticeDismissed_v1'; // mude a versão se quiser resetar
+    const NOTICE_KEY = 'equipNoticeDismissed_v1';
     const notice = document.getElementById('equip-notice');
     const closeBtn = document.getElementById('equip-notice-close');
 
-    // função que mostra o notice
     function showNotice() {
         if(!notice) return;
+        // garante que os children estejam com conteúdo
+        const body = notice.querySelector('.notice-body');
+        if(!body) return;
         notice.hidden = false;
-        // anima com delay curto
-        requestAnimationFrame(() => {
-            notice.classList.add('show');
-        });
+        requestAnimationFrame(() => notice.classList.add('show'));
     }
 
-    // função que oculta e grava preferência
     function hideNotice(persist=true) {
         if(!notice) return;
         notice.classList.remove('show');
-        // depois da transição, esconde do DOM visualmente
-        setTimeout(() => { notice.hidden = true; }, 260);
+        setTimeout(() => { if(notice) notice.hidden = true; }, 260);
         if(persist) localStorage.setItem(NOTICE_KEY, '1');
     }
 
-    // Se o usuário já dismissou, não mostra
     const dismissed = localStorage.getItem(NOTICE_KEY) === '1';
 
-    // espera DOM ready (se menu.js usar defer this will run after)
     document.addEventListener('DOMContentLoaded', () => {
-        // só exibir se NÃO foi dismissado
-        if(!dismissed) {
-            // pequeno atraso para não ficar brusco ao carregar
-            setTimeout(showNotice, 700);
-        }
+        // mostra só na página de equipamentos (opcional proteção)
+        // se quiser garantir que o script só rode aqui, checar URL:
+        // if(!location.pathname.includes('equipamentos')) return;
+        if(!dismissed) setTimeout(showNotice, 600);
     });
 
-    // fechar ao clicar no X
     if(closeBtn) closeBtn.addEventListener('click', () => hideNotice(true));
-
-    // fechar ao apertar ESC
-    document.addEventListener('keydown', (e) => {
-        if(e.key === 'Escape') hideNotice(true);
-    });
-
-    // opcional: fechar automaticamente após 10s (remover se não quiser)
-    // setTimeout(() => hideNotice(false), 10000);
+    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') hideNotice(true); });
 })();
 </script>
 
-    
     <!-- CONTEÚDO -->
     <div class="content">
         <h1>⚔️ Equipamentos Recomendados</h1>
