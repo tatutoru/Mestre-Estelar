@@ -220,39 +220,54 @@ h1, h2, h3 { color: #333; }
 /* garante que o .ro-tooltip continue com seu comportamento visual */
 .item .ro-tooltip { display: inline-block; width: 100%; height: 100%; }
 
-/* Manter visuais previsíveis para abas (opcional) */
-.equip-tabs .tab {
-    background: #dce6f5;
-    border: 1px solid #4a6ea9;
-    padding: 6px 14px;
-    border-radius: 4px;
-    font-weight: bold;
-    cursor: pointer;
-}
-.equip-tabs .tab.active { outline: none; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.05); }
-
-/* Barra de topo estilo Ragnarok */
+/* Topo azul estendido — versão polida */
 .equip-window .equip-bar {
-    width: 100%;
-    height: 24px;
+  width: 100%;
+  height: 64px;
+  background: linear-gradient(180deg, #d6e3f7 0%, #9eb7d9 45%, #6f8fbf 100%);
+  border: 1px solid #4a6ea9;
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+  box-shadow: inset 0 1px 0 #ffffffaa;
+}
 
-    /* Degradê azul estilo RO */
-    background: linear-gradient(
-        to bottom,
-        #c6d8f0 0%,
-        #9eb7d9 40%,
-        #87a5cc 70%,
-        #6f8fbf 100%
-    );
+/* borda suave no final da área azul */
+.equip-window .equip-bar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -10px;               /* desce um pouco para alongar */
+  height: 10px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(0,0,0,0.04));
+  pointer-events: none;
+  z-index: 0;
+}
 
-    border: 1px solid #4a6ea9;
-    border-bottom: none;
-    border-radius: 6px 6px 0 0;
+/* abas acima da barra, com leve sombra para destaque */
+.equip-tabs {
+  position: relative;
+  z-index: 2;
+  margin-top: -36px;           /* sobe as abas; ajuste fino aqui */
+  padding: 8px;
+  display: flex;
+  gap: 8px;
+}
 
-    /* brilho */
-    box-shadow:
-        inset 0 1px 0 #ffffffaa,
-        inset 0 -1px 0 #00000022;
-
-    margin-bottom: 0; /* gruda na aba */
+/* pequenas melhorias nas abas para parecerem encaixadas */
+.equip-tabs .tab {
+  background: linear-gradient(#e9f1fb, #dce6f5);
+  border: 1px solid #4a6ea9;
+  padding: 6px 14px;
+  border-radius: 4px;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.6);
+}
+.equip-tabs .tab.active {
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  position: relative;
+  top: 1px;
 }
