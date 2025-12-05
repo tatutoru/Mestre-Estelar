@@ -1,310 +1,685 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Equipamentos – Mestre Estelar</title>
-
-  <!-- usa seu style.css existente -->
-  <link rel="stylesheet" href="style.css">
-  <style>
-    /* pequenas correções locais que não conflitam com seu style.css */
-    /* garante que tab-container use display controlled por JS (sem inline grid overrides) */
-    .tab-container { display: none; }
-    .tab-container.active { display: block; }
-    /* garante que links internos não alterem visual dos slots */
-    .item-link { display:inline-block; width:100%; height:100%; color:inherit; text-decoration:none; }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Equipamentos – Mestre Estelar</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="content">
-    <h1>⚔️ Equipamentos Recomendados</h1>
-    <p>Lista de equipamentos focados no ciclo Solar/Lunar, priorizando dano, ASPD e sustain.</p>
+    <!-- MENU AUTOMÁTICO -->
+    <div id="menu-container"></div>
+    <script src="menu.js"></script>
 
-    <!-- ====== Equip window (exemplo) ====== -->
-    <div class="equip-window">
+    <!-- CONTEÚDO -->
+    <div class="content">
+        <h1>⚔️ Equipamentos Recomendados</h1>
+        <p>Lista de equipamentos focados no ciclo Solar/Lunar, priorizando dano, ASPD e sustain.</p>
 
-      <!-- abas -->
-      <div class="equip-tabs">
-        <button class="tab active" data-tab="equip">Equip.</button>
-        <button class="tab" data-tab="visual">Visual</button>
-        <button class="tab" data-tab="cards">Cartas</button>
-      </div>
+        <!-- ===== Janela principal de equipamentos ===== -->
+        <div class="equip-window">
 
-      <!-- === Aba Equip (padrão visível) === -->
-      <div class="tab-container active" id="tab-equip">
-        <div class="equip-body">
+            <!-- abas -->
+            <div class="equip-tabs">
+                <button class="tab active" data-tab="equip">Equip.</button>
+                <button class="tab" data-tab="visual">Visual</button>
+                <button class="tab" data-tab="cards">Cartas</button>
+            </div>
 
-          <!-- LEFT: col de slots -->
-          <div class="slots-col">
-            <div class="slot-row">
-              <div class="slot-label">Topo</div>
-              <div class="slot-box">
-                <div class="item" data-id="19362">
-                  <div class="ro-tooltip" tabindex="0">
-                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/19362" alt="Elmo do Xogum">
-                    <div class="ro-tooltip-box" role="tooltip">
-                      <img src="https://www.divine-pride.net/img/items/collection/kROZ/19362" alt="">
-                      <div class="ro-tooltip-title">Elmo do Xogum</div>
-                      <div class="ro-tooltip-line"></div>
-                      <p>+15% Dano físico vs Neutro/Fogo<br>+5% ASPD (União Solar)</p>
+            <!-- === Abas: container para cada conteúdo === -->
+            <!-- Aba Equip (visível por padrão) -->
+            <div class="tab-container active" id="tab-equip">
+
+                <div class="equip-body">
+
+                    <!-- LEFT: col de slots -->
+                    <div class="slots-col">
+                        <!-- Head -->
+                        <div class="slot-row">
+                            <div class="slot-label">Topo</div>
+                            <div class="slot-box">
+                                <div class="item" data-id="19362">
+                                <div class="ro-tooltip">
+                                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/19362" alt="Elmo do Xogum">
+                                    <div class="ro-tooltip-box">
+                                        <img src="https://www.divine-pride.net/img/items/collection/kROZ/19362" alt="">
+                                        <div class="ro-tooltip-title">Elmo do Xogum</div>
+                                        <div class="ro-tooltip-line"></div>
+                                        <p>+15% Dano físico vs Neutro/Fogo<br>+5% ASPD (União Solar)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- R-Hand -->
+                        <div class="slot-row">
+                            <div class="slot-label">Baixo</div>
+                            <div class="slot-box">
+                                <div class="item" data-id="18754">
+                                <div class="ro-tooltip">
+                                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/18754" alt="Presas Vamíricas">
+                                    <div class="ro-tooltip-box">
+                                        <img src="https://www.divine-pride.net/img/items/collection/kROZ/18754" alt="">
+                                        <div class="ro-tooltip-title">Presas Vamíricas</div>
+                                        <div class="ro-tooltip-line"></div>
+                                        <p>+X Dano físico.</p>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Robe (meio) -->
+                        <div class="slot-row">
+                            <div class="slot-label">Mão Direita</div>
+                            <div class="slot-box">
+                                <div class="item" data-id="28612">
+                                <div class="ro-tooltip">
+                                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/28612" alt="Apocalípse Ilusional">
+                                    <div class="ro-tooltip-box">
+                                        <img src="https://www.divine-pride.net/img/items/collection/kROZ/28612" alt="">
+                                        <div class="ro-tooltip-title">Apocalípse Ilusional</div>
+                                        <div class="ro-tooltip-line"></div>
+                                        <p>Bônus elemental.</p>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Accessory -->
+                        <div class="slot-row">
+                            <div class="slot-label">Capa</div>
+                            <div class="slot-box">
+                                <div class="item" data-id="20838">
+                                <div class="ro-tooltip">
+                                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/20838" alt="Sobrepeliz Ilusional">
+                                    <div class="ro-tooltip-box">
+                                        <img src="https://www.divine-pride.net/img/items/collection/kROZ/20838" alt="">
+                                        <div class="ro-tooltip-title">Sobrepeliz Ilusional</div>
+                                        <div class="ro-tooltip-line"></div>
+                                        <p>Bônus elemental.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- L-hand -->
+                        <div class="slot-row">
+                            <div class="slot-label">Acessório Direito</div>
+                            <div class="slot-box">
+                                <div class="item" data-id="28303">
+                                <div class="ro-tooltip">
+                                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/28303" alt="Núcleo Vesper 02">
+                                    <div class="ro-tooltip-box">
+                                        <img src="https://www.divine-pride.net/img/items/collection/kROZ/28303" alt="">
+                                        <div class="ro-tooltip-title">Núcleo Vesper 02</div>
+                                        <div class="ro-tooltip-line"></div>
+                                        <p>Bônus elemental.</p>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- end slots-col -->
+                    
+                    <!-- CENTER: quadro do boneco -->
+                    <div class="char-col">
+                        <div class="char-frame">
+                        <div class="char-sprite-bg" style="background-image:url('https://raw.githubusercontent.com/tatutoru/Mestre-Estelar/main/assets/Sprites/char-iddle.png');"></div>
+                        </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <div class="slot-row">
-              <div class="slot-label">Baixo</div>
-              <div class="slot-box">
-                <div class="item" data-id="18754">
-                  <div class="ro-tooltip" tabindex="0">
-                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/18754" alt="Presas Vamíricas">
-                    <div class="ro-tooltip-box" role="tooltip">
-                      <img src="https://www.divine-pride.net/img/items/collection/kROZ/18754" alt="">
-                      <div class="ro-tooltip-title">Presas Vamíricas</div>
-                      <div class="ro-tooltip-line"></div>
-                      <p>+X Dano físico.</p>
+                    <!-- RIGHT SLOTS (coluna igual à esquerda) -->
+                    <div class="slots-col slots-col-right">
+                        <!-- Topo -->
+                        <div class="slot-row">
+                            <div class="slot-label">Meio</div>
+                            <div class="slot-box">
+                                <div class="item" data-id="19392">
+                                <div class="ro-tooltip" tabindex="0">
+                                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/19392" alt="Presilha dos Amantes [1]">
+                                    <div class="ro-tooltip-box" role="tooltip">
+                                        <img src="https://www.divine-pride.net/img/items/collection/kROZ/19392" alt="">
+                                        <div class="ro-tooltip-title">Presilha dos Amantes [1]</div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Baixo -->
+                        <div class="slot-row">
+                            <div class="slot-label">Armadura</div>
+                            <div class="slot-box">
+                                <div class="item" data-id="15378">
+                                <div class="ro-tooltip" tabindex="0">
+                                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/15378" alt="Couraça Magmática [1]">
+                                    <div class="ro-tooltip-box" role="tooltip">
+                                        <img src="https://www.divine-pride.net/img/items/collection/kROZ/15378" alt="">
+                                        <div class="ro-tooltip-title">Couraça Magmática [1]</div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mão Direita -->
+                        <div class="slot-row">
+                            <div class="slot-label">Mão Esquerda</div>
+                            <div class="slot-box">
+                                <div class="item" data-id="28949">
+                                <div class="ro-tooltip" tabindex="0">
+                                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/28949" alt="Escudo de Jóias [1]">
+                                    <div class="ro-tooltip-box" role="tooltip">
+                                        <img src="https://www.divine-pride.net/img/items/collection/kROZ/28949" alt="">
+                                        <div class="ro-tooltip-title">Escudo de Jóias [1]</div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Capa -->
+                        <div class="slot-row">
+                            <div class="slot-label">Sapato</div>
+                            <div class="slot-box">
+                                <div class="item" data-id="22199">
+                                <div class="ro-tooltip" tabindex="0">
+                                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/22199" alt="Botas Magmáticas [1]">
+                                    <div class="ro-tooltip-box" role="tooltip">
+                                        <img src="https://www.divine-pride.net/img/items/collection/kROZ/22199" alt="">
+                                        <div class="ro-tooltip-title">Botas Magmáticas [1]</div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Acessório Direito -->
+                        <div class="slot-row">
+                            <div class="slot-label">Acessório Esquerdo</div>
+                            <div class="slot-box">
+                                <div class="item" data-id="28509">
+                                <div class="ro-tooltip" tabindex="0">
+                                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/28509" alt="Anel Ilusional [1]">
+                                    <div class="ro-tooltip-box" role="tooltip">
+                                        <img src="https://www.divine-pride.net/img/items/collection/kROZ/28509" alt="">
+                                        <div class="ro-tooltip-title">Anel Ilusional [1]</div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+                    
+                </div> <!-- fim equip-body -->
 
-            <div class="slot-row">
-              <div class="slot-label">Mão Direita</div>
-              <div class="slot-box">
-                <div class="item" data-id="28612">
-                  <div class="ro-tooltip" tabindex="0">
-                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/28612" alt="Apocalípse Ilusional">
-                    <div class="ro-tooltip-box" role="tooltip">
-                      <img src="https://www.divine-pride.net/img/items/collection/kROZ/28612" alt="">
-                      <div class="ro-tooltip-title">Apocalípse Ilusional</div>
-                      <div class="ro-tooltip-line"></div>
-                      <p>Bônus elemental.</p>
+            </div> <!-- fim tab-equip -->
+
+            <!-- Aba Visual (cópia inicial do conteúdo do Equip) -->
+            <div class="tab-container" id="tab-visual" style="display:none;">
+
+                <div class="equip-body">
+
+                    <!-- LEFT: col de slots -->
+                    <div class="slots-col">
+                        <!-- Head -->
+                        <div class="slot-row">
+                            <div class="slot-label">Enchant Topo</div>
+                            <div class="slot-box">
+                                <div class="item" data-id="310327">
+                                <div class="ro-tooltip">
+                                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/310327" alt="Melee Stone">
+                                    <div class="ro-tooltip-box">
+                                        <img src="https://www.divine-pride.net/img/items/collection/kROZ/310327" alt="">
+                                        <div class="ro-tooltip-title">Melee Stone</div>
+                                        <div class="ro-tooltip-line"></div>
+                                        <p>+15% Dano físico vs Neutro/Fogo<br>+5% ASPD (União Solar)</p>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- R-Hand -->
+                        <div class="slot-row">
+                            <div class="slot-label">Enchant Baixo</div>
+                            <div class="slot-box">
+                                <div class="item" data-id="310328">
+                                <div class="ro-tooltip">
+                                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/310328" alt="Melee Stone">
+                                    <div class="ro-tooltip-box">
+                                        <img src="https://www.divine-pride.net/img/items/collection/kROZ/310328" alt="">
+                                        <div class="ro-tooltip-title">Melee Stone</div>
+                                        <div class="ro-tooltip-line"></div>
+                                        <p>+X Dano físico.</p>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Robe (meio) -->
+                        <div class="slot-row">
+                            <div class="slot-label">-</div>
+                            <div class="slot-box">
+                            </div>
+                        </div>
+
+                        <!-- Accessory -->
+                        <div class="slot-row">
+                            <div class="slot-label">Enchant Capa</div>
+                            <div class="slot-box">
+                                <div class="item" data-id="25208">
+                                <div class="ro-tooltip">
+                                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/25208" alt="Absorção de SP">
+                                    <div class="ro-tooltip-box">
+                                        <img src="https://www.divine-pride.net/img/items/collection/kROZ/25208" alt="">
+                                        <div class="ro-tooltip-title">Absorção de SP</div>
+                                        <div class="ro-tooltip-line"></div>
+                                        <p>Bônus elemental.</p>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- L-hand -->
+                        <div class="slot-row">
+                            <div class="slot-label">Enchant Capa (Dual)</div>
+                            <div class="slot-box">
+                                <div class="item" data-id="29056">
+                                <div class="ro-tooltip">
+                                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/29056" alt="Esfera da Conj. Fixa">
+                                    <div class="ro-tooltip-box">
+                                        <img src="https://www.divine-pride.net/img/items/collection/kROZ/29056" alt="">
+                                        <div class="ro-tooltip-title">Esfera da Conj. Fixa</div>
+                                        <div class="ro-tooltip-line"></div>
+                                        <p>Bônus elemental.</p>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div> <!-- end slots-col -->
+                    
+                    <!-- CENTER: quadro do boneco -->
+                    <div class="char-col">
+                        <div class="char-frame">
+                        <div class="char-sprite-bg" style="background-image:url('https://raw.githubusercontent.com/tatutoru/Mestre-Estelar/main/assets/Sprites/char-iddle.png');"></div>
+                        </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <div class="slot-row">
-              <div class="slot-label">Capa</div>
-              <div class="slot-box">
-                <div class="item" data-id="20838">
-                  <div class="ro-tooltip" tabindex="0">
-                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/20838" alt="Sobrepeliz Ilusional">
-                    <div class="ro-tooltip-box" role="tooltip">
-                      <img src="https://www.divine-pride.net/img/items/collection/kROZ/20838" alt="">
-                      <div class="ro-tooltip-title">Sobrepeliz Ilusional</div>
-                      <div class="ro-tooltip-line"></div>
-                      <p>Bônus elemental.</p>
+                    <!-- RIGHT SLOTS (coluna igual à esquerda) -->
+                    <div class="slots-col slots-col-right">
+                        <!-- Topo -->
+                        <div class="slot-row">
+                            <div class="slot-label">Enchant Meio</div>
+                            <div class="slot-box">
+                                <div class="item" data-id="310329">
+                                <div class="ro-tooltip" tabindex="0">
+                                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/310329" alt="Melee Stone">
+                                    <div class="ro-tooltip-box">
+                                        <img src="https://www.divine-pride.net/img/items/collection/kROZ/310329" alt="">
+                                        <div class="ro-tooltip-title">Melee Stone</div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Baixo -->
+                        <div class="slot-row">
+                            <div class="slot-label">-</div>
+                            <div class="slot-box">
+                            </div>
+                        </div>
+
+                        <!-- Mão Direita -->
+                        <div class="slot-row">
+                            <div class="slot-label">-</div>
+                            <div class="slot-box">
+                            </div>
+                        </div>
+
+                        <!-- Capa -->
+                        <div class="slot-row">
+                            <div class="slot-label">-</div>
+                            <div class="slot-box">
+                            </div>
+                        </div>
+
+                        <!-- Acessório Direito -->
+                        <div class="slot-row">
+                            <div class="slot-label">Anel do Mercador</div>
+                            <div class="slot-box">
+                                <div class="item" data-id="50205">
+                                <div class="ro-tooltip" tabindex="0">
+                                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/iRO/490404" alt="Anel do Mercador">
+                                    <div class="ro-tooltip-box" role="tooltip">
+                                        <img src="https://www.divine-pride.net/img/items/collection/iRO/490404" alt="">
+                                        <div class="ro-tooltip-title">Anel do Mercador</div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+                    
+                </div> <!-- fim equip-body -->
 
-            <div class="slot-row">
-              <div class="slot-label">Acessório</div>
-              <div class="slot-box">
-                <div class="item" data-id="28303">
-                  <div class="ro-tooltip" tabindex="0">
-                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/28303" alt="Núcleo Vesper 02">
-                    <div class="ro-tooltip-box" role="tooltip">
-                      <img src="https://www.divine-pride.net/img/items/collection/kROZ/28303" alt="">
-                      <div class="ro-tooltip-title">Núcleo Vesper 02</div>
-                      <div class="ro-tooltip-line"></div>
-                      <p>Bônus elemental.</p>
+            </div> <!-- fim tab-visual -->
+
+        </div> <!-- fim equip-window -->
+
+    </div> <!-- fim content -->
+
+    <div class="tab-container active" id="tab-cards">
+
+                <div class="equip-body">
+
+                    <!-- LEFT: col de slots -->
+                    <div class="slots-col">
+                        <!-- Head -->
+                        <div class="slot-row">
+                            <div class="slot-label">Carta Topo</div>
+                            <div class="slot-box">
+                                <div class="item" data-id="19362">
+                                <div class="ro-tooltip">
+                                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/bRO/4484" alt="Carta">
+                                    <div class="ro-tooltip-box">
+                                        <img src="https://www.divine-pride.net/img/items/collection/bRO/4484" alt="">
+                                        <div class="ro-tooltip-title">Carta</div>
+                                        <div class="ro-tooltip-line"></div>
+                                        <p>+15% Dano físico vs Neutro/Fogo<br>+5% ASPD (União Solar)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- R-Hand -->
+                        <div class="slot-row">
+                            <div class="slot-label">-</div>
+                            <div class="slot-box">
+                                </div>
+                            </div>
+
+                        <!-- Robe (meio) -->
+                        <div class="slot-row">
+                            <div class="slot-label">Cartas Arma</div>
+                            <div class="slot-box">
+                                <div class="item" data-id="28612">
+                                <div class="ro-tooltip">
+                                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/bRO/4484" alt="Carta ">
+                                    <div class="ro-tooltip-box">
+                                        <img src="https://www.divine-pride.net/img/items/collection/bRO/4484" alt="">
+                                        <div class="ro-tooltip-title">Carta </div>
+                                        <div class="ro-tooltip-line"></div>
+                                        <p>.</p>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Accessory -->
+                        <div class="slot-row">
+                            <div class="slot-label">Carta Capa</div>
+                            <div class="slot-box">
+                                <div class="item" data-id="20838">
+                                <div class="ro-tooltip">
+                                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/bRO/4484" alt="Carta Wakwak">
+                                    <div class="ro-tooltip-box">
+                                        <img src="https://www.divine-pride.net/img/items/collection/bRO/4484" alt="">
+                                        <div class="ro-tooltip-title">Carta Wakwak</div>
+                                        <div class="ro-tooltip-line"></div>
+                                        <p>l.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- L-hand -->
+                        <div class="slot-row">
+                            <div class="slot-label">Carta Acc. Direito</div>
+                            <div class="slot-box">
+                                <div class="item" data-id="28303">
+                                <div class="ro-tooltip">
+                                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/bRO/4484" alt="Carta">
+                                    <div class="ro-tooltip-box">
+                                        <img src="https://www.divine-pride.net/img/items/collection/bRO/4484" alt="">
+                                        <div class="ro-tooltip-title">Carta </div>
+                                        <div class="ro-tooltip-line"></div>
+                                        <p>.</p>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- end slots-col -->
+                    
+                    <!-- CENTER: quadro do boneco -->
+                    <div class="char-col">
+                        <div class="char-frame">
+                        <div class="char-sprite-bg" style="background-image:url('https://raw.githubusercontent.com/tatutoru/Mestre-Estelar/main/assets/Sprites/char-iddle.png');"></div>
+                        </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-          </div> <!-- end left -->
+                    <!-- RIGHT SLOTS (coluna igual à esquerda) -->
+                    <div class="slots-col slots-col-right">
+                        <!-- Topo -->
+                        <div class="slot-row">
+                            <div class="slot-label">Carta Meio</div>
+                            <div class="slot-box">
+                                <div class="item" data-id="19392">
+                                <div class="ro-tooltip" tabindex="0">
+                                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/4484" alt="Carta ">
+                                    <div class="ro-tooltip-box" role="tooltip">
+                                        <img src="https://www.divine-pride.net/img/items/collection/bRO/4484" alt="">
+                                        <div class="ro-tooltip-title">Carta </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-          <!-- CENTER: quadro do boneco (tamanho de acordo com seu style.css) -->
-          <div class="char-col">
-            <div class="char-frame">
-              <div class="char-sprite-bg" style="background-image:url('https://raw.githubusercontent.com/tatutoru/Mestre-Estelar/main/assets/Sprites/char-iddle.png');"></div>
-            </div>
-          </div>
+                        <!-- Baixo -->
+                        <div class="slot-row">
+                            <div class="slot-label">Carta Armadura</div>
+                            <div class="slot-box">
+                                <div class="item" data-id="15378">
+                                <div class="ro-tooltip" tabindex="0">
+                                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/4484" alt="Carta ">
+                                    <div class="ro-tooltip-box" role="tooltip">
+                                        <img src="https://www.divine-pride.net/img/items/collection/kROZ/4484" alt="">
+                                        <div class="ro-tooltip-title">Carta</div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-          <!-- RIGHT: pode espelhar se quiser -->
-          <div class="slots-col slots-col-right">
-            <!-- exemplo: meio/armadura -->
-            <div class="slot-row">
-              <div class="slot-label">Meio</div>
-              <div class="slot-box">
-                <div class="item" data-id="19392">
-                  <div class="ro-tooltip" tabindex="0">
-                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/19392" alt="Presilha dos Amantes">
-                    <div class="ro-tooltip-box" role="tooltip">
-                      <img src="https://www.divine-pride.net/img/items/collection/kROZ/19392" alt="">
-                      <div class="ro-tooltip-title">Presilha dos Amantes [1]</div>
+                        <!-- Mão Direita -->
+                        <div class="slot-row">
+                            <div class="slot-label">Carta Escudo</div>
+                            <div class="slot-box">
+                                <div class="item" data-id="28949">
+                                <div class="ro-tooltip" tabindex="0">
+                                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/4484" alt="Carta">
+                                    <div class="ro-tooltip-box" role="tooltip">
+                                        <img src="https://www.divine-pride.net/img/items/collection/kROZ/4484" alt="">
+                                        <div class="ro-tooltip-title">Carta</div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Capa -->
+                        <div class="slot-row">
+                            <div class="slot-label">Carta Sapato</div>
+                            <div class="slot-box">
+                                <div class="item" data-id="22199">
+                                <div class="ro-tooltip" tabindex="0">
+                                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/4484" alt="Carta ">
+                                    <div class="ro-tooltip-box" role="tooltip">
+                                        <img src="https://www.divine-pride.net/img/items/collection/kROZ/4484" alt="">
+                                        <div class="ro-tooltip-title">Carta </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Acessório Direito -->
+                        <div class="slot-row">
+                            <div class="slot-label">Carta Acc. Esquerdo</div>
+                            <div class="slot-box">
+                                <div class="item" data-id="28509">
+                                <div class="ro-tooltip" tabindex="0">
+                                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/4484" alt="Carta ">
+                                    <div class="ro-tooltip-box" role="tooltip">
+                                        <img src="https://www.divine-pride.net/img/items/collection/kROZ/4484" alt="">
+                                        <div class="ro-tooltip-title">Carta </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+                    
+                </div> <!-- fim equip-cards -->
 
-            <div class="slot-row">
-              <div class="slot-label">Armadura</div>
-              <div class="slot-box">
-                <div class="item" data-id="15378">
-                  <div class="ro-tooltip" tabindex="0">
-                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/15378" alt="Couraça Magmática">
-                    <div class="ro-tooltip-box" role="tooltip">
-                      <img src="https://www.divine-pride.net/img/items/collection/kROZ/15378" alt="">
-                      <div class="ro-tooltip-title">Couraça Magmática [1]</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            </div> <!-- fim tab-cards -->
+    <!-- scripts: abas simples, suporte touch para tooltips e reposicionamento -->
+    <script>
+      // Abas visuais (apenas estilização local) — agora alterna conteúdo também
+      document.querySelectorAll('.equip-tabs .tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.equip-tabs .tab').forEach(t=>t.classList.remove('active'));
+          btn.classList.add('active');
 
-          </div> <!-- end right -->
-
-        </div> <!-- end equip-body -->
-      </div> <!-- end tab-equip -->
-
-      <!-- === Aba Visual === -->
-      <div class="tab-container" id="tab-visual">
-        <div class="equip-body">
-          <div class="slots-col">
-            <!-- Conteúdo visual (mesma estrutura, só sem descrição) -->
-            <div class="slot-row">
-              <div class="slot-label">Meio</div>
-              <div class="slot-box">
-                <div class="item" data-id="19392">
-                  <div class="ro-tooltip" tabindex="0">
-                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/19392" alt="Presilha dos Amantes">
-                    <div class="ro-tooltip-box" role="tooltip">
-                      <img src="https://www.divine-pride.net/img/items/collection/kROZ/19392" alt="">
-                      <div class="ro-tooltip-title">Presilha dos Amantes [1]</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- mais visual slots... -->
-          </div>
-
-          <div class="char-col">
-            <div class="char-frame">
-              <div class="char-sprite-bg" style="background-image:url('https://raw.githubusercontent.com/tatutoru/Mestre-Estelar/main/assets/Sprites/char-iddle.png');"></div>
-            </div>
-          </div>
-
-          <div class="slots-col slots-col-right"></div>
-        </div>
-      </div><!-- end tab-visual -->
-
-      <!-- === Aba Cartas === -->
-      <div class="tab-container" id="tab-cards">
-        <div class="equip-body">
-          <div class="slots-col">
-            <div class="slot-row">
-              <div class="slot-label">Carta Topo</div>
-              <div class="slot-box">
-                <div class="item" data-id="4132">
-                  <div class="ro-tooltip" tabindex="0">
-                    <img class="slot-icon" src="https://www.divine-pride.net/img/items/item/kROZ/4132" alt="Carta X">
-                    <div class="ro-tooltip-box" role="tooltip">
-                      <img src="https://www.divine-pride.net/img/items/collection/kROZ/4132" alt="">
-                      <div class="ro-tooltip-title">Carta X</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- mais cartas... -->
-          </div>
-
-          <div class="char-col">
-            <div class="char-frame">
-              <div class="char-sprite-bg" style="background-image:url('https://raw.githubusercontent.com/tatutoru/Mestre-Estelar/main/assets/Sprites/char-iddle.png');"></div>
-            </div>
-          </div>
-
-          <div class="slots-col slots-col-right"></div>
-        </div>
-      </div><!-- end tab-cards -->
-
-    </div> <!-- end equip-window -->
-
-  </div> <!-- end content -->
-
-
-  <!-- ================= SCRIPTS ================= -->
-  <script>
-    // Abas para múltiplas equip-windows (eles usam data-tab -> #tab-{data-tab})
-    document.querySelectorAll('.equip-window').forEach(windowEl => {
-      const tabs = windowEl.querySelectorAll('.equip-tabs .tab');
-
-      tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-          // reset
-          tabs.forEach(t => t.classList.remove('active'));
-          windowEl.querySelectorAll('.tab-container').forEach(c => c.classList.remove('active'));
-
-          // ativa a que corresponde ao data-tab
-          tab.classList.add('active');
-          const name = tab.dataset.tab;
-          const container = windowEl.querySelector(`#tab-${name}`);
-          if (container) container.classList.add('active');
+          const tipo = (btn.dataset.tab || '').trim().toLowerCase();
+          if(tipo === 'visual' || tipo === 'visuais' || tipo === 'visuals'){
+            // mostra a aba visual e oculta equip
+            const v = document.getElementById('tab-visual');
+            const e = document.getElementById('tab-equip');
+            if(e) e.style.display = 'none';
+            if(v) v.style.display = '';
+          } else {
+            // mostra equip e oculta visual
+            const v = document.getElementById('tab-visual');
+            const e = document.getElementById('tab-equip');
+            if(e) e.style.display = '';
+            if(v) v.style.display = 'none';
+          }
         });
       });
-    });
 
-    // touch tooltips (mantém comportamento já usado)
-    function initTooltipTouch(root = document) {
-      root.querySelectorAll('.ro-tooltip').forEach(el=>{
+      // suporte touch: alterna .touch-open em tooltips quando tocar
+      document.querySelectorAll('.ro-tooltip').forEach(el=>{
         el.addEventListener('touchstart', function(e){
-          root.querySelectorAll('.ro-tooltip.touch-open').forEach(o=>{ if(o!==el) o.classList.remove('touch-open'); });
+          document.querySelectorAll('.ro-tooltip.touch-open').forEach(o=>{ if(o!==el) o.classList.remove('touch-open'); });
           el.classList.toggle('touch-open');
         });
       });
+
+      // fecha tooltip touch ao tocar fora
       document.addEventListener('touchstart', function(e){
         if(!e.target.closest('.ro-tooltip')) {
           document.querySelectorAll('.ro-tooltip.touch-open').forEach(o=>o.classList.remove('touch-open'));
         }
       });
-    }
-    initTooltipTouch(document);
 
-    // Aplica links automáticos sem perder event listeners (usa replaceChild)
-    (function applyLinks(root = document) {
-      const baseURL = "https://www.pathofisgard.com.br/database/item/";
-      root.querySelectorAll('.item[data-id]').forEach(container => {
-        if (container.querySelector(':scope > a.item-link')) return;
-        const id = container.getAttribute('data-id');
-        if (!id) return;
-        const tooltipEl = container.querySelector('.ro-tooltip');
-        if (!tooltipEl) return;
-        const parent = tooltipEl.parentElement;
-        if (parent && parent.tagName.toLowerCase() === 'a') return;
+      // Reposiciona tooltips para a esquerda se ultrapassarem a viewport
+      (function(){
+        const margin = 12; // margem mínima da viewport
 
-        const a = document.createElement('a');
-        a.href = baseURL + id;
-        a.target = '_blank';
-        a.className = 'item-link';
+        function updateTooltipPlacement(el) {
+          const box = el.querySelector('.ro-tooltip-box');
+          if(!box) return;
+          el.classList.remove('flip-left');
 
-        try {
-          container.replaceChild(a, tooltipEl); // move preserving listeners
-        } catch(e) {
-          // fallback (menos ideal)
-          container.appendChild(a);
+          // tornar visível temporariamente para medir largura se necessário
+          const prevVis = box.style.visibility;
+          box.style.visibility = 'hidden';
+          box.style.display = 'block';
+          const boxWidth = box.offsetWidth || 220;
+          box.style.display = '';
+          box.style.visibility = prevVis || '';
+
+          const rect = el.getBoundingClientRect();
+          const predictedRight = rect.left + rect.width/2 + boxWidth/2;
+
+          if (predictedRight > (window.innerWidth - margin)) {
+            el.classList.add('flip-left');
+          } else {
+            el.classList.remove('flip-left');
+          }
         }
-        a.appendChild(tooltipEl);
-      });
-    })(document);
 
-  </script>
+        document.querySelectorAll('.ro-tooltip').forEach(el=>{
+          el.addEventListener('mouseenter', ()=> updateTooltipPlacement(el));
+          el.addEventListener('focus', ()=> updateTooltipPlacement(el)); // acessibilidade
+          el.addEventListener('touchstart', ()=> updateTooltipPlacement(el));
+        });
 
+        window.addEventListener('resize', () => {
+          document.querySelectorAll('.ro-tooltip').forEach(el=> updateTooltipPlacement(el));
+        });
+      })();
+    
+(function () {
+  const baseURL = "https://www.pathofisgard.com.br/database/item/";
+
+  function aplicarLinksAutomaticosPreservandoListeners() {
+    document.querySelectorAll(".item[data-id]").forEach(container => {
+      // evita já-envolvidos
+      if (container.querySelector(":scope > a.item-link")) return;
+
+      const id = container.getAttribute("data-id");
+      if (!id) return;
+
+      const url = baseURL + id;
+
+      // encontra o elemento tooltip existente (preserva listeners)
+      const tooltipEl = container.querySelector(".ro-tooltip");
+      if (!tooltipEl) return;
+
+      // se o tooltip já estiver dentro de um <a>, pula
+      const parent = tooltipEl.parentElement;
+      if (parent && parent.tagName.toLowerCase() === 'a') return;
+
+      // cria o <a>
+      const a = document.createElement("a");
+      a.href = url;
+      a.target = "_blank";
+      a.className = "item-link";
+
+      // substitui o tooltip pelo <a> e então coloca o tooltip dentro do <a>
+      // isso evita limpar outros nós e mantém a ordem original no DOM
+      container.replaceChild(a, tooltipEl);
+      a.appendChild(tooltipEl);
+    });
+  }
+
+  // Execute após DOM carregado
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", aplicarLinksAutomaticosPreservandoListeners);
+  } else {
+    aplicarLinksAutomaticosPreservandoListeners();
+  }
+})();
+
+
+
+    </script>
+    
 </body>
 </html>
