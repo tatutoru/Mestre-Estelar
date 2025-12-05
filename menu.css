@@ -229,3 +229,20 @@
     max-width: calc(100vw - 16px);
   }
 }
+
+/* remove qualquer estilo automático do navegador */
+.ms-menu__list a {
+  outline: none !important;
+  border: none !important;
+  text-decoration: none !important;
+  background: none !important;
+}
+
+/* estilo do hover personalizado */
+.ms-menu__list a:hover {
+  background: rgba(0,0,0,0.05);
+  border-radius: 6px;
+  box-shadow: 0 0 4px rgba(0,0,0,0.15);
+  transition: 180ms ease;
+}
+
