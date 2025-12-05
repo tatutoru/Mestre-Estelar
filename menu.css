@@ -1,237 +1,231 @@
 /* ===============================
-   menu.css - estilos do menu Mestre Estelar
-   Inclui: versões desktop / overlay, animações e responsividade básica
+   menu.css - Mestre Estelar
+   Versão estável: menu horizontal no index,
+   hamburger + painel vertical nas internas.
    =============================== */
 
-/* reset / base */
-.ms-menu { display:flex; align-items:center; gap:1rem; padding:0.6rem 1rem; background:#fff; border-bottom:1px solid rgba(0,0,0,0.06); position:relative; z-index:1000; box-sizing:border-box; }
-.ms-menu__brand { font-weight:700; margin-right:auto; }
-.ms-menu__brand a { color:inherit; text-decoration:none; }
+/* barra base */
+.ms-menu {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.6rem 1rem;
+  background: #ffffff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  position: relative;
+  z-index: 1000;
+  box-sizing: border-box;
+}
 
-/* hamburger toggle */
+/* logo / nome */
+.ms-menu__brand {
+  font-weight: 700;
+  margin-right: auto;
+}
+
+.ms-menu__brand a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* botão hamburger */
 .ms-menu__toggle {
-  display:none;
-  width:34px;
-  height:34px;
-  border:0;
-  background:transparent;
-  cursor:pointer;
-  padding:6px;
-  box-sizing:border-box;
+  display: none; /* no index some por padrão */
+  width: 34px;
+  height: 34px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 6px;
+  box-sizing: border-box;
 }
+
 .ms-menu__toggle .ms-menu__hamburger {
-  display:block;
-  width:100%;
-  height:2px;
-  background:#222;
-  position:relative;
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #222;
+  position: relative;
 }
+
 .ms-menu__toggle .ms-menu__hamburger::before,
 .ms-menu__toggle .ms-menu__hamburger::after {
-  content: '';
-  position:absolute;
-  left:0;
-  right:0;
-  height:2px;
-  background:#222;
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #222;
 }
-.ms-menu__toggle .ms-menu__hamburger::before { top:-8px; }
-.ms-menu__toggle .ms-menu__hamburger::after { top:8px; }
 
-/* default (horizontal) list in header */
-.ms-menu__list { list-style:none; margin:0; padding:0; display:flex; gap:1rem; align-items:center; }
-.ms-menu__list li { margin:0; padding:0; }
-.ms-menu__list a { text-decoration:none; color:#222; padding:0.25rem 0.5rem; font-weight:500; }
+.ms-menu__toggle .ms-menu__hamburger::before {
+  top: -8px;
+}
 
-/* --- collapsed behavior (pages internas) ---
-   Keep only brand + hamburger visible in header; the UL will be moved to body by JS,
-   so hiding it here won't prevent overlay from showing (because overlay is moved out of nav). */
-.ms-menu--collapsed { justify-content:flex-end; }
-.ms-menu--collapsed .ms-menu__brand { display:block; } /* show brand */
-.ms-menu--collapsed .ms-menu__toggle { display:inline-block; }
+.ms-menu__toggle .ms-menu__hamburger::after {
+  top: 8px;
+}
 
-/* hide the horizontal list inside the nav when collapsed */
-.ms-menu--collapsed .ms-menu__list { display: none; }
+/* lista padrão (horizontal no index) */
+.ms-menu__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
 
-/* ===== overlay / body > .ms-menu__list (when moved by JS) ===== */
-/* base overlay appearance */
-body > .ms-menu__list {
-  display: block;
-  position: fixed;
+.ms-menu__list li {
+  margin: 0;
+  padding: 0;
+}
+
+.ms-menu__list a {
+  text-decoration: none;
+  padding: 0.25rem 0.5rem;
+  font-weight: 500;
+  position: relative;
+}
+
+/* ===== Páginas internas (collapsed) =====
+   Mostra só logo + hamburger; esconde menu horizontal. */
+.ms-menu--collapsed {
+  justify-content: flex-start;
+}
+
+.ms-menu--collapsed .ms-menu__toggle {
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+.ms-menu--collapsed .ms-menu__brand {
+  margin-right: auto;
+}
+
+.ms-menu--collapsed .ms-menu__list {
+  display: none;
+}
+
+/* ===== Menu aberto (painel vertical) ===== */
+
+.ms-menu--open .ms-menu__list {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
   left: 8px;
-  box-sizing: border-box;
   width: 220px;
   max-width: calc(100vw - 16px);
-  z-index: 11150;
-  margin: 0;
-  padding: 0.25rem 0;
-  list-style: none;
-  border-radius: 10px;
-  overflow: visible;
-}
-
-/* panel visual (white with light blur and shadow) */
-body > .ms-menu__list {
-  background: rgba(255,255,255,0.96);
+  margin-top: 8px;
+  background: rgba(255, 255, 255, 0.97);
   backdrop-filter: blur(6px);
-  box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+  border-radius: 10px;
+  padding: 6px 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+  box-sizing: border-box;
+  z-index: 1100;
 }
 
-/* items stacked vertically */
-body > .ms-menu__list { display:flex; flex-direction:column; align-items:flex-start; gap:0; padding:6px 0; }
-body > .ms-menu__list li { width:100%; }
-
-/* links inside overlay */
-body > .ms-menu__list a {
-  display:block;
-  width:100%;
-  padding:10px 16px;
-  color:#222;
-  text-decoration:none;
-  font-size:15px;
-  border-radius:8px;
-  transition: background .16s ease, color .12s ease;
+.ms-menu--open .ms-menu__list li {
+  width: 100%;
 }
 
-/* separators between items */
-body > .ms-menu__list li + li { border-top:1px solid rgba(0,0,0,0.06); }
+/* links dentro do painel vertical */
+.ms-menu--open .ms-menu__list a {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: 6px;
+}
+
+/* separadores leves */
+.ms-menu--open .ms-menu__list li + li {
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
 
 /* hover / focus */
-body > .ms-menu__list a:hover,
-body > .ms-menu__list a:focus {
-  background: rgba(0,0,0,0.06);
-  color:#000;
-  outline:none;
+.ms-menu__list a:hover,
+.ms-menu__list a:focus {
+  background: rgba(0, 0, 0, 0.06);
+  outline: none;
 }
 
-/* highlight first item subtly (optional) */
-body > .ms-menu__list li:first-child a { margin-top: 2px; }
+/* ===== garantir que o texto dos links seja visível ===== */
 
-/* backdrop (inserted by JS as .ms-menu-backdrop on body) */
-.ms-menu-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.05);
-  z-index: 11140;
-  pointer-events: auto;
-  transition: background 220ms ease, opacity 220ms ease;
-  opacity: 1;
-}
-
-/* ===== animations: panel + items ===== */
-body > .ms-menu__list {
-  transition: transform 240ms cubic-bezier(.2,.9,.3,1), opacity 200ms ease;
-  transform-origin: top left;
-  opacity: 0;
-  transform: translateY(-8px) scale(.995);
-  pointer-events: none; /* will be enabled by JS when opening */
-  will-change: transform, opacity;
-}
-
-.ms-menu--open body > .ms-menu__list,
-.ms-menu--open .ms-menu__list { /* fallback if rules differ */
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  pointer-events: auto;
-}
-
-/* items stagger */
-body > .ms-menu__list li { opacity:0; transform:translateY(-6px); transition: transform 220ms ease, opacity 200ms ease; }
-.ms-menu--open body > .ms-menu__list li { opacity:1; transform:translateY(0); }
-/* stagger delays (up to 8 items) */
-.ms-menu--open body > .ms-menu__list li:nth-child(1) { transition-delay: 0ms; }
-.ms-menu--open body > .ms-menu__list li:nth-child(2) { transition-delay: 30ms; }
-.ms-menu--open body > .ms-menu__list li:nth-child(3) { transition-delay: 60ms; }
-.ms-menu--open body > .ms-menu__list li:nth-child(4) { transition-delay: 90ms; }
-.ms-menu--open body > .ms-menu__list li:nth-child(5) { transition-delay: 120ms; }
-.ms-menu--open body > .ms-menu__list li:nth-child(6) { transition-delay: 150ms; }
-
-/* ensure toggle stays above overlay/backdrop */
-.ms-menu__toggle { position:relative; z-index:11160; }
-
-/* accessibility: focus styles */
-.ms-menu__list a:focus { box-shadow: 0 0 0 3px rgba(0,0,0,0.06) inset; }
-
-/* respect reduced motion preference */
-@media (prefers-reduced-motion: reduce) {
-  body > .ms-menu__list,
-  body > .ms-menu__list li,
-  .ms-menu-backdrop {
-    transition: none !important;
-    transform: none !important;
-    opacity: 1 !important;
-    pointer-events: auto !important;
-  }
-}
-
-/* small screen: show hamburger and use overlay full-width optionally */
-@media (max-width: 520px) {
-  .ms-menu__toggle { display:inline-block; }
-  .ms-menu__list { display:none; } /* header list hidden on mobile header (overlay used) */
-
-  /* overlay fullscreen on very small screens */
-  body > .ms-menu__list {
-    left: 8px;
-    right: 8px;
-    width: auto;
-    max-width: calc(100vw - 16px);
-    border-radius: 10px;
-  }
-}
-
-/* small cosmetic: prevent unexpected inherited display:none */
-body > .ms-menu__list[style] { display:block !important; }
-
-body > .ms-menu__list a,
-body > .ms-menu__list a:link,
-body > .ms-menu__list a:visited {
-  color: #111 !important;
-  font-weight: 500;
-}
-
-/* ===== correção forte: garantir que o texto do menu fique visível ===== */
-
-body > .ms-menu__list a,
-body > .ms-menu__list a:link,
-body > .ms-menu__list a:visited {
+.ms-menu__list a,
+.ms-menu__list a:link,
+.ms-menu__list a:visited {
   color: #111 !important;
   font-weight: 500 !important;
   font-size: 15px !important;
   line-height: 1.4 !important;
 
-  /* zera qualquer truque de esconder texto */
-  text-indent: 0 !important;
-  text-transform: none !important;
-  letter-spacing: normal !important;
-  text-shadow: none !important;
-  opacity: 1 !important;
-}
-
-/* se tiver algum pseudo-elemento cobrindo o texto, some com ele */
-body > .ms-menu__list a::before,
-body > .ms-menu__list a::after {
-  content: '' !important;
-  display: none !important;
-}
-
-body > .ms-menu__list a,
-body > .ms-menu__list a:link,
-body > .ms-menu__list a:visited {
-  color: #111 !important;
-  font-weight: 500 !important;
-  font-size: 15px !important;
-  line-height: 1.4 !important;
-
-  /* zera qualquer truque de esconder texto */
+  /* desmonta qualquer "truque" global de gradiente em <a> */
   text-indent: 0 !important;
   text-transform: none !important;
   letter-spacing: normal !important;
   text-shadow: none !important;
   opacity: 1 !important;
 
-  /* 🔥 aqui é o pulo do gato para anular gradiente em links */
   -webkit-text-fill-color: #111 !important;
   -webkit-background-clip: border-box !important;
   background-image: none !important;
   background-clip: border-box !important;
+}
+
+/* se algum pseudo-elemento global estiver cobrindo o link, some com ele */
+.ms-menu__list a::before,
+.ms-menu__list a::after {
+  content: "" !important;
+  display: none !important;
+}
+
+/* ===== Backdrop quando o menu está aberto ===== */
+
+.ms-menu-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.05);
+  z-index: 900;
+  pointer-events: auto;
+}
+
+/* animação bem levinha */
+.ms-menu--open .ms-menu__list {
+  animation: ms-menu-slide 0.22s ease-out;
+}
+
+@keyframes ms-menu-slide {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* acessibilidade: foco */
+.ms-menu__list a:focus {
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.12) inset;
+}
+
+/* mobile – se quiser forçar sempre hamburger em telas pequenas */
+@media (max-width: 520px) {
+  .ms-menu__toggle {
+    display: inline-block;
+  }
+
+  .ms-menu__list {
+    display: none;
+  }
+
+  .ms-menu--open .ms-menu__list {
+    left: 8px;
+    right: 8px;
+    width: auto;
+    max-width: calc(100vw - 16px);
+  }
 }
