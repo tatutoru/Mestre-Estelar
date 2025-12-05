@@ -558,30 +558,34 @@
 
             </div> <!-- fim tab-cards -->
     <!-- scripts: abas simples, suporte touch para tooltips e reposicionamento -->
-    <script>
-      // Abas visuais (apenas estilização local) — agora alterna conteúdo também
-      document.querySelectorAll('.equip-tabs .tab').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.equip-tabs .tab').forEach(t=>t.classList.remove('active'));
-          btn.classList.add('active');
+<script>
+  // Abas simples — suporta Equip, Visual, Cartas e qualquer outra
+  document.querySelectorAll('.equip-window').forEach(windowEl => {
+    const tabs = windowEl.querySelectorAll('.equip-tabs .tab');
 
-          const tipo = (btn.dataset.tab || '').trim().toLowerCase();
-          if(tipo === 'visual' || tipo === 'visuais' || tipo === 'visuals'){
-            // mostra a aba visual e oculta equip
-            const v = document.getElementById('tab-visual');
-            const e = document.getElementById('tab-equip');
-            if(e) e.style.display = 'none';
-            if(v) v.style.display = '';
-          } else {
-            // mostra equip e oculta visual
-            const v = document.getElementById('tab-visual');
-            const e = document.getElementById('tab-equip');
-            if(e) e.style.display = '';
-            if(v) v.style.display = 'none';
-          }
-        });
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+
+        // remove active de todas as tabs
+        tabs.forEach(t => t.classList.remove('active'));
+
+        // esconde todas as abas internas
+        windowEl.querySelectorAll('.tab-container')
+                .forEach(c => c.classList.remove('active'));
+
+        // ativa a tab clicada
+        tab.classList.add('active');
+
+        // identifica o ID da aba correspondente
+        const target = tab.dataset.tab; // ex: equip, visual, cards
+        const container = windowEl.querySelector(`#tab-${target}`);
+
+        // mostra a aba correspondente
+        if (container) container.classList.add('active');
       });
-
+    });
+  });
+    
       // suporte touch: alterna .touch-open em tooltips quando tocar
       document.querySelectorAll('.ro-tooltip').forEach(el=>{
         el.addEventListener('touchstart', function(e){
