@@ -1,5 +1,5 @@
 // ===============================
-// menu.js - versão final com animações suaves (open/close)
+// menu.js - ajuste: abrir painel abaixo e à esquerda do toggle, itens verticais
 // ===============================
 
 (function(){
@@ -71,9 +71,7 @@
 
       if (!isIndex) nav.classList.add("ms-menu--collapsed");
 
-      // ---------------------------
       // Backdrop helpers
-      // ---------------------------
       function removeBackdrop(){
         const bd = document.querySelector(".ms-menu-backdrop");
         if (bd) bd.remove();
@@ -96,31 +94,26 @@
       let _listOriginalParent = null;
       let _listOriginalNext = null;
 
-      // ---------------------------
-      // Animated openMenu / closeMenu
-      // ---------------------------
-
+      // OPEN: abaixo do toggle e alinhado à esquerda do toggle (vertical)
       function openMenu(){
-        // mark nav as opening/open (class controls animations via CSS)
         nav.classList.add('ms-menu--open');
         if (toggle) toggle.setAttribute('aria-expanded','true');
 
-        // move list to body if needed (avoids being clipped by ancestors)
+        // move lista para body se necessário
         if (list && list.parentNode !== document.body) {
           _listOriginalParent = list.parentNode;
           _listOriginalNext = list.nextSibling;
           document.body.appendChild(list);
         }
 
-        // initial style state (pre-animation)
+        // força estilo do painel (vertical)
         list.style.position = 'fixed';
         list.style.height = 'auto';
         list.style.width = '220px';
         list.style.zIndex = '11150';
-        list.style.pointerEvents = 'none'; // disable during initial setup
+        list.style.pointerEvents = 'auto';
         list.style.margin = '0';
-        list.style.transform = 'translateY(-8px) scale(.995)';
-        list.style.opacity = '0';
+        list.style.transform = 'none';
         list.style.boxSizing = 'border-box';
         list.style.display = 'flex';
         list.style.flexDirection = 'column';
@@ -128,106 +121,77 @@
         list.style.gap = '6px';
         list.style.padding = '8px';
 
-        // position below toggle, left-aligned to left edge of viewport (8px), ensure fits
-        const rect = toggle.getBoundingClientRect();
-        const topPos = Math.round(rect.bottom + 8);
-        let leftPos = 8;
-        if (leftPos + 220 > window.innerWidth - 8) leftPos = Math.max(8, window.innerWidth - 220 - 8);
+// ==========================
+// POSICIONAMENTO FORÇADO À ESQUERDA
+// ==========================
+const rect = toggle.getBoundingClientRect();
+const topPos = Math.round(rect.bottom + 8);
 
+// força o menu a sempre abrir na esquerda da tela
+let leftPos = 8; // 8px da borda
+const menuWidth = 220;
 
+// garante que caiba na tela
+if (leftPos + menuWidth > window.innerWidth - 8) {
+  leftPos = window.innerWidth - menuWidth - 8;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        list.style.left = leftPos + 'px';
-        list.style.right = '';
-
-        // request animation frame to allow the browser to apply the initial styles, then transition to visible
-        requestAnimationFrame(() => {
-          // compute height after render, then place top properly
-          setTimeout(()=> {
-            const computedHeight = list.getBoundingClientRect().height || 200;
-            let finalTop = topPos;
-            if (finalTop + computedHeight > window.innerHeight - 8) {
-              finalTop = Math.max(8, window.innerHeight - computedHeight - 8);
-            }
-            list.style.top = finalTop + 'px';
-
-            // enable pointer events and let CSS transitions handle opacity/transform
-            list.style.pointerEvents = 'auto';
-            list.style.opacity = '1';
-            list.style.transform = 'translateY(0) scale(1)';
-            // add a temporal animating marker if needed
-            nav.classList.add('ms-menu--animating');
-            setTimeout(()=> nav.classList.remove('ms-menu--animating'), 400);
-          }, 0);
-        });
+// aplica posição fixa
+list.style.left = leftPos + 'px';
+list.style.right = '';
+        // calcula top após o browser ter medido o conteúdo
+        setTimeout(() => {
+          const computedHeight = list.getBoundingClientRect().height || 200;
+          let finalTop = topPos;
+          if (finalTop + computedHeight > window.innerHeight - 8) {
+            finalTop = Math.max(8, window.innerHeight - computedHeight - 8);
+          }
+          list.style.top = finalTop + 'px';
+        }, 0);
 
         createBackdrop();
 
-        // focus first item at end of animation (small delay)
-        setTimeout(()=>{
-          const first = list.querySelector('a, button');
-          if (first) first.focus();
-        }, 220);
+        // foco
+        const first = list.querySelector('a, button');
+        if (first) first.focus();
       }
 
-
+      // CLOSE: restaura
       function closeMenu(){
-        // remove open class to trigger CSS exit transitions
         nav.classList.remove('ms-menu--open');
         if (toggle) toggle.setAttribute('aria-expanded','false');
 
-        // block pointer events while closing
-        list.style.pointerEvents = 'none';
-        list.style.opacity = '0';
-        list.style.transform = 'translateY(-8px) scale(.995)';
+        if (list) {
+          list.style.position = '';
+          list.style.top = '';
+          list.style.left = '';
+          list.style.right = '';
+          list.style.width = '';
+          list.style.height = '';
+          list.style.zIndex = '';
+          list.style.pointerEvents = '';
+          list.style.margin = '';
+          list.style.transform = '';
+          list.style.boxSizing = '';
+          list.style.display = '';
+          list.style.flexDirection = '';
+          list.style.alignItems = '';
+          list.style.gap = '';
+          list.style.padding = '';
+        }
 
-        // after animation time, cleanup inline styles and restore DOM
-        setTimeout(()=> {
-          if (list) {
-            list.style.position = '';
-            list.style.top = '';
-            list.style.left = '';
-            list.style.right = '';
-            list.style.width = '';
-            list.style.height = '';
-            list.style.zIndex = '';
-            list.style.pointerEvents = '';
-            list.style.margin = '';
-            list.style.transform = '';
-            list.style.boxSizing = '';
-            list.style.display = '';
-            list.style.flexDirection = '';
-            list.style.alignItems = '';
-            list.style.gap = '';
-            list.style.padding = '';
-            list.style.opacity = '';
-          }
+        if (_listOriginalParent) {
+          if (_listOriginalNext) _listOriginalParent.insertBefore(list, _listOriginalNext);
+          else _listOriginalParent.appendChild(list);
+        }
+        _listOriginalParent = null;
+        _listOriginalNext = null;
 
-          if (_listOriginalParent) {
-            if (_listOriginalNext) _listOriginalParent.insertBefore(list, _listOriginalNext);
-            else _listOriginalParent.appendChild(list);
-          }
-          _listOriginalParent = null;
-          _listOriginalNext = null;
-
-          removeBackdrop();
-          if (toggle) toggle.focus();
-        }, 320); // match or slightly exceed CSS transition durations
+        removeBackdrop();
+        if (toggle) toggle.focus();
       }
 
-      // Toggle
+      // Toggle listener
       if (toggle) {
         toggle.addEventListener('click', () => {
           const isOpen = nav.classList.contains('ms-menu--open');
