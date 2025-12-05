@@ -144,3 +144,40 @@
   background:rgba(0,0,0,0.18);
   z-index:1100;
 }
+
+/* ===== ajustes finais para comportamento correto ===== */
+
+/* garante que a marca fique visível mesmo no estado collapsed */
+.ms-menu--collapsed .ms-menu__brand {
+  display: block !important;
+  margin-right: auto; /* empurra o toggle para a direita */
+}
+
+/* marca com link clicável - visual leve */
+.ms-menu__brand a { text-decoration:none; color:inherit; font-weight:700; }
+
+/* backdrop: abaixo do menu (mas cobre o resto da página) */
+.ms-menu-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.18);
+  z-index: 1098; /* abaixo do menu */
+  pointer-events: auto;
+}
+
+/* menu (overlay/drawer) precisa estar acima do backdrop */
+.ms-menu--collapsed.ms-menu--open .ms-menu__list{
+  z-index: 1100; /* acima do backdrop */
+  /* se ainda não tiver position:fixed/absolute, garanta */
+  position: fixed;
+}
+
+/* toggle (botão hamburger) sempre acima do backdrop */
+.ms-menu__toggle{
+  z-index: 1110;
+}
+
+/* proteção extra: garantir que links do menu recebam cliques */
+.ms-menu--collapsed.ms-menu--open .ms-menu__list a {
+  pointer-events: auto;
+}
