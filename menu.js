@@ -1,5 +1,5 @@
 // ===============================
-// menu.js - versão com painel posicionado abaixo do toggle (vertical) 
+// menu.js - ajuste: abrir painel abaixo e à esquerda do toggle, itens verticais
 // ===============================
 
 (function(){
@@ -30,11 +30,8 @@
       container.querySelectorAll("a[href]").forEach(a => {
         const href = a.getAttribute("href").trim();
         if (/^(\/|https?:|mailto:|tel:|#)/i.test(href)) return;
-        try {
-          a.href = new URL(href, menuUrl).pathname;
-        } catch(e) {
-          a.href = basePath + href;
-        }
+        try { a.href = new URL(href, menuUrl).pathname; }
+        catch(e) { a.href = basePath + href; }
       });
 
       const nav = container.querySelector(".ms-menu");
@@ -72,56 +69,44 @@
         brand.appendChild(a);
       }
 
-      // Se não está no index, começa colapsado
       if (!isIndex) nav.classList.add("ms-menu--collapsed");
 
-      // ---------------------------
       // Backdrop helpers
-      // ---------------------------
       function removeBackdrop(){
         const bd = document.querySelector(".ms-menu-backdrop");
         if (bd) bd.remove();
       }
-
       function createBackdrop(){
         removeBackdrop();
         const bd = document.createElement("div");
         bd.className = "ms-menu-backdrop";
-
         document.body.appendChild(bd);
-
         bd.style.position = "fixed";
         bd.style.inset = "0";
         bd.style.background = "rgba(0,0,0,0.18)";
         bd.style.zIndex = "11140";
         bd.style.pointerEvents = "auto";
-
         bd.addEventListener("click", closeMenu);
         return bd;
       }
 
-      // ---------------------------
       // Move list to body when open (avoid stacking contexts)
-      // ---------------------------
       let _listOriginalParent = null;
       let _listOriginalNext = null;
 
-      // ---------------------------
-      // openMenu / closeMenu
-      // ---------------------------
-
+      // OPEN: abaixo do toggle e alinhado à esquerda do toggle (vertical)
       function openMenu(){
         nav.classList.add('ms-menu--open');
         if (toggle) toggle.setAttribute('aria-expanded','true');
 
-        // Mover lista para o body (se necessário)
+        // move lista para body se necessário
         if (list && list.parentNode !== document.body) {
           _listOriginalParent = list.parentNode;
           _listOriginalNext = list.nextSibling;
           document.body.appendChild(list);
         }
 
-        // base de estilos do painel
+        // força estilo do painel (vertical)
         list.style.position = 'fixed';
         list.style.height = 'auto';
         list.style.width = '220px';
@@ -130,27 +115,23 @@
         list.style.margin = '0';
         list.style.transform = 'none';
         list.style.boxSizing = 'border-box';
+        list.style.display = 'flex';
+        list.style.flexDirection = 'column';
+        list.style.alignItems = 'flex-start';
+        list.style.gap = '6px';
+        list.style.padding = '8px';
 
-        // calcula onde abrir (abaixo do toggle)
+        // posicionamento: abaixo do toggle, alinhado ao left do toggle
         const rect = toggle.getBoundingClientRect();
-        const center = window.innerWidth / 2;
-        const openLeft = rect.left < center;
-
         const topPos = Math.round(rect.bottom + 8); // 8px gap
-        // posicionamento horizontal: tenta manter dentro da viewport
-        if (openLeft) {
-          let leftPos = Math.max(8, rect.left);
-          if (leftPos + 220 > window.innerWidth - 8) leftPos = Math.max(8, window.innerWidth - 220 - 8);
-          list.style.left = leftPos + 'px';
-          list.style.right = '';
-        } else {
-          let rightGap = Math.max(8, window.innerWidth - rect.right);
-          if (rightGap + 220 > window.innerWidth - 8) rightGap = 8;
-          list.style.right = rightGap + 'px';
-          list.style.left = '';
-        }
+        let leftPos = Math.max(8, rect.left); // evita ficar colado na borda
+        // garante que caiba na viewport
+        if (leftPos + 220 > window.innerWidth - 8) leftPos = Math.max(8, window.innerWidth - 220 - 8);
 
-        // aguarda browser calcular altura do conteúdo
+        // aplica posição
+        list.style.left = leftPos + 'px';
+        list.style.right = '';
+        // calcula top após o browser ter medido o conteúdo
         setTimeout(() => {
           const computedHeight = list.getBoundingClientRect().height || 200;
           let finalTop = topPos;
@@ -162,16 +143,16 @@
 
         createBackdrop();
 
-        // foco no primeiro item
+        // foco
         const first = list.querySelector('a, button');
         if (first) first.focus();
       }
 
+      // CLOSE: restaura
       function closeMenu(){
         nav.classList.remove('ms-menu--open');
         if (toggle) toggle.setAttribute('aria-expanded','false');
 
-        // limpa estilos inline
         if (list) {
           list.style.position = '';
           list.style.top = '';
@@ -184,14 +165,17 @@
           list.style.margin = '';
           list.style.transform = '';
           list.style.boxSizing = '';
+          list.style.display = '';
+          list.style.flexDirection = '';
+          list.style.alignItems = '';
+          list.style.gap = '';
+          list.style.padding = '';
         }
 
-        // restaurar lista para local original
         if (_listOriginalParent) {
           if (_listOriginalNext) _listOriginalParent.insertBefore(list, _listOriginalNext);
           else _listOriginalParent.appendChild(list);
         }
-
         _listOriginalParent = null;
         _listOriginalNext = null;
 
@@ -199,7 +183,7 @@
         if (toggle) toggle.focus();
       }
 
-      // Toggle
+      // Toggle listener
       if (toggle) {
         toggle.addEventListener('click', () => {
           const isOpen = nav.classList.contains('ms-menu--open');
@@ -222,7 +206,7 @@
         );
       }
 
-      // Limpeza paliativa de text-nodes curtos (evita caracteres soltos)
+      // limpeza paliativa de text-nodes curtos
       document.querySelectorAll('*').forEach(el=>{
         [...el.childNodes].forEach(n=>{
           if(n.nodeType===3){
