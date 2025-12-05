@@ -121,12 +121,25 @@
         list.style.gap = '6px';
         list.style.padding = '8px';
 
-        // posicionamento: abaixo do toggle, alinhado ao left do toggle
-        const rect = toggle.getBoundingClientRect();
-        const topPos = Math.round(rect.bottom + 8); // 8px gap
-        let leftPos = Math.max(8, rect.left); // evita ficar colado na borda
-        // garante que caiba na viewport
-        if (leftPos + 220 > window.innerWidth - 8) leftPos = Math.max(8, window.innerWidth - 220 - 8);
+// ==========================
+// POSICIONAMENTO FORÇADO À ESQUERDA
+// ==========================
+const rect = toggle.getBoundingClientRect();
+const topPos = Math.round(rect.bottom + 8);
+
+// força o menu a sempre abrir na esquerda da tela
+let leftPos = 8; // 8px da borda
+const menuWidth = 220;
+
+// garante que caiba na tela
+if (leftPos + menuWidth > window.innerWidth - 8) {
+  leftPos = window.innerWidth - menuWidth - 8;
+}
+
+// aplica posição fixa
+list.style.left = leftPos + 'px';
+list.style.right = '';
+
 
         // aplica posição
         list.style.left = leftPos + 'px';
