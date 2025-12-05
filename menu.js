@@ -1,27 +1,20 @@
-// menu.js - versão robusta completa
+// menu.js - versão ajustada: backdrop no body + menu overlay fixado para evitar bloqueio de cliques
 (function(){
-  // identifica o <script> que carregou este arquivo
   const script = document.currentScript || (function(){
     const s = document.getElementsByTagName('script');
     return s[s.length - 1];
   })();
 
-  // base URL onde este script está hospedado (ex: https://.../Mestre-Estelar/menu.js)
   const scriptUrl = new URL(script.src, location.href);
-  // basePath termina com '/'
   const basePath = scriptUrl.pathname.replace(/\/[^\/]*$/, '/');
-
-  // URL absoluta do menu.html relativo ao script
   const menuUrl = new URL('menu.html', scriptUrl).href;
 
-  // busca e injeta
   fetch(menuUrl)
     .then(res => {
       if (!res.ok) throw new Error('HTTP ' + res.status);
       return res.text();
     })
     .then(html => {
-      // injeta no container (cria se necessário)
       let container = document.getElementById('menu-container');
       if (!container) {
         container = document.createElement('div');
@@ -30,22 +23,20 @@
       }
       container.innerHTML = html;
 
-      // Normaliza links do menu (faz href absolutos a partir de menu.html)
+      // normaliza links
       const anchors = container.querySelectorAll('a[href]');
       anchors.forEach(a => {
         const href = a.getAttribute('href').trim();
-        // não mexe em absolutos, anchors, mailto, tel
         if (/^(\/|https?:|#|mailto:|tel:)/i.test(href)) return;
         try {
-          const resolved = new URL(href, menuUrl).pathname; // ex: /Mestre-Estelar/index.html
+          const resolved = new URL(href, menuUrl).pathname;
           a.setAttribute('href', resolved);
         } catch (e) {
-          // fallback simples relativo ao basePath
           a.setAttribute('href', basePath + href);
         }
       });
 
-      // -- comportamento do menu (colapsar/abrir/etc) --
+      // comportamento do menu
       const nav = container.querySelector('.ms-menu');
       if (!nav) return;
 
@@ -53,15 +44,13 @@
       const list = nav.querySelector('.ms-menu__list');
       const brand = nav.querySelector('.ms-menu__brand');
 
-      // detecta se estamos na página index (normaliza com/sem index.html)
       const pagePath = location.pathname.replace(/\/index\.html$/, '/');
       const menuIndexPath = new URL('index.html', scriptUrl).pathname.replace(/\/index\.html$/, '/');
       const isIndex = (pagePath === menuIndexPath || pagePath === '/' || pagePath === menuIndexPath.replace(/\/$/, ''));
 
-      // se for página interna, colapsa por padrão (classe)
       if (!isIndex) nav.classList.add('ms-menu--collapsed');
 
-      // 1) ocultar o item "Início" na própria index
+      // ocultar "Início" quando estamos no index
       if (isIndex && list) {
         const anchorsAll = nav.querySelectorAll('a[href]');
         anchorsAll.forEach(a => {
@@ -76,9 +65,8 @@
         });
       }
 
-      // 2) garantir marca visível e linkada para home
+      // garantir marca com link para home
       if (brand) {
-        // se houver <a> dentro, atualiza seu href; se não, cria
         try {
           const homeHref = new URL('index.html', scriptUrl).pathname;
           const existing = brand.querySelector('a');
@@ -94,40 +82,75 @@
         } catch(e){}
       }
 
-      // backdrop helpers
+      // backdrop helpers - agora inserimos no body (melhor para stacking)
       function removeBackdrop(){
         const bd = document.querySelector('.ms-menu-backdrop');
-        if (bd) bd.remove();
+        if(bd) bd.remove();
       }
       function createBackdrop(){
         removeBackdrop();
         const bd = document.createElement('div');
         bd.className = 'ms-menu-backdrop';
-        // inserimos antes do container (para evitar stacking issues)
-        const root = document.getElementById('menu-container') || document.body;
-        root.parentNode.insertBefore(bd, root);
+        // inserir no body (evita stacking issues)
+        document.body.appendChild(bd);
+
+        // estilos inline mínimos para consistência entre browsers
+        bd.style.position = 'fixed';
+        bd.style.inset = '0';
+        bd.style.background = 'rgba(0,0,0,0.18)';
+        bd.style.zIndex = '11140';
+        bd.style.pointerEvents = 'auto';
+
         bd.addEventListener('click', closeMenu);
         return bd;
       }
 
+      // open/close: além de classes, garantimos position/z-index do list (proteção contra stacking)
       function openMenu(){
         nav.classList.add('ms-menu--open');
-        if (toggle) toggle.setAttribute('aria-expanded', 'true');
-        createBackdrop();
+        if (toggle) toggle.setAttribute('aria-expanded','true');
+
+        // garantir que o menu overlay esteja acima do backdrop e fixado
         if (list) {
-          const first = list.querySelector('a');
+          list.style.position = 'fixed';
+          list.style.top = '0';
+          list.style.right = '0';
+          list.style.width = '300px';
+          list.style.height = '100vh';
+          list.style.zIndex = '11150';
+          list.style.pointerEvents = 'auto';
+          list.style.transform = 'none';
+        }
+
+        createBackdrop();
+
+        if (list) {
+          const first = list.querySelector('a, button');
           if (first) first.focus();
         }
       }
 
       function closeMenu(){
         nav.classList.remove('ms-menu--open');
-        if (toggle) toggle.setAttribute('aria-expanded', 'false');
+        if (toggle) toggle.setAttribute('aria-expanded','false');
+
+        // limpa estilos inline aplicados ao abrir
+        if (list) {
+          list.style.position = '';
+          list.style.top = '';
+          list.style.right = '';
+          list.style.width = '';
+          list.style.height = '';
+          list.style.zIndex = '';
+          list.style.pointerEvents = '';
+          list.style.transform = '';
+        }
+
         removeBackdrop();
+
         if (toggle) toggle.focus();
       }
 
-      // toggle click
       if (toggle) {
         toggle.addEventListener('click', function(e){
           const isOpen = nav.classList.toggle('ms-menu--open');
@@ -136,20 +159,17 @@
         });
       }
 
-      // fechar com Esc
       document.addEventListener('keydown', function(e){
         if (e.key === 'Escape' && nav.classList.contains('ms-menu--open')) closeMenu();
       });
 
-      // fechar ao clicar num link do menu (para mobile/overlay)
       if (list) {
         list.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
           if (nav.classList.contains('ms-menu--open')) closeMenu();
         }));
       }
 
-      // Remove nós de texto curtos (paliativo: evitar caracteres soltos no DOM)
-      // (essa limpeza ajuda caso algum script injete text-nodes isolados)
+      // limpeza paliativa de text-nodes curtos (evita caracteres soltos)
       document.querySelectorAll('*').forEach(el=>{
         [...el.childNodes].forEach(n=>{
           if(n.nodeType===3){
