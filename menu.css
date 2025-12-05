@@ -224,3 +224,84 @@
   pointer-events: auto !important;
   will-change: transform;
 }
+
+/* ---------- animações do painel + backdrop ---------- */
+
+/* estado base do painel quando movido para body */
+.ms-menu__list {
+  transition: transform 240ms cubic-bezier(.2,.9,.3,1), opacity 200ms ease;
+  transform-origin: top left;
+  opacity: 0;
+  transform: translateY(-8px) scale(.995);
+  pointer-events: none; /* evita clique enquanto fechado */
+  will-change: transform, opacity;
+}
+
+/* quando aberto (classe em <nav>) o painel aparece */
+.ms-menu--open .ms-menu__list {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* backdrop suave */
+.ms-menu-backdrop {
+  transition: background 220ms ease, opacity 220ms ease;
+  opacity: 0;
+  background: rgba(0,0,0,0.0); /* começamos transparente */
+  will-change: opacity;
+}
+
+/* backdrop visível (quando aberto) */
+.ms-menu--open ~ .ms-menu-backdrop,
+.ms-menu-backdrop[style] { /* fallback para quem injeta inline styles */
+  opacity: 1;
+  background: rgba(0,0,0,0.06) !important;
+}
+
+/* itens: animação em cascata (stagger) */
+.ms-menu__list li {
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: transform 220ms ease, opacity 200ms ease;
+}
+
+/* quando aberto, itens vão aparecendo em cascata */
+.ms-menu--open .ms-menu__list li {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* aplica delay de aparecimento por posição */
+.ms-menu--open .ms-menu__list li:nth-child(1)  { transition-delay: 0ms; }
+.ms-menu--open .ms-menu__list li:nth-child(2)  { transition-delay: 30ms; }
+.ms-menu--open .ms-menu__list li:nth-child(3)  { transition-delay: 60ms; }
+.ms-menu--open .ms-menu__list li:nth-child(4)  { transition-delay: 90ms; }
+.ms-menu--open .ms-menu__list li:nth-child(5)  { transition-delay: 120ms; }
+.ms-menu--open .ms-menu__list li:nth-child(6)  { transition-delay: 150ms; }
+
+/* hover/foco com "luz" */
+.ms-menu__list a {
+  transition: background .18s ease, color .12s ease;
+}
+.ms-menu__list a:hover,
+.ms-menu__list a:focus {
+  background: rgba(255,255,255,0.06);
+  outline: none;
+}
+
+/* respeitar preferências de redução de movimento */
+@media (prefers-reduced-motion: reduce) {
+  .ms-menu__list,
+  .ms-menu__list li,
+  .ms-menu-backdrop {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* ajuste final: garantir pointer-events no overlay e z-index coerente */
+.ms-menu-backdrop { z-index: 11140 !important; pointer-events: auto !important; }
+.ms-menu__list { z-index: 11150 !important; }
+
