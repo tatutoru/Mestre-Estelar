@@ -220,3 +220,7 @@ h1, h2, h3 { color: #333; }
 /* garante que o .ro-tooltip continue com seu comportamento visual */
 .item .ro-tooltip { display: inline-block; width: 100%; height: 100%; }
 
+/* Manter visuais previsíveis para abas (opcional) */
+.equip-tabs .tab { cursor: pointer; }
+.equip-tabs .tab.active { outline: none; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.05); }
+
