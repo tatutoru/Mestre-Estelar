@@ -181,3 +181,11 @@ body > .ms-menu__list li { opacity:0; transform:translateY(-6px); transition: tr
 
 /* small cosmetic: prevent unexpected inherited display:none */
 body > .ms-menu__list[style] { display:block !important; }
+
+body > .ms-menu__list a,
+body > .ms-menu__list a:link,
+body > .ms-menu__list a:visited {
+  color: #111 !important;
+  font-weight: 500;
+}
+
