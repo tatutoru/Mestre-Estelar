@@ -1,60 +1,58 @@
-// menu.js - busca menu.html relativo a si mesmo e ajusta links relativos
-(function() {
-  const script = document.currentScript || (function(){
-    const scripts = document.getElementsByTagName('script');
-    return scripts[scripts.length - 1];
-  })();
+// menu.js - busca menu.html relativo a si mesmo, injeta, normaliza links e aplica comportamento
+const isIndex = (pagePath === menuIndexPath || pagePath === '/' || pagePath === menuIndexPath.replace(/\/$/, ''));
 
-  console.log('menu.js loaded from:', script.src);
 
-  // base onde o menu.js está (ex: /Mestre-Estelar/ )
-  const scriptUrl = new URL(script.src, location.href);
-  const basePath = scriptUrl.pathname.replace(/\/[^\/]*$/, '/'); // termina com '/'
+// Se não for index, adiciona classe collapsed
+if(!isIndex){ nav.classList.add('ms-menu--collapsed'); }
 
-  const menuUrl = new URL('menu.html', scriptUrl).href;
-  console.log('fetching menu from:', menuUrl);
 
-  fetch(menuUrl)
-    .then(r => {
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      return r.text();
-    })
-    .then(html => {
-      let container = document.getElementById('menu-container');
-      if (!container) {
-        container = document.createElement('div');
-        container.id = 'menu-container';
-        document.body.insertBefore(container, document.body.firstChild);
-      }
-      container.innerHTML = html;
+// Toggle behavior
+const toggle = nav.querySelector('.ms-menu__toggle');
+const list = nav.querySelector('.ms-menu__list');
 
-      // --- Ajuste dos links relativos dentro do menu ---
-      // Seleciona todos os links dentro do container
-      const anchors = container.querySelectorAll('a[href]');
 
-      anchors.forEach(a => {
-        const href = a.getAttribute('href').trim();
+function openMenu(){
+nav.classList.add('ms-menu--open');
+toggle.setAttribute('aria-expanded','true');
+// add backdrop
+const backdrop = document.createElement('div');
+backdrop.className = 'ms-menu-backdrop';
+backdrop.style.position = 'fixed'; backdrop.style.inset = '0'; backdrop.style.background = 'rgba(0,0,0,0.18)'; backdrop.style.zIndex = '1100';
+document.body.appendChild(backdrop);
+backdrop.addEventListener('click', closeMenu);
+// trap focus on first link
+const firstLink = list.querySelector('a'); if(firstLink) firstLink.focus();
+}
 
-        // ignora casos absolutos e especiais:
-        // começa com '/', 'http:', 'https:', '#', 'mailto:', 'tel:'
-        if (/^(\/|https?:|#|mailto:|tel:)/i.test(href)) {
-          return; // já absoluto ou especial — não mexer
-        }
 
-        // Caso o href comece com './' ou '../' — resolvemos relativo ao menu.html original
-        // new URL(href, menuUrl) resolve corretamente ../ e ./
-        try {
-          const resolved = new URL(href, menuUrl).pathname;
-          // Queremos que o link aponte para a partir do basePath (por exemplo /Mestre-Estelar/index.html)
-          // resolved já é o caminho absoluto do servidor (começa com '/')
-          a.setAttribute('href', resolved);
-        } catch (e) {
-          // fallback simples: prefixa com basePath
-          a.setAttribute('href', basePath + href);
-        }
-      });
+function closeMenu(){
+nav.classList.remove('ms-menu--open');
+toggle.setAttribute('aria-expanded','false');
+const bd = document.querySelector('.ms-menu-backdrop'); if(bd) bd.remove();
+toggle.focus();
+}
 
-      console.log('menu injected and links normalized.');
-    })
-    .catch(err => console.error("Erro ao carregar o menu:", err));
+
+if(toggle){
+toggle.addEventListener('click', e => {
+const isOpen = nav.classList.toggle('ms-menu--open');
+toggle.setAttribute('aria-expanded', String(isOpen));
+if(isOpen) openMenu(); else closeMenu();
+});
+}
+
+
+// close on Esc
+document.addEventListener('keydown', e => { if(e.key === 'Escape') { if(nav.classList.contains('ms-menu--open')) closeMenu(); } });
+
+
+// close when clicking a link (on mobile/overlay)
+list.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { if(nav.classList.contains('ms-menu--open')) closeMenu(); }));
+
+
+// acessibilidade: se o menu estiver fixo no topo e for aberto, rolar o foco para lá
+
+
+})
+.catch(err => console.error('Erro ao carregar menu:', err));
 })();
