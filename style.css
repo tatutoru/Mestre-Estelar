@@ -219,3 +219,7 @@ h1, h2, h3 { color: #333; }
 
 /* garante que o .ro-tooltip continue com seu comportamento visual */
 .item .ro-tooltip { display: inline-block; width: 100%; height: 100%; }
+
+/* --- Tabs: controla visibilidade dos containers --- */
+.tab-container { display: none; }
+.tab-container.active { display: block; }
