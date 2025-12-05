@@ -214,3 +214,24 @@ body > .ms-menu__list a::after {
   display: none !important;
 }
 
+body > .ms-menu__list a,
+body > .ms-menu__list a:link,
+body > .ms-menu__list a:visited {
+  color: #111 !important;
+  font-weight: 500 !important;
+  font-size: 15px !important;
+  line-height: 1.4 !important;
+
+  /* zera qualquer truque de esconder texto */
+  text-indent: 0 !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+
+  /* 🔥 aqui é o pulo do gato para anular gradiente em links */
+  -webkit-text-fill-color: #111 !important;
+  -webkit-background-clip: border-box !important;
+  background-image: none !important;
+  background-clip: border-box !important;
+}
