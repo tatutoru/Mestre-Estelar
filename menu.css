@@ -217,3 +217,9 @@
 .ms-menu--collapsed.ms-menu--open .ms-menu__list button {
   pointer-events: auto !important;
 }
+
+/* pequenas proteções extras */
+.ms-menu--collapsed.ms-menu--open .ms-menu__list {
+  pointer-events: auto !important;
+  will-change: transform;
+}
