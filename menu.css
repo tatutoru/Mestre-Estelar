@@ -1,68 +1,146 @@
-/* menu.css - estilos para menu principal, comportamento collapsed e mobile */
+/* menu.css - versão substituta, específica e com reset local para o menu */
+
+/* container do menu (injetado) */
+#menu-container { display:block; }
+
+/* base do nav */
 .ms-menu{
-display:flex;
-align-items:center;
-gap:1rem;
-padding:0.6rem 1rem;
-background: rgba(255,255,255,0.95);
-box-shadow: 0 1px 6px rgba(0,0,0,0.06);
-position:relative;
-z-index:1000;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  padding:0.6rem 1rem;
+  background: #ffffff;
+  border-bottom:1px solid rgba(0,0,0,0.06);
+  position:relative;
+  z-index:1000;
+  box-sizing:border-box;
 }
-.ms-menu__brand a{ font-weight:700; text-decoration:none; color:inherit; }
 
+/* marca */
+.ms-menu__brand a{
+  font-weight:700;
+  text-decoration:none;
+  color: #222;
+  font-size:1.05rem;
+  line-height:1;
+}
 
+/* lista: reset específico apenas para o menu */
 .ms-menu__list{
-list-style:none; margin:0; padding:0; display:flex; gap:1rem; align-items:center;
-}
-.ms-menu__list a{ text-decoration:none; padding:0.4rem 0.6rem; border-radius:6px; display:inline-block }
-.ms-menu__list a:focus, .ms-menu__list a:hover{ outline:2px solid rgba(0,0,0,0.08); }
-
-
-/* Toggle (hamburger) */
-.ms-menu__toggle{ background:transparent; border:0; display:none; padding:0.4rem; cursor:pointer }
-.ms-menu__hamburger{ width:22px; height:2px; background:#222; display:block; position:relative }
-.ms-menu__hamburger::before, .ms-menu__hamburger::after{ content:""; position:absolute; left:0; right:0; height:2px; background:#222 }
-.ms-menu__hamburger::before{ top:-6px }
-.ms-menu__hamburger::after{ bottom:-6px }
-
-
-/* ---------------------------- COLLAPSED (páginas internas) --------------------------- */
-/* estila o container quando o menu estiver colapsado */
-.ms-menu--collapsed{
-justify-content:flex-end; /* empurra botão para direita */
-padding-right:1rem;
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:flex;
+  gap:1rem;
+  align-items:center;
 }
 
-
-/* quando colapsado, esconde a lista e mostra apenas o toggle */
-.ms-menu--collapsed .ms-menu__list{ display:none }
-.ms-menu--collapsed .ms-menu__brand{ display:none }
-.ms-menu--collapsed .ms-menu__toggle{ display:inline-block }
-
-
-/* estado aberto (após clicar no toggle) - exibe o menu como overlay em mobile ou dropdown em desktop */
-.ms-menu--collapsed.ms-menu--open{
-align-items:flex-start;
+/* links */
+.ms-menu__list li{ margin:0; padding:0; }
+.ms-menu__list a{
+  text-decoration:none;
+  padding:0.45rem 0.7rem;
+  border-radius:6px;
+  display:inline-block;
+  color:#1a1a1a;
+  font-weight:500;
 }
+.ms-menu__list a:hover,
+.ms-menu__list a:focus{
+  background: rgba(0,0,0,0.04);
+  outline: none;
+}
+
+/* hamburger toggle (escondido por padrão) */
+.ms-menu__toggle{
+  background:transparent;
+  border:0;
+  display:none;
+  padding:0.35rem;
+  cursor:pointer;
+}
+.ms-menu__hamburger{
+  width:22px;
+  height:2px;
+  background:#222;
+  display:block;
+  position:relative;
+}
+.ms-menu__hamburger::before,
+.ms-menu__hamburger::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  height:2px;
+  background:#222;
+}
+.ms-menu__hamburger::before{ top:-6px; }
+.ms-menu__hamburger::after{ bottom:-6px; }
+
+/* ---- comportamento colapsado (internas) ---- */
+.ms-menu--collapsed{ justify-content:flex-end; }
+.ms-menu--collapsed .ms-menu__list{ display:none; }
+.ms-menu--collapsed .ms-menu__brand{ display:none; }
+.ms-menu--collapsed .ms-menu__toggle{ display:inline-block; }
+
+/* quando aberto (overlay em mobile / drawer) */
 .ms-menu--collapsed.ms-menu--open .ms-menu__list{
-display:flex; flex-direction:column; position:fixed; top:0; right:0; height:100vh; width:280px;
-background:rgba(255,255,255,0.98); box-shadow:-6px 0 20px rgba(0,0,0,0.12); padding:2rem 1rem; gap:1rem;
-}
-.ms-menu--collapsed.ms-menu--open .ms-menu__toggle{ position:fixed; right:16px; top:16px; z-index:1101 }
-
-
-/* quando aberto, adicione um backdrop clicável (usamos pseudo-element no body com JS para inserir) */
-
-
-/* ---------------------------- RESPONSIVE --------------------------- */
-@media (max-width: 720px){
-.ms-menu{ padding:0.4rem 0.6rem }
-.ms-menu__list{ gap:0.6rem }
-.ms-menu--open .ms-menu__list{ width:80vw }
-.ms-menu__toggle{ display:inline-block }
-.ms-menu__brand{ display:block }
+  display:flex;
+  flex-direction:column;
+  position:fixed;
+  top:0;
+  right:0;
+  height:100vh;
+  width:300px;
+  padding:2rem 1rem;
+  gap:1rem;
+  background:#fff;
+  box-shadow:-8px 0 30px rgba(0,0,0,0.12);
+  z-index:1101;
 }
 
+/* toggle fixo quando aberto */
+.ms-menu--collapsed.ms-menu--open .ms-menu__toggle{
+  position:fixed;
+  top:16px;
+  right:16px;
+  z-index:1110;
+}
 
+/* desktop: quando aberto, mostra dropdown em vez de full-height */
+@media (min-width:721px){
+  .ms-menu--collapsed.ms-menu--open .ms-menu__list{
+    position:absolute;
+    top:calc(100% + 6px);
+    right:1rem;
+    width:260px;
+    height:auto;
+    border-radius:8px;
+    padding:0.6rem;
+    flex-direction:column;
+    box-shadow:0 8px 24px rgba(0,0,0,0.08);
+  }
+}
+
+/* mobile: sempre mostra o toggle e torna a marca visível */
+@media (max-width:720px){
+  .ms-menu__toggle{ display:inline-block; }
+  .ms-menu__brand{ display:block; }
+  .ms-menu{ padding:0.6rem; }
+  .ms-menu__list{ gap:0.6rem; }
+}
+
+/* pequenas proteções caso seu CSS global zere estilos */
+#menu-container .ms-menu__list,
+#menu-container .ms-menu__brand,
+#menu-container .ms-menu__toggle { box-sizing:border-box; }
+
+/* backdrop - caso queira um estilo permanente caso o script não injetar inline */
+.ms-menu-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.18);
+  z-index:1100;
 }
