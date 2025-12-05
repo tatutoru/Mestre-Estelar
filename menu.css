@@ -223,3 +223,60 @@
   pointer-events: auto !important;
   will-change: transform;
 }
+
+/* ===== estilo do painel quando aberto (vertical, claro, com "luz") ===== */
+.ms-menu--collapsed.ms-menu--open .ms-menu__list {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 0.25rem !important;
+  padding: 0.5rem !important;
+  width: 220px !important;       /* largura padrão do painel */
+  max-width: calc(100vw - 32px) !important;
+  height: auto !important;       /* não ocupar 100vh — será do tamanho do conteúdo */
+  overflow: visible !important;
+  background: rgba(255,255,255,0.96) !important; /* luz suave */
+  color: #222 !important;
+  border-radius: 10px !important;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15) !important;
+  padding-top: 0.6rem !important;
+  padding-bottom: 0.6rem !important;
+  top: auto !important;  /* controlado pelo JS */
+  left: auto !important;
+  right: auto !important;
+}
+
+/* cada item do menu vira um bloco vertical */
+.ms-menu--collapsed.ms-menu--open .ms-menu__list li {
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+/* link do menu */
+.ms-menu--collapsed.ms-menu--open .ms-menu__list a {
+  display: block !important;
+  width: 100% !important;
+  padding: 0.6rem 0.9rem !important;
+  text-decoration: none !important;
+  color: #222 !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  transition: background .15s ease, color .15s ease;
+  font-weight:500;
+}
+
+/* hover / foco: luz maior */
+.ms-menu--collapsed.ms-menu--open .ms-menu__list a:hover,
+.ms-menu--collapsed.ms-menu--open .ms-menu__list a:focus {
+  background: rgba(0,0,0,0.06) !important;
+  color: #000 !important;
+  outline: none;
+}
+
+/* destaque do primeiro item (Início) opcional */
+.ms-menu--collapsed.ms-menu--open .ms-menu__list li:first-child a {
+  margin-top: 0.15rem;
+}
+
+/* garante que o botão toggle continue acima */
+.ms-menu__toggle { z-index: 11160 !important; }
