@@ -221,7 +221,14 @@ h1, h2, h3 { color: #333; }
 .item .ro-tooltip { display: inline-block; width: 100%; height: 100%; }
 
 /* Manter visuais previsíveis para abas (opcional) */
-.equip-tabs .tab { cursor: pointer; }
+.equip-tabs .tab {
+    background: #dce6f5;
+    border: 1px solid #4a6ea9;
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
 .equip-tabs .tab.active { outline: none; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.05); }
 
 /* Barra de topo estilo Ragnarok */
@@ -240,35 +247,12 @@ h1, h2, h3 { color: #333; }
 
     border: 1px solid #4a6ea9;
     border-bottom: none;
-
     border-radius: 6px 6px 0 0;
 
-    /* efeito de brilho suave */
+    /* brilho */
     box-shadow:
         inset 0 1px 0 #ffffffaa,
         inset 0 -1px 0 #00000022;
-}
 
-.equip-tabs {
-    background: #eef3fa;
-    border: 1px solid #4a6ea9;
-    border-top: none;
-    border-radius: 0 0 6px 6px;
-    padding: 8px;
-}
-.equip-tabs .tab {
-    background: #dce6f5;
-    border: 1px solid #4a6ea9;
-    padding: 6px 14px;
-    border-radius: 4px;
-    margin-right: 8px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.equip-tabs .tab.active {
-    background: #ffffff;
-    border-bottom: 1px solid #ffffff;
-    position: relative;
-    top: 1px;
+    margin-bottom: 0; /* gruda na aba */
 }
