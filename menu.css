@@ -189,3 +189,28 @@ body > .ms-menu__list a:visited {
   font-weight: 500;
 }
 
+/* ===== correção forte: garantir que o texto do menu fique visível ===== */
+
+body > .ms-menu__list a,
+body > .ms-menu__list a:link,
+body > .ms-menu__list a:visited {
+  color: #111 !important;
+  font-weight: 500 !important;
+  font-size: 15px !important;
+  line-height: 1.4 !important;
+
+  /* zera qualquer truque de esconder texto */
+  text-indent: 0 !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+
+/* se tiver algum pseudo-elemento cobrindo o texto, some com ele */
+body > .ms-menu__list a::before,
+body > .ms-menu__list a::after {
+  content: '' !important;
+  display: none !important;
+}
+
