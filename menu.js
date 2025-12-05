@@ -1,5 +1,5 @@
 // ===============================
-// menu.js - versão final, completa e funcional
+// menu.js - versão com painel posicionado abaixo do toggle (vertical) 
 // ===============================
 
 (function(){
@@ -76,9 +76,8 @@
       if (!isIndex) nav.classList.add("ms-menu--collapsed");
 
       // ---------------------------
-      // Backdrop
+      // Backdrop helpers
       // ---------------------------
-
       function removeBackdrop(){
         const bd = document.querySelector(".ms-menu-backdrop");
         if (bd) bd.remove();
@@ -102,75 +101,95 @@
       }
 
       // ---------------------------
-      // Mover lista para body ao abrir
+      // Move list to body when open (avoid stacking contexts)
       // ---------------------------
-
       let _listOriginalParent = null;
       let _listOriginalNext = null;
 
-      function openMenu(){
-        nav.classList.add("ms-menu--open");
-        if (toggle) toggle.setAttribute("aria-expanded","true");
+      // ---------------------------
+      // openMenu / closeMenu
+      // ---------------------------
 
-        // Mover lista para o body (ELIMINA stacking context)
+      function openMenu(){
+        nav.classList.add('ms-menu--open');
+        if (toggle) toggle.setAttribute('aria-expanded','true');
+
+        // Mover lista para o body (se necessário)
         if (list && list.parentNode !== document.body) {
           _listOriginalParent = list.parentNode;
           _listOriginalNext = list.nextSibling;
           document.body.appendChild(list);
         }
 
-        // Forçar estilo do painel
-        list.style.position = "fixed";
-        list.style.top = "0";
-        list.style.height = "100vh";
-        list.style.width = "300px";
-        list.style.zIndex = "11150";
-        list.style.pointerEvents = "auto";
-        list.style.margin = "0";
-        list.style.transform = "none";
+        // base de estilos do painel
+        list.style.position = 'fixed';
+        list.style.height = 'auto';
+        list.style.width = '220px';
+        list.style.zIndex = '11150';
+        list.style.pointerEvents = 'auto';
+        list.style.margin = '0';
+        list.style.transform = 'none';
+        list.style.boxSizing = 'border-box';
 
-        // Define lado baseado no toggle
+        // calcula onde abrir (abaixo do toggle)
         const rect = toggle.getBoundingClientRect();
         const center = window.innerWidth / 2;
         const openLeft = rect.left < center;
 
+        const topPos = Math.round(rect.bottom + 8); // 8px gap
+        // posicionamento horizontal: tenta manter dentro da viewport
         if (openLeft) {
-          list.style.left = "0";
-          list.style.right = "";
+          let leftPos = Math.max(8, rect.left);
+          if (leftPos + 220 > window.innerWidth - 8) leftPos = Math.max(8, window.innerWidth - 220 - 8);
+          list.style.left = leftPos + 'px';
+          list.style.right = '';
         } else {
-          list.style.right = "0";
-          list.style.left = "";
+          let rightGap = Math.max(8, window.innerWidth - rect.right);
+          if (rightGap + 220 > window.innerWidth - 8) rightGap = 8;
+          list.style.right = rightGap + 'px';
+          list.style.left = '';
         }
+
+        // aguarda browser calcular altura do conteúdo
+        setTimeout(() => {
+          const computedHeight = list.getBoundingClientRect().height || 200;
+          let finalTop = topPos;
+          if (finalTop + computedHeight > window.innerHeight - 8) {
+            finalTop = Math.max(8, window.innerHeight - computedHeight - 8);
+          }
+          list.style.top = finalTop + 'px';
+        }, 0);
 
         createBackdrop();
 
-        // Foco no primeiro item
-        const first = list.querySelector("a, button");
+        // foco no primeiro item
+        const first = list.querySelector('a, button');
         if (first) first.focus();
       }
 
       function closeMenu(){
-        nav.classList.remove("ms-menu--open");
-        if (toggle) toggle.setAttribute("aria-expanded","false");
+        nav.classList.remove('ms-menu--open');
+        if (toggle) toggle.setAttribute('aria-expanded','false');
 
-        // Limpa estilos
-        list.style.position = "";
-        list.style.top = "";
-        list.style.left = "";
-        list.style.right = "";
-        list.style.width = "";
-        list.style.height = "";
-        list.style.zIndex = "";
-        list.style.pointerEvents = "";
-        list.style.margin = "";
-        list.style.transform = "";
+        // limpa estilos inline
+        if (list) {
+          list.style.position = '';
+          list.style.top = '';
+          list.style.left = '';
+          list.style.right = '';
+          list.style.width = '';
+          list.style.height = '';
+          list.style.zIndex = '';
+          list.style.pointerEvents = '';
+          list.style.margin = '';
+          list.style.transform = '';
+          list.style.boxSizing = '';
+        }
 
-        // Restaurar lista ao lugar original
+        // restaurar lista para local original
         if (_listOriginalParent) {
-          if (_listOriginalNext)
-            _listOriginalParent.insertBefore(list, _listOriginalNext);
-          else
-            _listOriginalParent.appendChild(list);
+          if (_listOriginalNext) _listOriginalParent.insertBefore(list, _listOriginalNext);
+          else _listOriginalParent.appendChild(list);
         }
 
         _listOriginalParent = null;
@@ -182,27 +201,38 @@
 
       // Toggle
       if (toggle) {
-        toggle.addEventListener("click", () => {
-          const isOpen = nav.classList.contains("ms-menu--open");
+        toggle.addEventListener('click', () => {
+          const isOpen = nav.classList.contains('ms-menu--open');
           if (!isOpen) openMenu();
           else closeMenu();
         });
       }
 
-      // Fechar com ESC
-      document.addEventListener("keydown", e => {
-        if (e.key === "Escape" && nav.classList.contains("ms-menu--open"))
-          closeMenu();
+      // ESC fecha
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && nav.classList.contains('ms-menu--open')) closeMenu();
       });
 
-      // Fechar ao clicar em um item
+      // fechar ao clicar em link
       if (list) {
-        list.querySelectorAll("a").forEach(a =>
-          a.addEventListener("click", () => {
-            if (nav.classList.contains("ms-menu--open")) closeMenu();
+        list.querySelectorAll('a').forEach(a =>
+          a.addEventListener('click', () => {
+            if (nav.classList.contains('ms-menu--open')) closeMenu();
           })
         );
       }
+
+      // Limpeza paliativa de text-nodes curtos (evita caracteres soltos)
+      document.querySelectorAll('*').forEach(el=>{
+        [...el.childNodes].forEach(n=>{
+          if(n.nodeType===3){
+            const t = n.textContent.trim();
+            if(/^[a-zA-Z]$/.test(t)){
+              n.parentNode.removeChild(n);
+            }
+          }
+        });
+      });
 
     })
     .catch(err => console.error("Erro ao carregar menu:", err));
