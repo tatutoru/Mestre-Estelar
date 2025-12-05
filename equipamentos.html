@@ -559,32 +559,67 @@
             </div> <!-- fim tab-cards -->
     <!-- scripts: abas simples, suporte touch para tooltips e reposicionamento -->
 <script>
-  // Abas simples — suporta Equip, Visual, Cartas e qualquer outra
-  document.querySelectorAll('.equip-window').forEach(windowEl => {
-    const tabs = windowEl.querySelectorAll('.equip-tabs .tab');
+  // SCRIPT DE ABAS (substitui o antigo). Usa style.display para mostrar/ocultar.
+  (function(){
+    // espera o DOM estar pronto
+    function initTabs() {
+      document.querySelectorAll('.equip-window').forEach(windowEl => {
+        const tabs = Array.from(windowEl.querySelectorAll('.equip-tabs .tab'));
+        const containers = Array.from(windowEl.querySelectorAll('.tab-container'));
 
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
+        // Inicialização: esconde todas as containers dentro desta window
+        containers.forEach(c => {
+          // somente define display se ainda não tiver uma flag inline (preservar quem já tem)
+          // vamos garantir que todas fiquem escondidas e só vamos mostrar a ativa
+          c.style.display = 'none';
+        });
 
-        // remove active de todas as tabs
-        tabs.forEach(t => t.classList.remove('active'));
+        // Decide qual container mostrar por padrão:
+        // 1) procura .tab.active e mostra o correspondente
+        // 2) se não existir, mostra o primeiro container encontrado (se houver)
+        let shown = false;
+        const activeTab = windowEl.querySelector('.equip-tabs .tab.active');
+        if (activeTab && activeTab.dataset && activeTab.dataset.tab) {
+          const id = activeTab.dataset.tab;
+          const container = windowEl.querySelector('#tab-' + id);
+          if (container) { container.style.display = ''; shown = true; }
+        }
+        if (!shown && containers.length > 0) {
+          containers[0].style.display = ''; // mostra a primeira por padrão
+        }
 
-        // esconde todas as abas internas
-        windowEl.querySelectorAll('.tab-container')
-                .forEach(c => c.classList.remove('active'));
+        // Evento de clique nas tabs
+        tabs.forEach(tab => {
+          tab.addEventListener('click', () => {
+            // remove classe active visualmente (se quiser manter)
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
 
-        // ativa a tab clicada
-        tab.classList.add('active');
+            // hide all containers in this window
+            containers.forEach(c => c.style.display = 'none');
 
-        // identifica o ID da aba correspondente
-        const target = tab.dataset.tab; // ex: equip, visual, cards
-        const container = windowEl.querySelector(`#tab-${target}`);
-
-        // mostra a aba correspondente
-        if (container) container.classList.add('active');
+            // show the target container
+            const targetName = tab.dataset.tab;
+            if (!targetName) return;
+            const target = windowEl.querySelector('#tab-' + targetName);
+            if (target) {
+              // se quiser preservar alguma propriedade inline de display original, deixamos em branco (''), que usa CSS
+              // mas como estamos controlando por JS, '' funciona bem e permite CSS controlar layout (grid/flex)
+              target.style.display = '';
+            }
+          });
+        });
       });
-    });
-  });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initTabs);
+    } else {
+      initTabs();
+    }
+  })();
+
+
     
       // suporte touch: alterna .touch-open em tooltips quando tocar
       document.querySelectorAll('.ro-tooltip').forEach(el=>{
