@@ -181,3 +181,39 @@
 .ms-menu--collapsed.ms-menu--open .ms-menu__list a {
   pointer-events: auto;
 }
+
+/* ====== fixes para garantir que o menu esteja acima do backdrop e clicável ====== */
+
+/* Força o menu overlay a ser fixed e acima do backdrop */
+.ms-menu--collapsed.ms-menu--open .ms-menu__list {
+  position: fixed !important;    /* garante que saia do stacking context do pai */
+  top: 0 !important;
+  right: 0 !important;
+  width: 300px !important;
+  height: 100vh !important;
+  z-index: 11150 !important;     /* número alto para garantir prioridade */
+  pointer-events: auto !important;
+  -webkit-transform: none !important; /* evita criação de stacking context por transform */
+  transform: none !important;
+}
+
+/* Toggle (hamburger) sempre acima do overlay */
+.ms-menu__toggle {
+  position: relative;
+  z-index: 11160 !important;
+}
+
+/* backdrop deve ficar abaixo do menu overlay */
+.ms-menu-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.18);
+  z-index: 11140 !important;     /* menor que o menu overlay, maior que o resto da página */
+  pointer-events: auto;
+}
+
+/* garantir links e botões do menu recebam eventos */
+.ms-menu--collapsed.ms-menu--open .ms-menu__list a,
+.ms-menu--collapsed.ms-menu--open .ms-menu__list button {
+  pointer-events: auto !important;
+}
