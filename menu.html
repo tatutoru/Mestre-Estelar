@@ -1,13 +1,20 @@
-<div class="sidebar">
-    <h2>📘 Guia do Mestre Estelar</h2>
+<!-- menu.html - fragmento que será injetado no container -->
+<nav class="ms-menu" aria-label="Menu Mestre Estelar">
+<button class="ms-menu__toggle" aria-expanded="false" aria-controls="ms-menu-list" aria-label="Abrir menu">
+<span class="ms-menu__hamburger" aria-hidden="true"></span>
+</button>
 
-    <ul>
-        <li><a href="index.html">Início</a></li>
-        <li><a href="jogabilidade.html">Sobre a jogabilidade</a></li>
-        <li><a href="habilidades.html">Habilidades e Status</a></li>
-        <li><a href="#">Do lixo ao luxo</a></li>
-        <li><a href="equip/equipamentos.html">Equipamentos</a></li>
-        <li><a href="build.html">Build End Game</a></li>
-        <li><a href="#">Considerações Finais</a></li>  
-    </ul>
+
+<div class="ms-menu__brand">
+<a href="index.html">Mestre Estelar</a>
 </div>
+
+
+<ul id="ms-menu-list" class="ms-menu__list" role="menubar">
+<li role="none"><a role="menuitem" href="index.html">Início</a></li>
+<li role="none"><a role="menuitem" href="sobre.html">Sobre</a></li>
+<li role="none"><a role="menuitem" href="guia.html">Guia</a></li>
+<li role="none"><a role="menuitem" href="equip/equipamentos.html">Equipamentos</a></li>
+<li role="none"><a role="menuitem" href="contato.html">Contato</a></li>
+</ul>
+</nav>
