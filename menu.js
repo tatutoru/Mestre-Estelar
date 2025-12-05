@@ -1,188 +1,209 @@
-// menu.js - versão ajustada: backdrop no body + menu overlay fixado para evitar bloqueio de cliques
+// ===============================
+// menu.js - versão final, completa e funcional
+// ===============================
+
 (function(){
   const script = document.currentScript || (function(){
-    const s = document.getElementsByTagName('script');
+    const s = document.getElementsByTagName("script");
     return s[s.length - 1];
   })();
 
   const scriptUrl = new URL(script.src, location.href);
-  const basePath = scriptUrl.pathname.replace(/\/[^\/]*$/, '/');
-  const menuUrl = new URL('menu.html', scriptUrl).href;
+  const basePath = scriptUrl.pathname.replace(/\/[^\/]*$/, "/");
+  const menuUrl = new URL("menu.html", scriptUrl).href;
 
   fetch(menuUrl)
-    .then(res => {
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      return res.text();
+    .then(r => {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.text();
     })
     .then(html => {
-      let container = document.getElementById('menu-container');
+      let container = document.getElementById("menu-container");
       if (!container) {
-        container = document.createElement('div');
-        container.id = 'menu-container';
+        container = document.createElement("div");
+        container.id = "menu-container";
         document.body.insertBefore(container, document.body.firstChild);
       }
       container.innerHTML = html;
 
-      // normaliza links
-      const anchors = container.querySelectorAll('a[href]');
-      anchors.forEach(a => {
-        const href = a.getAttribute('href').trim();
-        if (/^(\/|https?:|#|mailto:|tel:)/i.test(href)) return;
+      // Normalização de links
+      container.querySelectorAll("a[href]").forEach(a => {
+        const href = a.getAttribute("href").trim();
+        if (/^(\/|https?:|mailto:|tel:|#)/i.test(href)) return;
         try {
-          const resolved = new URL(href, menuUrl).pathname;
-          a.setAttribute('href', resolved);
-        } catch (e) {
-          a.setAttribute('href', basePath + href);
+          a.href = new URL(href, menuUrl).pathname;
+        } catch(e) {
+          a.href = basePath + href;
         }
       });
 
-      // comportamento do menu
-      const nav = container.querySelector('.ms-menu');
+      const nav = container.querySelector(".ms-menu");
       if (!nav) return;
 
-      const toggle = nav.querySelector('.ms-menu__toggle');
-      const list = nav.querySelector('.ms-menu__list');
-      const brand = nav.querySelector('.ms-menu__brand');
+      const toggle = nav.querySelector(".ms-menu__toggle");
+      const list = nav.querySelector(".ms-menu__list");
+      const brand = nav.querySelector(".ms-menu__brand");
 
-      const pagePath = location.pathname.replace(/\/index\.html$/, '/');
-      const menuIndexPath = new URL('index.html', scriptUrl).pathname.replace(/\/index\.html$/, '/');
-      const isIndex = (pagePath === menuIndexPath || pagePath === '/' || pagePath === menuIndexPath.replace(/\/$/, ''));
+      // Detectar se está no index
+      const pagePath = location.pathname.replace(/\/index\.html$/, "/");
+      const menuIndexPath = new URL("index.html", scriptUrl).pathname.replace(/\/index\.html$/, "/");
+      const isIndex = (pagePath === menuIndexPath || pagePath === "/" || pagePath === menuIndexPath.replace(/\/$/, ""));
 
-      if (!isIndex) nav.classList.add('ms-menu--collapsed');
-
-      // ocultar "Início" quando estamos no index
-      if (isIndex && list) {
-        const anchorsAll = nav.querySelectorAll('a[href]');
-        anchorsAll.forEach(a => {
+      // Ocultar item "Início" no index
+      if (isIndex) {
+        nav.querySelectorAll("a[href]").forEach(a => {
           try {
-            const url = new URL(a.getAttribute('href'), location.href);
-            const p = url.pathname.replace(/\/index\.html$/, '/');
-            if (p === menuIndexPath || p === '/') {
-              const li = a.closest('li');
-              if (li) li.style.display = 'none';
+            let p = new URL(a.href, location.href).pathname.replace(/\/index\.html$/, "/");
+            if (p === "/" || p === menuIndexPath) {
+              const li = a.closest("li");
+              if (li) li.style.display = "none";
             }
           } catch(e){}
         });
       }
 
-      // garantir marca com link para home
+      // Manter marca como link para home
       if (brand) {
-        try {
-          const homeHref = new URL('index.html', scriptUrl).pathname;
-          const existing = brand.querySelector('a');
-          if (existing) existing.setAttribute('href', homeHref);
-          else {
-            const txt = brand.textContent.trim() || 'Mestre Estelar';
-            brand.innerHTML = '';
-            const a = document.createElement('a');
-            a.href = homeHref;
-            a.textContent = txt;
-            brand.appendChild(a);
-          }
-        } catch(e){}
+        const homeHref = new URL("index.html", scriptUrl).pathname;
+        const a = brand.querySelector("a") || document.createElement("a");
+        a.href = homeHref;
+        a.textContent = brand.textContent.trim() || "Mestre Estelar";
+        brand.innerHTML = "";
+        brand.appendChild(a);
       }
 
-      // backdrop helpers - agora inserimos no body (melhor para stacking)
+      // Se não está no index, começa colapsado
+      if (!isIndex) nav.classList.add("ms-menu--collapsed");
+
+      // ---------------------------
+      // Backdrop
+      // ---------------------------
+
       function removeBackdrop(){
-        const bd = document.querySelector('.ms-menu-backdrop');
-        if(bd) bd.remove();
+        const bd = document.querySelector(".ms-menu-backdrop");
+        if (bd) bd.remove();
       }
+
       function createBackdrop(){
         removeBackdrop();
-        const bd = document.createElement('div');
-        bd.className = 'ms-menu-backdrop';
-        // inserir no body (evita stacking issues)
+        const bd = document.createElement("div");
+        bd.className = "ms-menu-backdrop";
+
         document.body.appendChild(bd);
 
-        // estilos inline mínimos para consistência entre browsers
-        bd.style.position = 'fixed';
-        bd.style.inset = '0';
-        bd.style.background = 'rgba(0,0,0,0.18)';
-        bd.style.zIndex = '11140';
-        bd.style.pointerEvents = 'auto';
+        bd.style.position = "fixed";
+        bd.style.inset = "0";
+        bd.style.background = "rgba(0,0,0,0.18)";
+        bd.style.zIndex = "11140";
+        bd.style.pointerEvents = "auto";
 
-        bd.addEventListener('click', closeMenu);
+        bd.addEventListener("click", closeMenu);
         return bd;
       }
 
-      // open/close: além de classes, garantimos position/z-index do list (proteção contra stacking)
-      function openMenu(){
-        nav.classList.add('ms-menu--open');
-        if (toggle) toggle.setAttribute('aria-expanded','true');
+      // ---------------------------
+      // Mover lista para body ao abrir
+      // ---------------------------
 
-        // garantir que o menu overlay esteja acima do backdrop e fixado
-        if (list) {
-          list.style.position = 'fixed';
-          list.style.top = '0';
-          list.style.right = '0';
-          list.style.width = '300px';
-          list.style.height = '100vh';
-          list.style.zIndex = '11150';
-          list.style.pointerEvents = 'auto';
-          list.style.transform = 'none';
+      let _listOriginalParent = null;
+      let _listOriginalNext = null;
+
+      function openMenu(){
+        nav.classList.add("ms-menu--open");
+        if (toggle) toggle.setAttribute("aria-expanded","true");
+
+        // Mover lista para o body (ELIMINA stacking context)
+        if (list && list.parentNode !== document.body) {
+          _listOriginalParent = list.parentNode;
+          _listOriginalNext = list.nextSibling;
+          document.body.appendChild(list);
+        }
+
+        // Forçar estilo do painel
+        list.style.position = "fixed";
+        list.style.top = "0";
+        list.style.height = "100vh";
+        list.style.width = "300px";
+        list.style.zIndex = "11150";
+        list.style.pointerEvents = "auto";
+        list.style.margin = "0";
+        list.style.transform = "none";
+
+        // Define lado baseado no toggle
+        const rect = toggle.getBoundingClientRect();
+        const center = window.innerWidth / 2;
+        const openLeft = rect.left < center;
+
+        if (openLeft) {
+          list.style.left = "0";
+          list.style.right = "";
+        } else {
+          list.style.right = "0";
+          list.style.left = "";
         }
 
         createBackdrop();
 
-        if (list) {
-          const first = list.querySelector('a, button');
-          if (first) first.focus();
-        }
+        // Foco no primeiro item
+        const first = list.querySelector("a, button");
+        if (first) first.focus();
       }
 
       function closeMenu(){
-        nav.classList.remove('ms-menu--open');
-        if (toggle) toggle.setAttribute('aria-expanded','false');
+        nav.classList.remove("ms-menu--open");
+        if (toggle) toggle.setAttribute("aria-expanded","false");
 
-        // limpa estilos inline aplicados ao abrir
-        if (list) {
-          list.style.position = '';
-          list.style.top = '';
-          list.style.right = '';
-          list.style.width = '';
-          list.style.height = '';
-          list.style.zIndex = '';
-          list.style.pointerEvents = '';
-          list.style.transform = '';
+        // Limpa estilos
+        list.style.position = "";
+        list.style.top = "";
+        list.style.left = "";
+        list.style.right = "";
+        list.style.width = "";
+        list.style.height = "";
+        list.style.zIndex = "";
+        list.style.pointerEvents = "";
+        list.style.margin = "";
+        list.style.transform = "";
+
+        // Restaurar lista ao lugar original
+        if (_listOriginalParent) {
+          if (_listOriginalNext)
+            _listOriginalParent.insertBefore(list, _listOriginalNext);
+          else
+            _listOriginalParent.appendChild(list);
         }
 
-        removeBackdrop();
+        _listOriginalParent = null;
+        _listOriginalNext = null;
 
+        removeBackdrop();
         if (toggle) toggle.focus();
       }
 
+      // Toggle
       if (toggle) {
-        toggle.addEventListener('click', function(e){
-          const isOpen = nav.classList.toggle('ms-menu--open');
-          toggle.setAttribute('aria-expanded', String(isOpen));
-          if (isOpen) openMenu(); else closeMenu();
+        toggle.addEventListener("click", () => {
+          const isOpen = nav.classList.contains("ms-menu--open");
+          if (!isOpen) openMenu();
+          else closeMenu();
         });
       }
 
-      document.addEventListener('keydown', function(e){
-        if (e.key === 'Escape' && nav.classList.contains('ms-menu--open')) closeMenu();
+      // Fechar com ESC
+      document.addEventListener("keydown", e => {
+        if (e.key === "Escape" && nav.classList.contains("ms-menu--open"))
+          closeMenu();
       });
 
+      // Fechar ao clicar em um item
       if (list) {
-        list.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-          if (nav.classList.contains('ms-menu--open')) closeMenu();
-        }));
+        list.querySelectorAll("a").forEach(a =>
+          a.addEventListener("click", () => {
+            if (nav.classList.contains("ms-menu--open")) closeMenu();
+          })
+        );
       }
-
-      // limpeza paliativa de text-nodes curtos (evita caracteres soltos)
-      document.querySelectorAll('*').forEach(el=>{
-        [...el.childNodes].forEach(n=>{
-          if(n.nodeType===3){
-            const t = n.textContent.trim();
-            if(/^[a-zA-Z]$/.test(t)){
-              n.parentNode.removeChild(n);
-            }
-          }
-        });
-      });
 
     })
-    .catch(err => {
-      console.error('Erro ao carregar menu:', err);
-    });
+    .catch(err => console.error("Erro ao carregar menu:", err));
 })();
