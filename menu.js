@@ -1,17 +1,22 @@
 // ===============================
-// menu.js - versão final, completa e funcional (com pequenos ajustes)
+// menu.js - ajuste: abrir painel abaixo e à esquerda do toggle, itens verticais
 // ===============================
+
 (function(){
   const script = document.currentScript || (function(){
     const s = document.getElementsByTagName("script");
     return s[s.length - 1];
   })();
+
   const scriptUrl = new URL(script.src, location.href);
   const basePath = scriptUrl.pathname.replace(/\/[^\/]*$/, "/");
   const menuUrl = new URL("menu.html", scriptUrl).href;
 
   fetch(menuUrl)
-    .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
+    .then(r => {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.text();
+    })
     .then(html => {
       let container = document.getElementById("menu-container");
       if (!container) {
@@ -31,6 +36,7 @@
 
       const nav = container.querySelector(".ms-menu");
       if (!nav) return;
+
       const toggle = nav.querySelector(".ms-menu__toggle");
       const list = nav.querySelector(".ms-menu__list");
       const brand = nav.querySelector(".ms-menu__brand");
@@ -63,65 +69,13 @@
         brand.appendChild(a);
       }
 
-      // Se não está no index, começa colapsado
       if (!isIndex) nav.classList.add("ms-menu--collapsed");
 
-      // === ADDED: esconder lateral direita em todas as páginas exceto index ===
-      // Tenta encontrar possíveis seletores usados para "lado direito" no menu.html
-      (function handleRightSidebar() {
-        const rightCandidates = [
-          ".ms-menu__right",
-          ".ms-menu-side",
-          "#menu-right",
-          ".ms-menu__sidebar",
-          ".ms-menu-right"
-        ];
-        rightCandidates.forEach(sel => {
-          const el = nav.querySelector(sel);
-          if (!el) return;
-          if (!isIndex) {
-            // remove visualmente e também do fluxo de acessibilidade
-            el.style.display = "none";
-            el.setAttribute("aria-hidden","true");
-          } else {
-            el.style.display = "";
-            el.removeAttribute("aria-hidden");
-          }
-        });
-      })();
-      // === end ADDED ===
-
-      // === ADDED: transformar LIs estáticos em <a> automaticamente (quando faltar <a>) ===
-      // Se o menu.html tiver <li>Texto</li> sem <a>, criamos um link com slug padrão.
-      (function autolinkListItems(){
-        if (!list) return;
-        list.querySelectorAll("li").forEach(li => {
-          // pula se já há um link dentro
-          if (li.querySelector("a")) return;
-          const txt = li.textContent.trim();
-          if (!txt) return;
-          // mapeamento simples: "Início" -> index.html, outros -> slug.html
-          let href = txt.toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'') // remove acentos
-                      .replace(/[^a-z0-9\s-]/g,'') // remove chars invalidos
-                      .trim().replace(/\s+/g, '-')
-                      + '.html';
-          if (/^(in[íi]cio|inicio|home)$/i.test(txt)) href = 'index.html';
-          const a = document.createElement('a');
-          // utiliza caminho relativo correto em relação ao script/menu.html
-          try { a.href = new URL(href, scriptUrl).pathname; } catch(e) { a.href = basePath + href; }
-          a.textContent = txt;
-          // copia atributos ARIA básicos do li (se houver)
-          if (li.id) a.id = li.id + "-link";
-          li.innerHTML = "";
-          li.appendChild(a);
-        });
-      })();
-      // === end ADDED ===
-
-      // ---------------------------
-      // Backdrop
-      // ---------------------------
-      function removeBackdrop(){ const bd = document.querySelector(".ms-menu-backdrop"); if (bd) bd.remove(); }
+      // Backdrop helpers
+      function removeBackdrop(){
+        const bd = document.querySelector(".ms-menu-backdrop");
+        if (bd) bd.remove();
+      }
       function createBackdrop(){
         removeBackdrop();
         const bd = document.createElement("div");
@@ -136,84 +90,146 @@
         return bd;
       }
 
-      // ---------------------------
-      // Mover lista para body ao abrir
-      // ---------------------------
+      // Move list to body when open (avoid stacking contexts)
       let _listOriginalParent = null;
       let _listOriginalNext = null;
+
+      // OPEN: abaixo do toggle e alinhado à esquerda do toggle (vertical)
       function openMenu(){
-        nav.classList.add("ms-menu--open");
-        if (toggle) toggle.setAttribute("aria-expanded","true");
-        // Mover lista para o body (ELIMINA stacking context)
+        nav.classList.add('ms-menu--open');
+        if (toggle) toggle.setAttribute('aria-expanded','true');
+
+        // move lista para body se necessário
         if (list && list.parentNode !== document.body) {
           _listOriginalParent = list.parentNode;
           _listOriginalNext = list.nextSibling;
           document.body.appendChild(list);
         }
-        // Forçar estilo do painel list.style.position = "fixed";
-        list.style.position = "fixed";
-        list.style.top = "0";
-        list.style.height = "100vh";
-        list.style.width = "300px";
-        list.style.zIndex = "11150";
-        list.style.pointerEvents = "auto";
-        list.style.margin = "0";
-        list.style.transform = "none";
-        // Define lado baseado no toggle
+
+        // força estilo do painel (vertical)
+        list.style.position = 'fixed';
+        list.style.height = 'auto';
+        list.style.width = '220px';
+        list.style.zIndex = '11150';
+        list.style.pointerEvents = 'auto';
+        list.style.margin = '0';
+        list.style.transform = 'none';
+        list.style.boxSizing = 'border-box';
+        list.style.display = 'flex';
+        list.style.flexDirection = 'column';
+        list.style.alignItems = 'flex-start';
+        list.style.gap = '6px';
+        list.style.padding = '8px';
+
+        // posicionamento: abaixo do toggle, alinhado ao left do toggle
         const rect = toggle.getBoundingClientRect();
-        const center = window.innerWidth / 2;
-        const openLeft = rect.left < center;
-        if (openLeft) { list.style.left = "0"; list.style.right = ""; }
-        else { list.style.right = "0"; list.style.left = ""; }
+        const topPos = Math.round(rect.bottom + 8); // 8px gap
+        let leftPos = Math.max(8, rect.left); // evita ficar colado na borda
+        // garante que caiba na viewport
+        if (leftPos + 220 > window.innerWidth - 8) leftPos = Math.max(8, window.innerWidth - 220 - 8);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // aplica posição
+        list.style.left = leftPos + 'px';
+        list.style.right = '';
+        // calcula top após o browser ter medido o conteúdo
+        setTimeout(() => {
+          const computedHeight = list.getBoundingClientRect().height || 200;
+          let finalTop = topPos;
+          if (finalTop + computedHeight > window.innerHeight - 8) {
+            finalTop = Math.max(8, window.innerHeight - computedHeight - 8);
+          }
+          list.style.top = finalTop + 'px';
+        }, 0);
+
         createBackdrop();
-        // Foco no primeiro item
-        const first = list.querySelector("a, button");
+
+        // foco
+        const first = list.querySelector('a, button');
         if (first) first.focus();
       }
+
+      // CLOSE: restaura
       function closeMenu(){
-        nav.classList.remove("ms-menu--open");
-        if (toggle) toggle.setAttribute("aria-expanded","false");
-        // Limpa estilos
-        list.style.position = "";
-        list.style.top = "";
-        list.style.left = "";
-        list.style.right = "";
-        list.style.width = "";
-        list.style.height = "";
-        list.style.zIndex = "";
-        list.style.pointerEvents = "";
-        list.style.margin = "";
-        list.style.transform = "";
-        // Restaurar lista ao lugar original
+        nav.classList.remove('ms-menu--open');
+        if (toggle) toggle.setAttribute('aria-expanded','false');
+
+        if (list) {
+          list.style.position = '';
+          list.style.top = '';
+          list.style.left = '';
+          list.style.right = '';
+          list.style.width = '';
+          list.style.height = '';
+          list.style.zIndex = '';
+          list.style.pointerEvents = '';
+          list.style.margin = '';
+          list.style.transform = '';
+          list.style.boxSizing = '';
+          list.style.display = '';
+          list.style.flexDirection = '';
+          list.style.alignItems = '';
+          list.style.gap = '';
+          list.style.padding = '';
+        }
+
         if (_listOriginalParent) {
           if (_listOriginalNext) _listOriginalParent.insertBefore(list, _listOriginalNext);
           else _listOriginalParent.appendChild(list);
         }
         _listOriginalParent = null;
         _listOriginalNext = null;
+
         removeBackdrop();
         if (toggle) toggle.focus();
       }
 
-      // Toggle
+      // Toggle listener
       if (toggle) {
-        toggle.addEventListener("click", () => {
-          const isOpen = nav.classList.contains("ms-menu--open");
-          if (!isOpen) openMenu(); else closeMenu();
+        toggle.addEventListener('click', () => {
+          const isOpen = nav.classList.contains('ms-menu--open');
+          if (!isOpen) openMenu();
+          else closeMenu();
         });
       }
 
-      // Fechar com ESC
-      document.addEventListener("keydown", e => {
-        if (e.key === "Escape" && nav.classList.contains("ms-menu--open")) closeMenu();
+      // ESC fecha
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && nav.classList.contains('ms-menu--open')) closeMenu();
       });
 
-      // Fechar ao clicar em um item
+      // fechar ao clicar em link
       if (list) {
-        list.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
-          if (nav.classList.contains("ms-menu--open")) closeMenu();
-        }));
+        list.querySelectorAll('a').forEach(a =>
+          a.addEventListener('click', () => {
+            if (nav.classList.contains('ms-menu--open')) closeMenu();
+          })
+        );
       }
+
+      // limpeza paliativa de text-nodes curtos
+      document.querySelectorAll('*').forEach(el=>{
+        [...el.childNodes].forEach(n=>{
+          if(n.nodeType===3){
+            const t = n.textContent.trim();
+            if(/^[a-zA-Z]$/.test(t)){
+              n.parentNode.removeChild(n);
+            }
+          }
+        });
+      });
 
     })
     .catch(err => console.error("Erro ao carregar menu:", err));
