@@ -82,7 +82,6 @@
 
 /* ---- comportamento colapsado (internas) ---- */
 .ms-menu--collapsed{ justify-content:flex-end; }
-.ms-menu--collapsed .ms-menu__list{ display:none; }
 .ms-menu--collapsed .ms-menu__brand{ display:none; }
 .ms-menu--collapsed .ms-menu__toggle{ display:inline-block; }
 
@@ -231,7 +230,6 @@
 .ms-menu__list {
   transition: transform 240ms cubic-bezier(.2,.9,.3,1), opacity 200ms ease;
   transform-origin: top left;
-  opacity: 0;
   transform: translateY(-8px) scale(.995);
   pointer-events: none; /* evita clique enquanto fechado */
   will-change: transform, opacity;
@@ -261,7 +259,6 @@
 
 /* itens: animação em cascata (stagger) */
 .ms-menu__list li {
-  opacity: 0;
   transform: translateY(-6px);
   transition: transform 220ms ease, opacity 200ms ease;
 }
