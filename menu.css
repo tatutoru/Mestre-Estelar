@@ -134,7 +134,7 @@
 /* links dentro do painel vertical */
 .ms-menu--open .ms-menu__list a {
   display: block;
-  width: 100%;
+  width: 80%;
   padding: 10px 16px;
   border-radius: 6px;
 }
