@@ -246,3 +246,74 @@
   transition: 180ms ease;
 }
 
+/* ========== CUSTOMIZAÇÃO ESTÉTICA DO MENU - TEMA AZUL ESTELAR ========== */
+
+/* barra principal */
+.ms-menu {
+  background: rgba(10, 16, 32, 0.82); /* azul cósmico escuro */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(120, 150, 255, 0.18);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* logo / nome */
+.ms-menu__brand a {
+  color: #e8eeff;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.65);
+}
+
+/* links horizontais */
+.ms-menu__list a,
+.ms-menu__list a:link,
+.ms-menu__list a:visited {
+  color: #dde6ff !important;
+  font-weight: 500 !important;
+  font-size: 15px !important;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: 0.15s ease;
+  background: none !important;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+}
+
+/* hover/focus */
+.ms-menu__list a:hover,
+.ms-menu__list a:focus {
+  background: rgba(60, 100, 200, 0.45) !important; /* azul translúcido */
+  box-shadow: 0 0 8px rgba(120, 150, 255, 0.4);     /* glow estelar */
+  backdrop-filter: blur(6px);
+}
+
+/* painel vertical aberto (hamburger) */
+.ms-menu--open .ms-menu__list {
+  background: rgba(15, 25, 55, 0.96); /* azul profundo */
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius: 12px;
+  border: 1px solid rgba(120,150,255,0.22);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.6);
+}
+
+/* links dentro do menu mobile */
+.ms-menu--open .ms-menu__list a:hover {
+  background: rgba(80, 120, 230, 0.30) !important;
+  box-shadow: 0 0 12px rgba(120,150,255,0.35);
+}
+
+/* botão hamburger */
+.ms-menu__toggle .ms-menu__hamburger,
+.ms-menu__toggle .ms-menu__hamburger::before,
+.ms-menu__toggle .ms-menu__hamburger::after {
+  background: #e8eeff; /* azul clarinho */
+}
+
+/* força links brancos no menu */
+.ms-menu .ms-menu__list a,
+.ms-menu .ms-menu__list a:link,
+.ms-menu .ms-menu__list a:visited {
+    color: #f5f7ff !important;  /* branco azulado */
+    -webkit-text-fill-color: #f5f7ff !important;
+}
