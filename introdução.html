@@ -26,6 +26,30 @@ body {
     a:visited {
         color: #1e90ff; /* mantém a mesma cor mesmo após visitar */
     }
+
+
+@media (max-width: 768px) {
+    .content {
+        max-width: 100%;
+        width: 100%;
+        margin: 80px 12px 24px; /* topo, lados, baixo */
+        padding: 16px;
+        box-sizing: border-box;
+        display: block; /* garante que não fique em layout de coluna estreita por flex/grid */
+    }
+
+    .content section {
+        max-width: 100%;
+    }
+
+    .gif-row {
+        flex-direction: column;   /* garante que os gif-box empilhem no mobile */
+    }
+
+    .gif-box {
+        width: 100%;
+    }
+}
 </style>
 
 
