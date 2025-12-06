@@ -342,7 +342,7 @@ h1, h2, h3 { color: #333; }
 }
 
 body {
-    background: url('/assets/ui/backgroundteste2.jpeg') no-repeat center center fixed !important;
+    background: url('https://raw.githubusercontent.com/tatutoru/Mestre-Estelar/main/assets/ui/backgroundteste2.jpeg') no-repeat center center fixed !important;
     background-size: cover !important;
     color: white;
 }
@@ -359,3 +359,6 @@ h1, h2, h3 {
     text-shadow: 0 2px 6px rgba(252, 253, 249, 0.75);
 }
 
+.ms-menu__brand a {
+    color: #f5f7ff !important;
+}
