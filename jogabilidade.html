@@ -59,6 +59,28 @@
             </p>
         </div>
 
+    <button id="btnCopiar" onclick="copiarTexto()">t_garden 113/116</button>
+    <script>
+        function copiarTexto() {
+          const texto = "/navi t_garden 113/116";
+          const botao = document.getElementById("btnCopiar");
+
+           navigator.clipboard.writeText(texto)
+               .then(() => {
+                  // muda o texto do botão
+                  botao.textContent = "Copiado";
+                
+                 // depois de 5 segundos volta ao normal
+                 setTimeout(() => {
+                  botao.textContent = "t_garden 113/116";
+                }, 5000);
+            })
+            .catch(err => console.error("Erro ao copiar:", err));
+        }
+    </script>
+
+
+
         <!-- RODAPÉ DE NAVEGAÇÃO -->
     <div class="page-nav">
         <a class="prev" href="introdução.html">← Introdução</a>
