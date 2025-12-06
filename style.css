@@ -313,7 +313,11 @@ h1, h2, h3 { color: #333; }
 }
 
 .page-nav a:hover {
-    background: #919cfc;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: #22366B;
+    border-radius: 14px;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.65);
 }
 
 .page-nav .prev::before {
@@ -361,4 +365,118 @@ h1, h2, h3 {
 
 .ms-menu__brand a {
     color: #f5f7ff !important;
+}
+
+/* ===========================
+   HERO BANNER ÉPICO
+   =========================== */
+
+.intro-hero {
+    position: relative;
+    width: 100%;
+    margin: 0 auto 40px auto;
+    padding: 40px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Personagens */
+.hero {
+    width: 320px;
+    max-width: 30vw;
+    filter: drop-shadow(0 6px 14px rgba(0, 140, 255, 0.45));
+    animation: float 4s ease-in-out infinite;
+    image-rendering: auto;
+    pointer-events: none;
+}
+
+/* Lado esquerdo sobe/desce em tempos diferentes */
+.hero-left { animation-delay: 0s; }
+.hero-right { animation-delay: 1.3s; }
+
+/* Título central */
+.hero-title {
+    text-align: center;
+    z-index: 10;
+    padding: 10px 30px;
+    color: white;
+    text-shadow: 0 0 8px rgba(0, 200, 255, 0.6);
+}
+
+.hero-title h1 {
+    font-size: 36px;
+    margin-bottom: 6px;
+    text-shadow:
+        0 0 10px rgba(0, 180, 255, 0.75),
+        0 0 20px rgba(0, 140, 255, 0.55);
+}
+
+.hero-title p {
+    font-size: 17px;
+    opacity: 0.85;
+}
+
+/* ANIMAÇÃO DE FLUTUAÇÃO */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+/* AURA / ENERGIA ATRÁS DO BANNER */
+.intro-hero::before {
+    content: "";
+    position: absolute;
+    width: 75%;
+    height: 180px;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(
+        circle,
+        rgba(0, 150, 255, 0.35),
+        rgba(0, 40, 80, 0.15),
+        transparent 70%
+    );
+    filter: blur(35px);
+    animation: pulse 6s infinite ease-in-out;
+    z-index: 0;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.55; transform: translateX(-50%) scale(1); }
+    50% { opacity: 0.9; transform: translateX(-50%) scale(1.12); }
+    100% { opacity: 0.55; transform: translateX(-50%) scale(1); }
+}
+
+/* ===== Layout especial da página de Introdução ===== */
+
+.content-intro {
+    max-width: 900px;           /* largura máxima do texto */
+    margin: 40px auto 60px;     /* centraliza e dá respiro em cima/baixo */
+    padding: 0 20px;
+}
+
+/* títulos centralizados pra combinar com o hero */
+.content-intro h1,
+.content-intro h2 {
+    text-align: center;
+}
+
+/* parágrafos e listas alinhados à esquerda (melhor leitura) */
+.content-intro p,
+.content-intro ul,
+.content-intro li {
+    text-align: left;
+}
+
+/* cada bloco com espaçamento confortável */
+.content-intro section {
+    margin-bottom: 28px;
+}
+
+/* Ajuste para navegação com apenas um link (página inicial) */
+.page-nav.page-nav--single {
+    justify-content: flex-start;
 }
