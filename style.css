@@ -367,89 +367,6 @@ h1, h2, h3 {
     color: #f5f7ff !important;
 }
 
-/* ===========================
-   HERO BANNER ÉPICO
-   =========================== */
-
-.intro-hero {
-    position: relative;
-    width: 100%;
-    margin: 0 auto 40px auto;
-    padding: 40px 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Personagens */
-.hero {
-    width: 320px;
-    max-width: 30vw;
-    filter: drop-shadow(0 6px 14px rgba(0, 140, 255, 0.45));
-    animation: float 4s ease-in-out infinite;
-    image-rendering: auto;
-    pointer-events: none;
-}
-
-/* Lado esquerdo sobe/desce em tempos diferentes */
-.hero-left { animation-delay: 0s; }
-.hero-right { animation-delay: 1.3s; }
-
-/* Título central */
-.hero-title {
-    text-align: center;
-    z-index: 10;
-    padding: 10px 30px;
-    color: white;
-    text-shadow: 0 0 8px rgba(0, 200, 255, 0.6);
-}
-
-.hero-title h1 {
-    font-size: 36px;
-    margin-bottom: 6px;
-    text-shadow:
-        0 0 10px rgba(0, 180, 255, 0.75),
-        0 0 20px rgba(0, 140, 255, 0.55);
-}
-
-.hero-title p {
-    font-size: 17px;
-    opacity: 0.85;
-}
-
-/* ANIMAÇÃO DE FLUTUAÇÃO */
-@keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0px); }
-}
-
-/* AURA / ENERGIA ATRÁS DO BANNER */
-.intro-hero::before {
-    content: "";
-    position: absolute;
-    width: 75%;
-    height: 180px;
-    top: 30%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: radial-gradient(
-        circle,
-        rgba(0, 150, 255, 0.35),
-        rgba(0, 40, 80, 0.15),
-        transparent 70%
-    );
-    filter: blur(35px);
-    animation: pulse 6s infinite ease-in-out;
-    z-index: 0;
-}
-
-@keyframes pulse {
-    0% { opacity: 0.55; transform: translateX(-50%) scale(1); }
-    50% { opacity: 0.9; transform: translateX(-50%) scale(1.12); }
-    100% { opacity: 0.55; transform: translateX(-50%) scale(1); }
-}
-
 /* ===== Layout especial da página de Introdução ===== */
 
 .content-intro {
@@ -479,4 +396,163 @@ h1, h2, h3 {
 /* Ajuste para navegação com apenas um link (página inicial) */
 .page-nav.page-nav--single {
     justify-content: flex-start;
+}
+
+/* =======================================================
+   HERO BANNER ÉPICO COMPLETO – MESTRE ESTELAR
+   ======================================================= */
+
+.intro-hero {
+    position: relative;
+    width: 100%;
+    margin: 0 auto 40px auto;
+    padding: 40px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: visible;
+}
+
+/* PERSONAGENS ------------------------------------------------ */
+
+.hero {
+    width: 320px;
+    max-width: 30vw;
+    filter: drop-shadow(0 6px 14px rgba(0, 140, 255, 0.45));
+    image-rendering: auto;
+    pointer-events: none;
+
+    /* começa invisível, entra com animação e depois fica flutuando */
+    opacity: 0;
+}
+
+/* esquerda: entra da esquerda + depois flutua */
+.hero-left {
+    animation:
+        heroEnterLeft 0.9s ease-out forwards,
+        float 4s ease-in-out 0.9s infinite;
+}
+
+/* direita: entra da direita + depois flutua */
+.hero-right {
+    animation:
+        heroEnterRight 0.9s ease-out forwards,
+        float 4s ease-in-out 1.0s infinite;
+}
+
+/* TÍTULO CENTRAL ---------------------------------------------- */
+
+.hero-title {
+    text-align: center;
+    z-index: 10;
+    padding: 10px 30px;
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(0, 200, 255, 0.6);
+
+    opacity: 0;
+    animation: heroEnterTitle 0.9s ease-out forwards;
+    animation-delay: 0.18s;
+}
+
+.hero-title h1 {
+    font-size: 36px;
+    margin-bottom: 6px;
+    text-shadow:
+        0 0 10px rgba(0, 180, 255, 0.75),
+        0 0 20px rgba(0, 140, 255, 0.55);
+}
+
+.hero-title p {
+    font-size: 17px;
+    opacity: 0.85;
+}
+
+/* ANIMAÇÃO DE FLUTUAÇÃO SUAVE -------------------------------- */
+
+@keyframes float {
+    0%   { transform: translateY(0px); }
+    50%  { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+/* ANIMAÇÕES DE ENTRADA ---------------------------------------- */
+
+@keyframes heroEnterLeft {
+    from {
+        opacity: 0;
+        transform: translate(-32px, -8px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+}
+
+@keyframes heroEnterRight {
+    from {
+        opacity: 0;
+        transform: translate(32px, -8px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+}
+
+@keyframes heroEnterTitle {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* PARTÍCULAS ESTELARES ATRÁS DO HERO ------------------------- */
+
+.intro-hero::before,
+.intro-hero::after {
+    content: "";
+    position: absolute;
+    inset: -40px;
+    pointer-events: none;
+    z-index: -1;
+    background-repeat: no-repeat;
+    opacity: 0.6;
+}
+
+/* camada 1 – estrelinhas brancas/azuladas, movimento mais rápido */
+.intro-hero::before {
+    background-image:
+        radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(2px 2px at 30% 80%, rgba(180,200,255,0.9), transparent),
+        radial-gradient(2px 2px at 70% 40%, rgba(255,255,255,0.9), transparent),
+        radial-gradient(2px 2px at 85% 15%, rgba(200,220,255,0.9), transparent),
+        radial-gradient(2px 2px at 50% 90%, rgba(255,255,255,0.8), transparent);
+    animation: starDrift1 22s linear infinite;
+}
+
+/* camada 2 – estrelas maiores e mais suaves */
+.intro-hero::after {
+    background-image:
+        radial-gradient(3px 3px at 15% 60%, rgba(140,190,255,0.65), transparent),
+        radial-gradient(3px 3px at 60% 25%, rgba(255,255,255,0.5), transparent),
+        radial-gradient(3px 3px at 80% 75%, rgba(180,200,255,0.6), transparent);
+    animation: starDrift2 34s linear infinite;
+    opacity: 0.45;
+}
+
+/* movimento das estrelas */
+@keyframes starDrift1 {
+    0%   { transform: translate3d(0, 0, 0); }
+    50%  { transform: translate3d(-18px, -10px, 0); }
+    100% { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes starDrift2 {
+    0%   { transform: translate3d(0, 0, 0); }
+    50%  { transform: translate3d(16px, 14px, 0); }
+    100% { transform: translate3d(0, 0, 0); }
 }
