@@ -19,6 +19,15 @@
         <h1>⚔️ Equipamentos Recomendados</h1>
         <p>Lista de equipamentos focados no ciclo Solar/Lunar, priorizando dano, ASPD e sustain.</p>
 
+        <!-- ===== Progressões de equipamentos (NOVO BLOCO) ===== -->
+        <div class="progression-tabs">
+            <button class="progression-tab active" data-progression="p1">Progressão 1</button>
+            <button class="progression-tab" data-progression="p2">Progressão 2</button>
+            <button class="progression-tab" data-progression="p3">Progressão 3</button>
+        </div>
+
+        <div id="equip-windows-container"></div><!-- ===== FIM progressões ===== -->
+
         <!-- ===== Janela principal de equipamentos ===== -->
         <div class="equip-window">
 
@@ -559,71 +568,62 @@
 
     </div> <!-- fim content -->
 
-    
+    <!-- NOVO: script de template de equip -->
+    <script src="equip-window.js"></script>
+
     <!-- scripts: abas simples, suporte touch para tooltips e reposicionamento -->
 <script>
-  // SCRIPT DE ABAS (substitui o antigo). Usa style.display para mostrar/ocultar.
-  (function(){
-    // espera o DOM estar pronto
-    function initTabs() {
-      document.querySelectorAll('.equip-window').forEach(windowEl => {
-        const tabs = Array.from(windowEl.querySelectorAll('.equip-tabs .tab'));
-        const containers = Array.from(windowEl.querySelectorAll('.tab-container'));
+// SCRIPT DE ABAS (substitui o antigo). Usa style.display para mostrar/ocultar.
+(function(){
+  // espera o DOM estar pronto
+  function initTabs() {
+    document.querySelectorAll('.equip-window').forEach(windowEl => {
+      const tabs = Array.from(windowEl.querySelectorAll('.equip-tabs .tab'));
+      const containers = Array.from(windowEl.querySelectorAll('.tab-container'));
 
-        // Inicialização: esconde todas as containers dentro desta window
-        containers.forEach(c => {
-          // somente define display se ainda não tiver uma flag inline (preservar quem já tem)
-          // vamos garantir que todas fiquem escondidas e só vamos mostrar a ativa
-          c.style.display = 'none';
-        });
+      containers.forEach(c => {
+        c.style.display = 'none';
+      });
 
-        // Decide qual container mostrar por padrão:
-        // 1) procura .tab.active e mostra o correspondente
-        // 2) se não existir, mostra o primeiro container encontrado (se houver)
-        let shown = false;
-        const activeTab = windowEl.querySelector('.equip-tabs .tab.active');
-        if (activeTab && activeTab.dataset && activeTab.dataset.tab) {
-          const id = activeTab.dataset.tab;
-          const container = windowEl.querySelector('#tab-' + id);
-          if (container) { container.style.display = ''; shown = true; }
-        }
-        if (!shown && containers.length > 0) {
-          containers[0].style.display = ''; // mostra a primeira por padrão
-        }
+      let shown = false;
+      const activeTab = windowEl.querySelector('.equip-tabs .tab.active');
+      if (activeTab && activeTab.dataset && activeTab.dataset.tab) {
+        const id = activeTab.dataset.tab;
+        const container = windowEl.querySelector('#tab-' + id);
+        if (container) { container.style.display = ''; shown = true; }
+      }
+      if (!shown && containers.length > 0) {
+        containers[0].style.display = '';
+      }
 
-        // Evento de clique nas tabs
-        tabs.forEach(tab => {
-          tab.addEventListener('click', () => {
-            // remove classe active visualmente (se quiser manter)
-            tabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
 
-            // hide all containers in this window
-            containers.forEach(c => c.style.display = 'none');
+          containers.forEach(c => c.style.display = 'none');
 
-            // show the target container
-            const targetName = tab.dataset.tab;
-            if (!targetName) return;
-            const target = windowEl.querySelector('#tab-' + targetName);
-            if (target) {
-              // se quiser preservar alguma propriedade inline de display original, deixamos em branco (''), que usa CSS
-              // mas como estamos controlando por JS, '' funciona bem e permite CSS controlar layout (grid/flex)
-              target.style.display = '';
-            }
-          });
+          const targetName = tab.dataset.tab;
+          if (!targetName) return;
+          const target = windowEl.querySelector('#tab-' + targetName);
+          if (target) {
+            target.style.display = '';
+          }
         });
       });
-    }
+    });
+  }
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initTabs);
-    } else {
-      initTabs();
-    }
-  })();
+  // 🔹 EXPOE para o resto do código poder chamar depois
+  window.initEquipTabs = initTabs;
 
-
-    
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTabs);
+  } else {
+    initTabs();
+  }
+})();
+    // SCRIPT DE TOOLTIP COM SUPORTE A TOUCH
       // suporte touch: alterna .touch-open em tooltips quando tocar
       document.querySelectorAll('.ro-tooltip').forEach(el=>{
         el.addEventListener('touchstart', function(e){
@@ -719,6 +719,228 @@
   }
 })();
 
+  // =========================
+  // PROGRESSÕES DE EQUIP (NOVO)
+  // =========================
+
+const PROGRESSOES_EQUIP = {
+  p1: {
+    id: 'p1',
+
+    // ABA EQUIP
+    equip: {
+      slotsLeft: [
+        {
+          slotLabel: 'Topo',
+          id: 19362,
+          nome: 'Elmo do Xogum',
+          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/19362',
+          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/19362',
+          descricao: '+15% Dano físico vs Neutro/Fogo<br>+5% ASPD (União Solar)'
+        },
+        {
+          slotLabel: 'Baixo',
+          id: 18754,
+          nome: 'Presas Vamíricas',
+          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/18754',
+          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/18754',
+          descricao: '+X Dano físico.'
+        },
+        {
+          slotLabel: 'Mão Direita',
+          id: 28612,
+          nome: 'Apocalípse Ilusional',
+          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/28612',
+          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/28612',
+          descricao: 'Bônus elemental.'
+        },
+        {
+          slotLabel: 'Capa',
+          id: 20838,
+          nome: 'Sobrepeliz Ilusional',
+          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/20838',
+          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/20838',
+          descricao: 'Bônus elemental.'
+        },
+        {
+          slotLabel: 'Acessório Direito',
+          id: 28303,
+          nome: 'Núcleo Vesper 02',
+          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/28303',
+          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/28303',
+          descricao: 'Bônus elemental.'
+        }
+      ],
+      slotsRight: [
+        {
+          slotLabel: 'Meio',
+          id: 19392,
+          nome: 'Presilha dos Amantes [1]',
+          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/19392',
+          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/19392',
+          descricao: ''
+        },
+        {
+          slotLabel: 'Armadura',
+          id: 15378,
+          nome: 'Couraça Magmática [1]',
+          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/15378',
+          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/15378',
+          descricao: ''
+        },
+        {
+          slotLabel: 'Mão Esquerda',
+          id: 28949,
+          nome: 'Escudo de Jóias [1]',
+          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/28949',
+          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/28949',
+          descricao: ''
+        },
+        {
+          slotLabel: 'Sapato',
+          id: 22199,
+          nome: 'Botas Magmáticas [1]',
+          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/22199',
+          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/22199',
+          descricao: ''
+        },
+        {
+          slotLabel: 'Acessório Esquerdo',
+          id: 28509,
+          nome: 'Anel Ilusional [1]',
+          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/28509',
+          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/28509',
+          descricao: ''
+        }
+      ]
+    },
+
+    // ABA VISUAL (exemplo com seus enchants)
+    visual: {
+      slotsLeft: [
+        {
+          slotLabel: 'Enchant Topo',
+          id: 310327,
+          nome: 'Melee Stone',
+          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/310327',
+          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/310327',
+          descricao: '+15% Dano físico vs Neutro/Fogo<br>+5% ASPD (União Solar)'
+        },
+        {
+          slotLabel: 'Enchant Baixo',
+          id: 310328,
+          nome: 'Melee Stone',
+          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/310328',
+          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/310328',
+          descricao: '+X Dano físico.'
+        },
+        {
+          slotLabel: 'Enchant Capa',
+          id: 25208,
+          nome: 'Absorção de SP',
+          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/25208',
+          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/25208',
+          descricao: 'Bônus elemental.'
+        },
+        {
+          slotLabel: 'Enchant Capa (Dual)',
+          id: 29056,
+          nome: 'Esfera da Conj. Fixa',
+          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/29056',
+          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/29056',
+          descricao: 'Bônus elemental.'
+        }
+      ],
+      slotsRight: [
+        {
+          slotLabel: 'Enchant Meio',
+          id: 310329,
+          nome: 'Melee Stone',
+          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/310329',
+          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/310329',
+          descricao: ''
+        },
+          {
+          type: 'placeholder',
+          slotLabel: '—'
+        },
+        {
+          slotLabel: 'Anel do Mercador',
+          id: 50205,
+          nome: 'Anel do Mercador',
+          iconUrl: 'https://www.divine-pride.net/img/items/item/iRO/490404',
+          collectionUrl: 'https://www.divine-pride.net/img/items/collection/iRO/490404',
+          descricao: ''
+        }
+      ]
+    },
+
+    // ABA CARTAS (exemplo com alguns)
+    cards: {
+      slotsLeft: [
+        {
+          slotLabel: 'Carta Topo',
+          id: 4484,
+          nome: 'Carta X',
+          iconUrl: 'https://www.divine-pride.net/img/items/item/bRO/4484',
+          collectionUrl: 'https://www.divine-pride.net/img/items/collection/bRO/4484',
+          descricao: '...'
+        },
+        // etc...
+      ],
+      slotsRight: [
+        // Carta Meio, Armadura, Escudo, etc...
+      ]
+    }
+  },
+
+  // p2 / p3 por enquanto podem ficar vazios:
+  p2: { id: 'p2', equip: { slotsLeft: [], slotsRight: [] }, visual: { slotsLeft: [], slotsRight: [] }, cards: { slotsLeft: [], slotsRight: [] } },
+  p3: { id: 'p3', equip: { slotsLeft: [], slotsRight: [] }, visual: { slotsLeft: [], slotsRight: [] }, cards: { slotsLeft: [], slotsRight: [] } }
+};
+
+  // Inicializa as janelas de progressão
+if (window.renderEquipProgressions) {
+  window.renderEquipProgressions(PROGRESSOES_EQUIP).then(() => {
+    // liga os botões Progressão 1/2/3
+    setupProgressionTabs();
+
+    // 🔹 re-inicializa as abas (Equip / Visual / Cartas) para TODAS as equip-window,
+    // incluindo as novas que acabaram de ser criadas
+    if (window.initEquipTabs) {
+      window.initEquipTabs();
+    }
+  });
+}
+    // Configura os botões de aba de progressão
+
+  function setupProgressionTabs() {
+    const tabs = document.querySelectorAll('.progression-tab');
+    const windows = document.querySelectorAll('.progression-window');
+
+    function showProgression(id) {
+      windows.forEach(w => {
+        w.style.display = (w.dataset.progression === id) ? '' : 'none';
+      });
+
+      tabs.forEach(t => {
+        if (t.dataset.progression === id) {
+          t.classList.add('active');
+        } else {
+          t.classList.remove('active');
+        }
+      });
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        showProgression(tab.dataset.progression);
+      });
+    });
+
+    // mostra p1 por padrão
+    showProgression('p1');
+  }
 
 
     </script>
