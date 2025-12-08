@@ -21,6 +21,23 @@
     a:visited {
         color: #1e90ff; /* mantém a mesma cor mesmo após visitar */
     }
+    .intro-msg {
+    display: flex;
+    align-items: center;      /* faz a imagem pegar a altura inteira */
+    gap: 12px;
+}
+
+.intro-msg p {
+    margin: 0;
+    flex: 1;                   /* texto ocupa o espaço restante */
+}
+
+.intro-msg img {
+    height: 100%;              /* imagem cresce para acompanhar o texto */
+    width: auto;               /* mantém proporção */
+    object-fit: contain;       /* evita deformar */
+}
+
 </style>
 </head>
 
@@ -44,9 +61,17 @@
 
         <section id="inicio">
             <h1>Bem-vindo!</h1>
-            <p>
-                O artigo em questão tem por objetivo orientá-los com o básico da classe.
-            </p>
+<div class="intro-msg">
+    <p>
+        Esse é um guia simples direcionado ao servidor 
+        <b><a href="https://pathofisgard.com.br" target="_blank">Path of Isgard</a></b>, 
+        acesse a <b><a href="https://pathofisgard.com.br/wiki/Página_principal" target="_blank">Wiki</a></b> oficial deles
+        e verifique os guias atualizados de conteúdos e informações do servidor.
+    </p>
+
+    <img src="https://pathofisgard.com.br/wiki/resources/assets/change-your-logo.jpg?e2854g" alt="">
+</div>
+
         </section>
 
 
