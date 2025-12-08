@@ -46,6 +46,23 @@ body {
         width: 100%;
     }
 }
+
+.tk {
+    display: flex;
+    align-items: center;      /* centraliza texto e imagem verticalmente */
+    gap: 12px;
+}
+
+.tk .texto {
+    flex: 1;                  /* texto ocupa todo o espaço disponível */
+}
+
+.tk img {
+    height: 60px;             /* deixe fixo (recomendado) */
+    width: auto;
+    object-fit: contain;
+}
+
 </style>
 
 
@@ -58,17 +75,24 @@ body {
 <div class="content">
 
     <!-- INTRODUÇÃO -->
-    <section>
-        <h1>📘 Introdução & Mecânicas</h1>
-        <p>
-            O Mestre Estelar é uma classe expandida muito versátil que possui um burst de dano tremendo,
-            podendo usufruir da mecânica de <b><a href="https://pathofisgard.com.br/wiki/Overkill" target="_blank">overkill</a></b> 
-            (25% de drop em hit kill) em conteúdos end-game.
-            <br><br>
-            Embora muito forte, não recomendo o mesmo para ser seu <b>primeiro personagem</b>,
-            devido à sua complexidade de jogabilidade, falta de equipamentos e sustain (quando você perceber, não terá mais SP).
-        </p>
-    </section>
+<section>
+    <div class="tk">
+        <div class="texto">
+            <h1>📘 Introdução & Mecânicas</h1>
+            <p>
+                O Mestre Estelar é uma classe expandida muito versátil que possui um burst de dano tremendo,
+                podendo usufruir da mecânica de <b><a href="https://pathofisgard.com.br/wiki/Overkill" target="_blank">overkill</a></b> 
+                (25% de drop em hit kill) em conteúdos end-game.
+                <br><br>
+                Embora muito forte, não recomendo o mesmo para ser seu <b>primeiro personagem</b>,
+                devido à sua complexidade de jogabilidade, falta de equipamentos e sustain (quando você perceber, não terá mais SP).
+            </p>
+        </div>
+
+        <img src="/assets/ui/200px-Arte_Mestres_Estelares.png" alt="" style="width:400px; height:400px; vertical-align:middle; margin-right:6px;">
+    </div>
+</section>
+
 
     <!-- PONTOS FORTES -->
     <section>
