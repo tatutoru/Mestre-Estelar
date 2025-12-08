@@ -7,6 +7,47 @@
     <!-- caminho relativo do arquivo movido para /equip/ -->
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../menu.css">
+    <style>
+body {
+    background: url('/assets/ui/backgroundteste2.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    color: white; /* se quiser manter */
+}
+    a {
+        color: #1e90ff; /* azul vibrante (DodgerBlue) */
+        text-decoration: none; /* remove sublinhado */
+        font-weight: 600; /* deixa mais forte */
+    }
+
+    a:hover {
+        color: #00b7ff; /* azul claro no hover */
+        text-decoration: underline; /* volta o sublinhado no hover se quiser */
+    }
+
+    a:visited {
+        color: #1e90ff; /* mantém a mesma cor mesmo após visitar */
+    }
+
+
+@media (max-width: 768px) {
+    body.intro-page .content {
+        max-width: 100%;
+        width: 100%;
+        margin: 80px 12px 24px; /* topo, lados, baixo */
+        padding: 16px;
+        box-sizing: border-box;
+        display: block;
+    }
+
+    body.intro-page .gif-row {
+        flex-direction: column;
+    }
+
+    body.intro-page .gif-box {
+        width: 100%;
+    }
+}
+</style>
 </head>
 <body>
 
@@ -567,6 +608,11 @@
 </div>
      </div> fim equip-window  -->
 
+             <!-- RODAPÉ DE NAVEGAÇÃO -->
+    <div class="page-nav">
+        <a class="prev" href="../habilidades.html">← Habilidades</a>
+        <a class="next" href="../index.html">Voltar ao Início →</a>
+    </div>
     </div> <!-- fim content -->
 
     <!-- NOVO: script de template de equip -->
