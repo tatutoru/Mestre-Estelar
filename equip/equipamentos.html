@@ -291,6 +291,91 @@
     overflow-x: hidden;
   }
 }
+/* ===== MOBILE: layout compacto e confiável (substitui os anteriores) ===== */
+@media (max-width: 980px) {
+
+  /* conteúdo principal */
+  .content {
+    margin: 12px;
+    padding: 12px;
+    max-width: 100%;
+  }
+
+  /* Evita que elementos forcem largura */
+  .progression-window,
+  .equip-window {
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;                /* se algo realmente não couber, permite scroll horizontal */
+    padding: 8px;
+    margin: 8px 0;
+  }
+
+  /* layout em duas colunas com larguras reduzidas e sem min-width */
+  .equip-body,
+  .progression-window .equip-body {
+    display: grid !important;
+    grid-template-columns: 46% 46% ;  /* duas colunas lado a lado com gap controlado */
+    column-gap: 8%;
+    row-gap: 8px;
+    align-items: start;
+    width: 100%;
+  }
+
+  /* se a viewport for bem pequena, reduz as colunas ainda mais */
+  @media (max-width: 520px) {
+    .equip-body,
+    .progression-window .equip-body {
+      grid-template-columns: 48% 48%;
+      column-gap: 4%;
+    }
+  }
+
+  /* evitar min-widths forçando quebra */
+  .slots-col, .slots-col-right, .item-col, .extra-col {
+    min-width: 0 !important;
+    max-width: 100%;
+    width: auto !important;
+    box-sizing: border-box;
+    padding: 4px;
+  }
+
+  /* reduzir tamanhos das boxes/ícones */
+  .slot-box { width: 44px; height: 44px; }
+  .slot-icon { width: 28px; height: 28px; }
+  .slot-label { font-size: 13px; max-width: calc(100% - 52px); }
+
+  /* centraliza a coluna do meio quando necessário (char-frame) */
+  .char-col { justify-content: center; }
+  .char-frame { width: 180px; height: 220px; }
+
+  /* reduz fontes/paddings dentro da janela para caber */
+  .equip-window, .progression-window, .card {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  /* abas e tabs menos espaçadas */
+  .progression-tabs { gap: 6px; padding: 6px 4px; }
+  .progression-tab { padding: 6px 10px; font-size: 13px; }
+
+  /* garante que imagens e gifs não extrapolem */
+  .content img, .aparato img, .gif-box img { max-width: 100%; height: auto; display: block; }
+
+  /* se a tela for muito pequena, empilha as colunas ao invés de quebrar */
+  @media (max-width: 360px) {
+    .equip-body, .progression-window .equip-body {
+      grid-template-columns: 1fr;  /* stack */
+      column-gap: 0;
+    }
+
+    .slot-label { max-width: 70%; }
+    .char-frame { width: 160px; height: 220px; }
+  }
+
+  /* remove overflow horizontal do body (visual) — se scroll for necessário, o container terá */
+  body { overflow-x: hidden; }
+}
 </style>
 </head>
 <body>
