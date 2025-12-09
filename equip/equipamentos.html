@@ -47,6 +47,83 @@ body {
         width: 100%;
     }
 }
+/* ===== Progression tabs (botões de progressão) ===== */
+.progression-tabs {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: nowrap;             /* não quebrar linhas em desktop */
+  overflow-x: auto;              /* permite scroll horizontal no mobile */
+  -webkit-overflow-scrolling: touch;
+  padding: 6px 4px;
+  margin: 12px 0 8px;
+  scrollbar-width: none;         /* firefox */
+}
+
+/* opcional: esconder scrollbar visual no WebKit */
+.progression-tabs::-webkit-scrollbar { display: none; }
+
+.progression-tab {
+  flex: 0 0 auto;                /* não encolher, manter tamanho do conteúdo */
+  background: linear-gradient(#16397f, #1e4ba8); /* azul escuro -> azul */
+  color: #fff;
+  border: 2px solid #000;        /* contorno preto forte */
+  padding: 10px 16px;
+  font-weight: 700;
+  font-size: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-transform: none;
+  transition: transform .12s ease, background .12s ease, box-shadow .12s ease;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.6); /* efeito "botão levantado" */
+  white-space: nowrap;
+}
+
+/* hover e foco */
+.progression-tab:hover,
+.progression-tab:focus {
+  transform: translateY(-2px);
+  background: linear-gradient(#1b4fd6, #2a67e2);
+  outline: none;
+}
+
+/* estado ativo (selecionado) — destaque dourado estilo anterior */
+.progression-tab.active {
+  background: linear-gradient(#ffd85e, #f7c63a);
+  color: #000;
+  border-color: #c29a00;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.6), inset 0 -3px 0 rgba(0,0,0,0.06);
+  transform: translateY(0);
+}
+
+/* acessibilidade: foco bem visível */
+.progression-tab:focus-visible {
+  outline: 3px solid rgba(255,216,94,0.25);
+  outline-offset: 3px;
+}
+
+/* container das janelas de progressão (onde o render coloca as .progression-window) */
+.progression-window {
+  margin-top: 14px;
+  background: rgba(0,0,0,0.35);  /* leve vidro escuro */
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+}
+
+/* responsivo: em telas pequenas diminuir padding e tamanho */
+@media (max-width: 520px) {
+  .progression-tab {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  .progression-window {
+    padding: 10px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -62,10 +139,10 @@ body {
 
         <!-- ===== Progressões de equipamentos (NOVO BLOCO) ===== -->
         <div class="progression-tabs">
-            <button class="progression-tab active" data-progression="p1">Progressão 1</button>
-            <button class="progression-tab" data-progression="p2">Progressão 2</button>
-            <button class="progression-tab" data-progression="p3">Progressão 3</button>
-            <button class="progression-tab" data-progression="p4">Progressão 4</button>
+            <button class="progression-tab active" data-progression="p1">Iniciante</button>
+            <button class="progression-tab" data-progression="p2">Intermediário</button>
+            <button class="progression-tab" data-progression="p3">Intermediário->Avançado</button>
+            <button class="progression-tab" data-progression="p4">Avançado</button>
         </div>
 
         <div id="equip-windows-container"></div><!-- ===== FIM progressões ===== -->

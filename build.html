@@ -46,6 +46,34 @@ body {
         width: 100%;
     }
 }
+.atr-table {
+    width: 100%;
+    max-width: 400px;
+    margin: 15px 0;
+    border-collapse: collapse;
+    font-size: 22px; /* tamanho no estilo Ragnarok */
+}
+
+.atr-table td {
+    padding: 8px 12px;
+}
+
+/* Coluna 1 — azul Ragnarok com outline preto */
+.atr-nome {
+    color: #1e4ba8; /* azul escuro Ragnarok */
+    font-weight: bold;
+    text-shadow: 
+        -1px -1px 0 #dddddd,
+         1px -1px 0 #dddddd,
+        -1px  1px 0 #dddddd,
+         1px  1px 0 #dddddd; /* contorno preto */
+    width: 120px;
+}
+
+/* Coluna 2 — fonte preta simples */
+.atr-valor {
+    color: #fffdfd;
+}
 </style>
 </head>
 
@@ -56,74 +84,54 @@ body {
 
     <div class="content">
         <section>
-            <h1>Build Recomendada</h1>
+            <h1>Distribuição de Atributos</h1>
             <p>
-                Esta página reúne sugestões de <b>atributos</b>, <b>skills</b> e fundamentos gerais 
-                para montar uma build eficiente de <b>Mestre Estelar</b>, com foco no ciclo Lunar.
+                Os atributos podem divergir, é algo bem pessoal, 
+                como eu não sou extremamente rico pra ficar resetando várias vezes
+                e chegar no melhor valor possível,
+                cheguei à conclusão de que, no 120, a melhor distribuição seria:
             </p>
         </section>
 
         <!-- ATRIBUTOS -->
         <section>
-            <h2>📊 Distribuição de Atributos</h2>
+<h2>🧬 Atributos</h2>
 
-            <div class="card">
-                <h3>✨ Atributos Sugeridos (nível 175~200)</h3>
-                <ul>
-                    <li><b>FOR:</b> 100~120 — dano físico geral</li>
-                    <li><b>AGI:</b> 90~110 — ASPD e esquiva</li>
-                    <li><b>VIT:</b> 80~100 — sobrevivência</li>
-                    <li><b>DES:</b> 70~90 — precisão</li>
-                    <li><b>SOR:</b> 80~100 — dano físico, crítico e suporte</li>
-                </ul>
-                <p><i>Valores variam dependendo do equipamento final.</i></p>
-            </div>
-        </section>
+<table class="atr-table">
+    <tr>
+        <td class="atr-nome">STR</td>
+        <td class="atr-valor">100</td>
+    </tr>
+    <tr>
+        <td class="atr-nome">AGI</td>
+        <td class="atr-valor">26</td>
+    </tr>
+    <tr>
+        <td class="atr-nome">VIT</td>
+        <td class="atr-valor">50</td>
+    </tr>
+    <tr>
+        <td class="atr-nome">INT</td>
+        <td class="atr-valor">1</td>
+    </tr>
+    <tr>
+        <td class="atr-nome">DEX</td>
+        <td class="atr-valor">80</td>
+    </tr>
+    <tr>
+        <td class="atr-nome">LUK</td>
+        <td class="atr-valor">80</td>
+    </tr>
+</table>
 
-        <!-- SKILLS -->
-        <section>
-            <h2>🌀 Distribuição de Skills</h2>
+<div class="card" >
+    <h3>
+        ⚠️ Lembre-se: Essa é apenas uma sugestão de build, 
+        sinta-se à vontade para adaptá-la conforme seu estilo de jogo e necessidades específicas!
+    </h3>
 
-            <p>Uma sugestão inicial de habilidades para o foco Lunar:</p>
+</div>
 
-            <div class="card">
-                <h3>🌙 Skills de Mestre Estelar (importantes)</h3>
-                <ul>
-                    <li>União Solar, Lunar e Estelar — <b>MAX</b></li>
-                    <li>Percepção Solar/Lunar/Estelar — <b>MAX</b></li>
-                    <li>Benção do Sol/Lua/Estrela — <b>MAX</b></li>
-                    <li>Postura Lunar Avançada — <b>MAX</b></li>
-                    <li>Calores — 3~5</li>
-                    <li>Chute Aéreo — 5</li>
-                    <li>Cambalhota — 5</li>
-                    <li>Brisa Leve — 4</li>
-                </ul>
-            </div>
-
-            <div class="card">
-                <h3>☀ Skills de suporte Solar</h3>
-                <ul>
-                    <li>Dança Solar</li>
-                    <li>Benção Solar</li>
-                    <li>Solar Stance (opcional)</li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- NOTAS -->
-        <section>
-            <h2>📝 Observações importantes</h2>
-
-            <div class="card">
-                <p>
-                    A build final muda bastante conforme os equipamentos usados.  
-                    Assim que sua página de equipamentos ficar pronta, ajustaremos os atributos 
-                    e skills para bater exatamente com seu set.
-                </p>
-            </div>
-        </section>
-
-        <br><br>
 
         <!-- RODAPÉ DE NAVEGAÇÃO -->
     <div class="page-nav">

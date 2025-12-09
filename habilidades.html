@@ -46,6 +46,38 @@ body {
         width: 100%;
     }
 }
+.classe-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.classe-buttons button {
+    background: #1e4ba8;
+    color: white;
+    border: 2px solid black;
+    padding: 8px 14px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+
+.classe-buttons button:hover {
+    background: #2a67e2;
+}
+
+.classe-buttons button.ativo {
+    background: #ffd85e;
+    color: black;
+    border-color: #c29a00;
+}
+#classeImg {
+    width: auto;
+    height: auto;
+    max-width: 100%; /* evita quebrar no celular */
+}
+
 </style>
 </head>
 
@@ -58,77 +90,36 @@ body {
         <section>
             <h1>Habilidades Importantes</h1>
             <p>
-                Nesta página você encontra uma explicação detalhada das principais habilidades 
-                que tornam o <b>Mestre Estelar</b> um dos personagens mais versáteis e explosivos do jogo.
+                Segue build completinha para você rodar no 120:
             </p>
         </section>
+    
+<section>
+    <div class="classe-buttons">
+        <button onclick="trocarClasse('taekwon')">Taekwon</button>
+        <button onclick="trocarClasse('mestre')">Mestre Taekwon</button>
+        <button onclick="trocarClasse('estelar')">Mestre Estelar</button>
+    </div>
+    <h2>
+        <img id="classeImg" src="assets/ui/taekwon-skills.png" alt="">
+    </h2>
+</section>
 
-        <section>
-            <h2>📌 Habilidades-Chave</h2>
-
-            <div class="card">
-                <h3>🌙 Chute Aéreo</h3>
-                <p>
-                    Habilidade essencial de <b>aproximação</b>.  
-                    Permite entrar no alvo rapidamente para iniciar a rotação de habilidades lunares.
-                </p>
-            </div>
-
-            <div class="card">
-                <h3>🔄 Cambalhota</h3>
-                <p>
-                    Uma ferramenta poderosa de <b>mobilidade e esquiva</b>.  
-                    Utilizada para reposicionamento rápido e evitar golpes críticos.
-                </p>
-            </div>
-
-            <div class="card">
-                <h3>🌪 Brisa Leve</h3>
-                <p>
-                    Permite <b>trocar o elemento</b> de seus ataques físicos.  
-                    Essencial para explorar fraquezas elementais e maximizar o dano.
-                </p>
-            </div>
-
-            <div class="card">
-                <h3>🌞 Percepção Solar, Lunar e Estelar</h3>
-                <p>
-                    Habilidade usada para <b>alinhar mapas e monstros</b>.  
-                    Fundamental para ativar bônus específicos do ciclo solar/lunar/estelar.
-                </p>
-            </div>
-
-            <div class="card">
-                <h3>🌀 União Solar, Lunar e Estelar</h3>
-                <p>
-                    Considerada o <b>CORE do personagem</b>.  
-                    Ela amplifica as habilidades e ativa efeitos especiais que definem o Mestre Estelar.
-                </p>
-            </div>
-
-            <div class="card">
-                <h3>🔥 Calores</h3>
-                <p>
-                    Útil para ativar o <b>Milagre</b>, potencializando o dano e os bônus do ciclo.  
-                    Também auxilia no sustain dependendo da configuração.
-                </p>
-            </div>
-        </section>
-
-        <section>
-            <h2>🌙 Ciclo Lunar (Principal)</h2>
-            <p>
-                O foco da build é maximizar o dano do ciclo Lunar, que oferece as habilidades de burst mais fortes.
-            </p>
-        </section>
-
-        <section>
-            <h2>☀ Ciclo Solar (Suporte ao Lunar)</h2>
-            <p>
-                Serve para cura, buffs, ativação de Milagre e manutenção de efeitos que fortalecem o Lunar.
-            </p>
-        </section>
-
+<section>
+    <h2>Algumas observações:</h2>
+    <p>
+        <li>Em Taekwon, para upar, pegue <img id="classeImg" src="assets/ui/Chute_do_Tornado.png" alt=""> Postura e Chute do Tornado e depois resete para essa versão;</li> 
+        <li>Em Mestre Taekwon, para upar, pegue as Bênçãos para obter XP bônus de acordo com o alinhamento do mapa,
+            na Percepção <img id="classeImg" src="assets/ui/Percepção_Solar,_Lunar_e_Estelar.png" alt=""> e depois resete para essa versão.</li>
+        <li>Para pega a habilidade <img id="classeImg" src="assets/ui/União_Solar,_Lunar_e_Estelar.png" alt=""> União Solar, Lunar e Estelar,
+        é preciso estar com o <img id="classeImg" src="assets/ui/Espírito_do_Mestre_Taekwon.png" alt=""> Espírito do Mestre Taekwon ativado,
+        e <b>minimizar seu Alt S</b>, para então poder selecioná-la.</li>
+        <li>Em Mestre Estelar, recomendo usar sempre a <img id="classeImg" src="assets/ui/Postura_do_Universo.png" alt=""> Postura do Universo
+            e <img id="classeImg" src="assets/ui/Luz_Lunar.png" alt=""> Luz Lunar (sempre que usar Luz Lunar, terá de usar a Postura de novo, mas compensa).</li>
+        <li>O <img id="classeImg" src="assets/ui/Registro_Solar,_Lunar_e_Estelar.png" alt=""> Registro Solar, Lunar e Estelar é responsável por redefinir o alinhamento
+            (Solar, Lunar ou Estelar) dos mapas.</li>
+    </p>
+</section>
         <br><br>
 
         <!-- RODAPÉ DE NAVEGAÇÃO -->
@@ -137,5 +128,25 @@ body {
         <a class="next" href="equip/equipamentos.html">Equipamentos →</a>
     </div>
 </div>
+<script>
+function trocarClasse(tipo) {
+    const img = document.getElementById("classeImg");
+
+    if (tipo === "taekwon") {
+        img.src = "assets/ui/taekwon-skills.png";
+    }
+    if (tipo === "mestre") {
+        img.src = "assets/ui/mastertaekwon-skills.png";
+    }
+    if (tipo === "estelar") {
+        img.src = "assets/ui/staremperor-skills.png";
+    }
+
+    // destaca o botão selecionado
+    document.querySelectorAll(".classe-buttons button").forEach(btn => btn.classList.remove("ativo"));
+    event.target.classList.add("ativo");
+}
+</script>
+
 </body>
 </html>

@@ -46,6 +46,8 @@ body {
         width: 100%;
     }
 }
+
+
 </style>
 </head>
 <body>
@@ -57,51 +59,28 @@ body {
 
     <!-- Conteúdo -->
     <div class="content">
-        <h1>Jogabilidade</h1>
+        <h1>Criando seu boneco e upando:</h1>
 
         <p>
-            Descrição.
+            Agora que você já tem/tinha noção do que a classe é capaz, vamos para a parte de leveling.<br><br>
         </p>
 
-        <h2>Título 2</h2>
+        <h2>Pets!</h2>
         <p>
-            Descrição.
+            No Path of Isgard, é essencial ter um pet para facilitar sua vida.<br>
+            Eles são os responsáveis pelo "autoloot" - pegar seus itens automáticamente do chão.<br>
+            Ao começar o jogo, você recebe um Ovo de Bebê Poring, para ajudar na sua jornada, 
+            mas você poderá obter outros pets da forma normal do jogo, com 100% de chance.<br>
+            Poderá também obter pets com condições especiais em pacotes promocionais limitados.<br>
+            Para mais informações sobre pets, acesse a <b><a href="https://pathofisgard.com.br/wiki/Mascotes" target="_blank">página na Wiki</a></b>.<br>
         </p>
-        <div style="display: flex; gap: 20px;">
 
-    <!-- BLOCO 1 -->
-    <div style="flex: 1; text-align: center;">
-        <h3 style="margin-bottom: 8px;">Eclipse Lunar</h3>
-        <img src="https://browiki.org/images/a/ad/Eclipse_Lunar.gif"
-             alt="Gif 1"
-             style="width: 100%; border-radius: 8px;">
-    </div>
-
-    <!-- BLOCO 2 -->
-        <div style="flex: 1; text-align: center;">
-            <h3 style="margin-bottom: 8px;">Chute Lunar</h3>
-            <img src="https://browiki.org/images/a/a2/Chute_Lunar.gif"
-             alt="Gif 2"
-             style="width: 100%; border-radius: 8px;">
-        </div>
-
-    </div>
-
-        
-        <h2>Título 3</h2>
+        <h2>@eden</h2>
         <p>
-            Descrição.
-        </p>
-
-        <div class="card">
-            <h3>Título 4</h3>
-            <p>
-                Descrição.
-            </p>
-        </div>
-
-    <button id="btnCopiar" onclick="copiarTexto()">t_garden 113/116</button>
-    <script>
+            O Éden é seu ponto de partida, que te guiará até o nível máximo.<br>
+            Faça sua inscrição com a Secretária Lime Evenor 
+                <button id="btnCopiar" onclick="copiarTexto()">t_garden 113, 116</button>
+        <script>
         function copiarTexto() {
           const texto = "/navi t_garden 113/116";
           const botao = document.getElementById("btnCopiar");
@@ -114,14 +93,207 @@ body {
                  // depois de 5 segundos volta ao normal
                  setTimeout(() => {
                   botao.textContent = "t_garden 113/116";
-                }, 5000);
+                }, 3000);
             })
             .catch(err => console.error("Erro ao copiar:", err));
         }
-    </script>
+        </script><br>
+            Após, isso, você poderá fazer missões e comprar equipamentos com moedas recebidas fazendo as missões de caça.<br>
+            Para ver as missões, itens e preço, acesse a <b><a href="https://pathofisgard.com.br/wiki/Grupo_Éden_de_Isgard" target="_blank">página na Wiki</a></b>.<br>
+        </p>
+
+        <div class="video-box">
+        <p>Assista também ao Guia do Éden, feito pelo Keke:</p>
+    <iframe 
+        width="560" 
+        height="315" 
+        src="https://www.youtube.com/embed/rFz6M2ScVyI"
+        title="Guia do Grupo Éden de Isgard"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+    </iframe>
+</div>
 
 
+        
+        <h2>Rota de Up:</h2>
+        <p>
+            Upar no Path of Isgard é simples, porém muito satisfatório.
+            A rota mais prática é a seguinte:
+        </p>
 
+        <div class="card">
+            <h3>Nível 1 e virando Taekwon:</h3>
+            <p>
+                <b>Teleportador -> Masmorras -> Formigueiro Infernal</b> - É o mapa mais tranquilo, sem apanhar, no início demora um tempo até matar um ovo.<br>
+                Coloque seus pontos em STR para matá-los<br>
+                Após virar Taekwon, continue nesse mapa até o nível 30.<br>
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Nível 30 a 50:</h3>
+            <p>
+                <b>Teleportador -> Masmorras -> Caverna dos Orcs (saia do mapa em direção ao mapa dos orcs
+                <button id="btnCopiar2" onclick="copiarTexto2()">gef_fild10 65, 335</button>
+        <script>
+        function copiarTexto2() {
+          const texto = "/navi gef_fild10 65/335";
+          const botao = document.getElementById("btnCopiar2");
+
+           navigator.clipboard.writeText(texto)
+               .then(() => {
+                  // muda o texto do botão
+                  botao.textContent = "Copiado";
+                
+                 // depois de 5 segundos volta ao normal
+                 setTimeout(() => {
+                  botao.textContent = "gef_fild10 65/335";
+                }, 3000);
+            })
+            .catch(err => console.error("Erro ao copiar:", err));
+        }</script>)</b> 
+                Aqui você vai ter uma certa dificuldade inicial, porém, continue insistindo, morrer faz parte! 
+                A melhor forma de upar, é usando o 
+                <img src="assets/ui/Chute_do_Tornado.png" alt="" style="width:25px; height:25px; vertical-align:middle; margin-right:6px;">
+                Chute do Tornado.<br>
+                No nível 40, faça a missão do Éden de equipamentos da Instrutora Boya.
+            </p>
+        </div>
+        
+        <div class="card">
+            <h3>Nível 50 a 70:</h3>
+            <p>
+                <b>Teleportador -> Masmorras -> Caverna dos Orcs</b> - Após virar Mestre-Taekwon, continue aqui até nível 70.<br>
+                Existem outros mapas, porém esse é o mais tranquilo para upar.<br>
+                De Mestre-Taekwon, o melhor para se upar é continuar no 
+                <img src="assets/ui/Chute_do_Tornado.png" alt="" style="width:25px; height:25px; vertical-align:middle; margin-right:6px;">
+                Chute do Tornado.<br>
+                Assim que chegar no nível 70, faça a missão do Éden de equipamentos do Instrutor Ur.<br><br>
+                Os equipamentos do Éden podem ser obtidos no castelo, dentro do @eden, vá para:  
+                <button id="btnCopiar6" onclick="copiarTexto6()">t_garden 118, 142</button>
+        <script>
+        function copiarTexto6() {
+          const texto = "/navi t_garden 118/142";
+          const botao = document.getElementById("btnCopiar6");
+
+           navigator.clipboard.writeText(texto)
+               .then(() => {
+                  // muda o texto do botão
+                  botao.textContent = "Copiado";
+                
+                 // depois de 5 segundos volta ao normal
+                 setTimeout(() => {
+                  botao.textContent = "t_garden 118/142";
+                }, 3000);
+            })
+            .catch(err => console.error("Erro ao copiar:", err));
+        }</script></b> e clique na porta para entrar.<br><br>
+                <li> Nível 40: Administrador Michael - 
+                <button id="btnCopiar3" onclick="copiarTexto3()">moc_para01 112, 96</button>
+        <script>
+        function copiarTexto3() {
+          const texto = "/navi moc_para01 112/96";
+          const botao = document.getElementById("btnCopiar3");
+
+           navigator.clipboard.writeText(texto)
+               .then(() => {
+                  // muda o texto do botão
+                  botao.textContent = "Copiado";
+                
+                 // depois de 5 segundos volta ao normal
+                 setTimeout(() => {
+                  botao.textContent = "moc_para01 112/96";
+                }, 3000);
+            })
+            .catch(err => console.error("Erro ao copiar:", err));
+        }</script></b></li><br>
+                <li>Nível 70: Ferreiro Thorn - 
+                <button id="btnCopiar4" onclick="copiarTexto4()">moc_para01 111, 84</button>
+        <script>
+        function copiarTexto4() {
+          const texto = "/navi moc_para01 111/84";
+          const botao = document.getElementById("btnCopiar4");
+
+           navigator.clipboard.writeText(texto)
+               .then(() => {
+                  // muda o texto do botão
+                  botao.textContent = "Copiado";
+                
+                 // depois de 5 segundos volta ao normal
+                 setTimeout(() => {
+                  botao.textContent = "moc_para01 111/84";
+                }, 3000);
+            })
+            .catch(err => console.error("Erro ao copiar:", err));
+        }</script></b></li>
+            </p>
+        </div>
+
+        <div class="card" >
+            <h3>Nível 70 a 99:</h3>
+            <p>
+                <b>Teleportador -> End Game -> Caverna de Magma 3 (entre no portal!!!)</b> - Fique aqui até o nível 99.<br>
+                Se atente ao dia (opcional) para receber bônus de EXP de acordo com a Bênção upada (Solar/Lunar/Estelar).<br>
+                Use a <img src="assets/ui/Percepção_Solar,_Lunar_e_Estelar.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
+                percepção no mapa, escolhendo o nível de acordo com o dia, para alinhar os monstros e use a habilidade de Calor do dia <br>
+                <img src="assets/ui/Calor_Solar.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
+                <img src="assets/ui/Calor_Lunar.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
+                <img src="assets/ui/Calor_Estelar.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
+                (Solar = pares, Lunar = ímpares, Estelar = múltiplos de 5).<br><br>
+                Nesse ponto do jogo, já é esperado que você farme <img src="https://www.pathofisgard.com.br/database/img/itens/25223.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
+                Moedas do Éden para comprar sua arma Paradise.<br>
+                As melhores missões para juntar Moedas nesse nível são:
+                <li>Missão de Caça 91-99 - Porcellio, Metaling e Jubileu. </li><br>
+                (Teleportador -> Cidades -> Einbech -> Desce; Nesse mapa Porcelio, no da esquerda Metalling).<br>
+        </div>
+
+        <div class="card" >
+            <h3>Nível 100+</h3>
+            <p>
+                A partir do nível 100, esqueça o rush para o 120, foque em:
+                • Farmar moedas para equipamentos - na missão 100-111: Novus. (Teleportador -> Campos -> Campos de Hugel);<br>
+                • Farmar Zeny para craftar seus itens no <b><a href="https://pathofisgard.com.br/wiki/Chapeleiro" target="_blank">Chapeleiro</a></b>,
+                na @central (até você juntar o zeny para o Rideword você já terá pegado 120).<br>
+                Caso queira rushar nível, sem itens, os mapas serão bem punks, sendo Caverna de Magma 2 / Juperos as melhores opções de xp/zeny.<br><br>
+                Se quiser tentar, pode ir para:<br>
+                <li><b>Teleportador -> End Game -> Caverna de Magma 3</b>.</li><br>
+                <li><b>Teleportador -> Ilusional -> Ilusão do Vampiro</b>.</li><br>
+            </p>
+        </div>
+
+        <div class="card" >
+            <h3>Dicas Finais:</h3>
+            <ul>
+                <li>Use as <img src="https://www.pathofisgard.com.br/database/img/itens/25223.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
+                    Moedas do Éden para comprar <img src="https://www.pathofisgard.com.br/database/img/itens/14545.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
+                    Diário de Aventuras, <img src="https://www.pathofisgard.com.br/database/img/itens/12883.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
+                    Bolinho Divino e <img src="https://www.pathofisgard.com.br/database/img/itens/23012.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
+                    Poção Menor de Mana para facilitar seu up no NPC Assistente Noah 
+                <button id="btnCopiar7" onclick="copiarTexto7()">t_garden 124, 114</button>
+        <script>
+        function copiarTexto7() {
+          const texto = "/navi t_garden 124/114";
+          const botao = document.getElementById("btnCopiar7");
+
+           navigator.clipboard.writeText(texto)
+               .then(() => {
+                  // muda o texto do botão
+                  botao.textContent = "Copiado";
+                
+                 // depois de 5 segundos volta ao normal
+                 setTimeout(() => {
+                  botao.textContent = "t_garden 124/114";
+                }, 3000);
+            })
+            .catch(err => console.error("Erro ao copiar:", err));
+        }</script></b></li>
+                <li>Não se preocupe em usar a percepção nos mapas, assim que virar Mestre Estelar você poderá redefinir.</li>
+                <li>Abuse da <img src="assets/ui/Brisa_Leve.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
+                Brisa Leve nos mapas!</li>
+                <li>Divirta-se e aproveite a jornada, Ragnarok não é uma corrida, você não precisa rushar conteúdos, aproveite os momentos!</li>
+            </ul>
         <!-- RODAPÉ DE NAVEGAÇÃO -->
     <div class="page-nav">
         <a class="prev" href="introdução.html">← Introdução</a>
