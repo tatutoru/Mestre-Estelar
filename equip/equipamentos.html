@@ -161,6 +161,71 @@
         align-items: center;
         gap: 6px;
     }
+
+/* ===== FUNDO CORRIGIDO (SEM ALTERAR DESKTOP) ===== */
+html, body {
+  background: url('/assets/ui/backgroundteste2.jpeg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* Mobile: corrige “desgrudar” e travamentos */
+@media (max-width: 980px) {
+  html, body {
+    background-attachment: scroll !important;
+    background-position: top center;
+  }
+}
+
+/* ===== AJUSTE DE PROPORÇÃO DO PROGRESSION-WINDOW (SEM ALTERAR DESKTOP) ===== */
+.progression-window .equip-body {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+/* colunas permanecem lado a lado */
+.progression-window .slots-col,
+.progression-window .slots-col-right {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Centraliza o char-frame corretamente */
+.progression-window .char-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Mobile: não quebra, apenas reduz um pouco a largura */
+@media (max-width: 720px) {
+  .progression-window .equip-body {
+    gap: 6px;
+  }
+
+  /* não esconde, não empilha — só diminui */
+  .progression-window .slots-col,
+  .progression-window .slots-col-right {
+    transform: scale(0.85);
+    transform-origin: top center;
+  }
+
+  .progression-window .char-frame {
+    transform: scale(0.85);
+    transform-origin: top center;
+  }
+}
+
+/* ===== TOOLTIP PLACEHOLDER ===== */
+.slot-icon.placeholder + .ro-tooltip-box,
+.slot-icon.placeholder ~ .ro-tooltip-box {
+  display: none !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
   </style>
 </head>
 <body>
