@@ -183,60 +183,39 @@
       .intro-msg img { width: 100px; }
     }
     /* --- Forçar images + título lado-a-lado em mobile usando grid --- */
-    @media (max-width: 560px) {
-      /* transforma a hero em grid: imagem | título | imagem */
-      .intro-hero {
-        display: grid;
-        grid-template-columns: 64px minmax(140px, 1fr) 64px;
-        gap: 10px;
-        align-items: center;
-        justify-items: center;
-        text-align: center;
-        padding: 6px 0;
-      }
+/* Corrigir posicionamento do título no centro absoluto */
+@media (max-width: 560px) {
 
-      .intro-hero .hero {
-        width: 64px;       /* largura das imagens no mobile; ajuste se quiser menor/maior */
-        height: auto;
-        object-fit: contain;
-        display: block;
-        margin: 0;
-      }
+  .intro-hero {
+    display: grid;
+    /* três colunas iguais visualmente: imagem | título | imagem */
+    grid-template-columns: auto 1fr auto;
+    gap: 10px;
+    align-items: center;
+    justify-items: center;
+    text-align: center;
+  }
 
-      .hero-title {
-        /* título centralizado verticalmente */
-        align-self: center;
-        justify-self: center;
-        padding: 0 6px;
-      }
-      .hero-title h1 {
-        font-size: 1.25rem;
-        margin: 0;
-        line-height: 1.05;
-      }
+  /* imagens */
+  .intro-hero .hero {
+    width: 64px;
+    height: auto;
+    object-fit: contain;
+  }
 
-      /* Ajustes na intro-msg (texto + logo) para reduzir espaçamento e centralizar */
-      .intro-msg {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 8px;
-      }
-      .intro-msg p {
-        margin: 0;
-        text-align: center;
-        flex: none;        /* evita que o texto ocupe espaço extra */
-        line-height: 1.4;
-      }
-      .intro-msg img {
-        width: 100px;      /* tamanho da logo do servidor no mobile */
-        margin: 0;         /* remove espaço extra acima/abaixo */
-        border-radius: 6px;
-      }
+  /* título sempre na coluna central */
+  .hero-title {
+    grid-column: 2;          /* força ficar na coluna do meio */
+    justify-self: center;    /* centraliza dentro da coluna */
+    align-self: center;
+  }
 
-      /* caso o conteúdo precise de um pouco mais de "aperto", reduza paddings */
-      .content { padding-left: 12px; padding-right: 12px; }
-    }
+  .hero-title h1 {
+    font-size: 1.25rem;
+    margin: 0;
+    line-height: 1.05;
+  }
+}
   </style>
 </head>
 
