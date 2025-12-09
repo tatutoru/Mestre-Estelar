@@ -556,3 +556,257 @@ h1, h2, h3 {
     50%  { transform: translate3d(16px, 14px, 0); }
     100% { transform: translate3d(0, 0, 0); }
 }
+
+/* ===== AJUSTES FINAIS DA TABELA DE PROGRESSÕES ===== */
+
+.equip-window {
+    max-width: 760px !important;
+    margin: 0 auto;
+}
+
+.slots-col,
+.slots-col-right {
+    width: 160px !important;
+    max-width: 160px !important;
+}
+
+.slot-label {
+    max-width: 140px !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    font-size: 14px !important;
+    line-height: 1.25;
+}
+
+.slot-icon {
+    width: 32px !important;
+    height: 32px !important;
+    object-fit: contain;
+}
+
+.ro-tooltip-box {
+    max-width: 260px !important;
+}
+
+/* ============================
+   PADRÃO VISUAL UNIFICADO
+   (combina com as outras páginas)
+   ============================ */
+
+:root{
+  --accent: #1e90ff;
+  --accent-hover: #00b7ff;
+  --card-bg: rgba(0,0,0,0.45);
+  --card-border: rgba(255,255,255,0.06);
+  --muted: #dcdcdc;
+  --panel-bg: rgba(255,255,255,0.04);
+  --panel-border: rgba(255,255,255,0.05);
+  --glass-blur: 6px;
+}
+
+/* janela de progressão agora usa o mesmo visual 'card' */
+.equip-window {
+  width: 100%;
+  max-width: 980px;                       /* igual ao .content das outras páginas */
+  margin: 12px auto;
+  background: linear-gradient(rgba(0,0,0,0.28), rgba(0,0,0,0.18));
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  padding: 12px;
+  box-sizing: border-box;
+  backdrop-filter: blur(var(--glass-blur));
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  color: white;
+}
+
+/* equip-bar — suavizado e integrado ao visual */
+.equip-window .equip-bar {
+  height: 56px;
+  background: linear-gradient(180deg, rgba(30,144,255,0.12), rgba(0,119,204,0.08));
+  border-radius: 10px 10px 0 0;
+  border: 1px solid rgba(255,255,255,0.04);
+  margin: -12px -12px 10px -12px;
+  display:flex;
+  align-items:center;
+  padding: 10px 16px;
+  box-sizing: border-box;
+}
+
+/* abas — estilo consistente com outras páginas */
+.equip-tabs {
+  display:flex;
+  gap:10px;
+  margin-top: -36px;       /* leve sobreposição */
+  padding: 8px 6px;
+  z-index: 2;
+}
+
+.equip-tabs .tab {
+  background: rgba(255,255,255,0.03);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.04);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .12s ease, background .12s ease;
+}
+
+.equip-tabs .tab:hover { transform: translateY(-2px); background: rgba(255,255,255,0.05); }
+
+.equip-tabs .tab.active {
+  background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+  color: #00121a;
+  border-color: rgba(0,0,0,0.25);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+}
+
+/* GRID — lateral fixa + centro fluido, alinhado ao padrão */
+.equip-body {
+  display: grid;
+  grid-template-columns: 160px minmax(280px, 1fr) 160px;
+  gap: 16px;
+  align-items: start;
+}
+
+/* colunas laterais com mesmo visual de cartão */
+.slots-col, .slots-col-right {
+  background: transparent;
+  padding: 6px;
+  box-sizing: border-box;
+  min-width: 160px;
+  max-width: 160px;
+}
+
+/* linhas de slot — aparência limpa e consistente */
+.slot-row {
+  display:flex;
+  gap:10px;
+  align-items:center;
+  margin:8px 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* label com largura controlada — não estoura o layout */
+.slot-label {
+  width: 100%;
+  max-width: 120px;
+  font-weight: 600;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.25;
+  word-break: break-word;
+}
+
+/* caixa do slot — vidro leve, borda sutil */
+.slot-box {
+  width:56px;
+  height:56px;
+  background: var(--card-bg);
+  border-radius: 10px;
+  border: 1px solid var(--card-border);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.02);
+  overflow: visible;
+}
+
+/* ícone padronizado para combinar com as outras páginas */
+.slot-icon {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  image-rendering: auto;
+  transition: transform .12s ease;
+}
+
+.slot-box:hover .slot-icon { transform: translateY(-3px); }
+
+/* placeholder reduzido e dessaturado */
+.slot-icon.placeholder {
+  opacity: 0.48;
+  filter: grayscale(100%);
+}
+
+/* centro (boneco) — mantém o mesmo estilo das outras páginas */
+.char-col { display:flex; align-items:center; justify-content:center; padding:6px; }
+
+.char-frame {
+  width: 280px;
+  height: 320px;
+  border-radius: 12px;
+  background: linear-gradient(rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.03);
+  display:flex; align-items:center; justify-content:center;
+  position:relative;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.35);
+  overflow: visible; /* permite tooltips por cima */
+}
+
+.char-sprite-bg {
+  width: 200px;
+  height: 240px;
+  background-size: contain;
+  background-position:center;
+  background-repeat:no-repeat;
+  image-rendering: pixelated;
+}
+
+/* tooltips com limite e mesmo visual translúcido */
+.ro-tooltip-box {
+  max-width: 260px;
+  background: rgba(0,0,0,0.8);
+  border: 1px solid rgba(255,255,255,0.04);
+  color: #fff;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+
+/* cards e textos dentro da página padronizados */
+.card { background: var(--card-bg); border:1px solid var(--card-border); padding:12px; border-radius:8px; color: var(--muted); }
+
+/* inline icons do corpo (menores que os slot-icons) */
+.inline-icon { width: 1em; height: 1em; vertical-align: -0.12em; margin-right: 0.45ch; }
+
+/* small variation class se quiser um ícone ligeiramente maior */
+.item-xx { width: 1.25em; height: 1.25em; }
+
+/* page-nav coerente com o restante */
+.page-nav a {
+  background: rgba(255,255,255,0.03);
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: white;
+  text-decoration:none;
+  font-weight:600;
+}
+
+/* responsividade: mantém consistência com outras páginas */
+@media (max-width: 980px) {
+  .equip-window { max-width: 92%; padding:10px; }
+  .equip-body { grid-template-columns: 200px 1fr; }
+  .slots-col-right { display: none; } /* simplifica no mobile */
+  .char-frame { width: 220px; height: 280px; }
+  .char-sprite-bg { width: 170px; height: 210px; }
+}
+
+@media (max-width: 720px) {
+  .equip-body { grid-template-columns: 1fr; }
+  .slots-col, .slots-col-right { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-start; width:100%; max-width:100%; }
+  .slot-box { width:48px; height:48px; }
+  .slot-icon { width:30px; height:30px; }
+  .char-frame { width: 200px; height: 260px; margin: 0 auto 8px auto; }
+}
+
+/* Remove o tooltip dos placeholders */
+.slot-icon.placeholder + .ro-tooltip-box,
+.slot-icon.placeholder ~ .ro-tooltip-box {
+    display: none !important;
+}
+
+.slot-row .placeholder {
+    pointer-events: none !important; /* bloqueia hover/click */
+}

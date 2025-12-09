@@ -1,233 +1,327 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Introdução - Mestre Estelar</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="menu.css">
-<style>
-body {
-    background: url('/assets/ui/backgroundteste2.jpeg') no-repeat center center fixed;
-    background-size: cover;
-    color: white; /* se quiser manter */
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Introdução - Mestre Estelar</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="menu.css">
+  <style>
+    :root{
+      --accent:#1e90ff;
+      --accent-hover:#00b7ff;
+      --card-bg: rgba(0,0,0,0.45);
+      --card-border: rgba(255,255,255,0.06);
+      --muted: #dcdcdc;
+    }
+
+    html,body{
+      height:100%;
+      margin:0;
+      padding:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    body {
+      background: url('/assets/ui/backgroundteste2.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      line-height:1.45;
+    }
+
     a {
-        color: #1e90ff; /* azul vibrante (DodgerBlue) */
-        text-decoration: none; /* remove sublinhado */
-        font-weight: 600; /* deixa mais forte */
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    a:hover { color: var(--accent-hover); text-decoration: underline; }
+    a:visited { color: var(--accent); }
+
+    .content{
+      max-width: 980px;
+      margin: 36px auto;
+      padding: 20px;
+      box-sizing: border-box;
+      background: linear-gradient(rgba(0,0,0,0.28), rgba(0,0,0,0.18));
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.03);
+      backdrop-filter: blur(6px);
     }
 
-    a:hover {
-        color: #00b7ff; /* azul claro no hover */
-        text-decoration: underline; /* volta o sublinhado no hover se quiser */
-    }
+    h1 { margin-top:0; font-size:1.6rem; }
+    h2 { margin: 18px 0 8px; font-size:1.15rem; }
+    h3 { margin: 10px 0 6px; font-size:1rem; }
 
-    a:visited {
-        color: #1e90ff; /* mantém a mesma cor mesmo após visitar */
-    }
+    p { color: var(--muted); margin: 10px 0; }
+    li { color: var(--muted); margin: 6px 0; }
 
-
-@media (max-width: 768px) {
-    body.intro-page .content {
-        max-width: 100%;
-        width: 100%;
-        margin: 80px 12px 24px; /* topo, lados, baixo */
-        padding: 16px;
-        box-sizing: border-box;
-        display: block;
+    /* layout .tk (texto + imagem) */
+    .tk {
+      display:flex;
+      align-items:center;
+      gap:16px;
+      margin-top:8px;
+      flex-wrap:wrap;
     }
+    .tk .texto { flex:1 1 320px; min-width: 220px; }
+    .tk .art { flex: 0 0 220px; display:flex; justify-content:center; }
+    .tk .art img { width: 220px; height: auto; object-fit:contain; border-radius:8px; }
 
-    body.intro-page .gif-row {
-        flex-direction: column;
+    /* gif rows */
+    .gif-row {
+      display:flex;
+      gap:18px;
+      margin-top:10px;
+      flex-wrap:wrap;
     }
+    .gif-box {
+      flex:1 1 320px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 10px;
+      border-radius: 8px;
+      overflow:hidden;
+    }
+    .gif-box img { max-width:100%; height:auto; display:block; margin: 8px 0; }
 
-    body.intro-page .gif-box {
-        width: 100%;
-    }
+    /* inline icons */
+.inline-icon {
+  display: inline-block;
+  width: 1em;      /* igual ao tamanho da fonte atual */
+  height: 1em;
+  object-fit: contain;
+  vertical-align: -0.15em;
+  margin-right: 6px;
 }
 
-.tk {
-    display: flex;
-    align-items: center;      /* centraliza texto e imagem verticalmente */
-    gap: 12px;
+    /* page-nav */
+    .page-nav {
+      display:flex;
+      justify-content:space-between;
+      gap: 12px;
+      margin-top: 18px;
+      align-items:center;
+    }
+    .page-nav a {
+      background: rgba(255,255,255,0.03);
+      padding: 10px 14px;
+      border-radius: 8px;
+      color: white;
+      text-decoration:none;
+      font-weight:600;
+    }
+
+    /* responsiveness */
+    @media (max-width: 980px) {
+      .content { margin: 18px; padding: 14px; border-radius:10px; }
+      h1 { font-size:1.35rem; }
+      h2 { font-size:1.05rem; }
+      .tk { flex-direction: column-reverse; align-items:flex-start; gap:10px; }
+      .tk .art { width:100%; display:block; text-align:center; }
+      .tk .art img { width:160px; }
+      .gif-row { flex-direction:column; gap:12px; }
+      .gif-box { padding:8px; }
+      .page-nav { flex-direction:column; align-items:stretch; }
+      .page-nav a { text-align:center; }
+      .content img { max-width:100%; height:auto; }
+    }
+
+    /* word breaking / overflow safety */
+    .content, .gif-box { word-wrap: break-word; overflow-wrap:break-word; }
+
+    /* força ícones inline a seguirem o tamanho da fonte onde estiverem */
+.content .inline-icon,
+.content h3 .inline-icon,
+.content h2 .inline-icon,
+.content h1 .inline-icon,
+.gif-box h3 .inline-icon {
+  display: inline-block;
+  width: 1.50em !important;        /* igual ao tamanho da fonte do elemento pai */
+  height: 1.50em !important;
+  max-width: 100em !important;
+  max-height: 100em !important;
+  object-fit: contain;
+  vertical-align: -0.12em !important;
+  margin-right: 0.45ch !important;
 }
 
-.tk .texto {
-    flex: 1;                  /* texto ocupa todo o espaço disponível */
+/* variação se quiser um pouco menor dentro de títulos grandes */
+.content h3 .inline-icon {
+  width: 1.30em !important;
+  height: 1.30em !important;
+  vertical-align: -0.70em !important;
 }
 
-.tk img {
-    height: 60px;             /* deixe fixo (recomendado) */
-    width: auto;
-    object-fit: contain;
-}
-
-</style>
-
-
+  </style>
 </head>
 
 <body class="intro-page">
-<div id="menu-container"></div>
-<script src="menu.js"></script>
+  <div id="menu-container"></div>
+  <script src="menu.js"></script>
 
-<div class="content">
+  <div class="content">
 
     <!-- INTRODUÇÃO -->
-<section>
-        <div class="texto">
-            <h1>📘 Introdução & Mecânicas</h1>
-            <div class="tk">
-            <p>
-                O Mestre Estelar é uma classe expandida muito versátil que possui um burst de dano tremendo,
-                podendo usufruir da mecânica de <b><a href="https://pathofisgard.com.br/wiki/Overkill" target="_blank">overkill</a></b> 
-                (25% de drop em hit kill) em conteúdos end-game.
-                <br><br>
-                Embora muito forte, não recomendo o mesmo para ser seu <b>primeiro personagem</b>,
-                devido à sua complexidade de jogabilidade, falta de equipamentos e sustain. Para começar, é muito
-                mais prático começar de Desordeiro, e montar um Mestre Estelar depois de estar com recursos para sustentar seu gasto de SP.
-            </p>
-            <img src="assets/ui/200px-Arte_Mestres_Estelares.png" alt="" style="width:400px; height:400px; vertical-align:middle; margin-right:6px;">
-        </div>
-    </div>
-</section>
+    <section>
+      <div class="texto">
+        <h1>📘 Introdução & Mecânicas</h1>
 
+        <div class="tk">
+          <div class="texto">
+            <p>
+              O Mestre Estelar é uma classe expandida muito versátil que possui um burst de dano tremendo,
+              podendo usufruir da mecânica de <b><a href="https://pathofisgard.com.br/wiki/Overkill" target="_blank">overkill</a></b>
+              (25% de drop em hit kill) em conteúdos end-game.
+              <br><br>
+              Embora muito forte, não recomendo o mesmo para ser seu <b>primeiro personagem</b>,
+              devido à sua complexidade de jogabilidade, falta de equipamentos e sustain. Para começar, é muito
+              mais prático começar de Desordeiro, e montar um Mestre Estelar depois de estar com recursos para sustentar seu gasto de SP.
+            </p>
+          </div>
+
+          <div class="art">
+            <img src="assets/ui/200px-Arte_Mestres_Estelares.png" alt="Arte Mestre Estelar">
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- PONTOS FORTES -->
     <section>
-        <h2>🔼 Pontos Fortes</h2>
-        <p>
-            • Escala muito bem graças aos buffs do milagre, união e outros da classe não sendo necessário gears end-game para ter um bom desempenho.<br><br>
-            • Classe extremamente móvel graças ao <img src="assets/ui/Chute_Aéreo.png" alt="" style="width:25px; height:25px; vertical-align:middle; margin-right:6px;">
-            <b>Chute Aéreo</b>.<br><br>
-            • Kit de habilidades muito completo, excelente para farmar conteúdos end-game ou Instâncias como 
-            <a 
-            href="https://pathofisgard.com.br/wiki/Vila_dos_Porings" target="_blank">
-            <img src="assets/ui/poringão.png" alt="" style="width:25px; height:25px; vertical-align:middle; margin-right:6px;">Vila Poring</a> ou 
-            <a href="https://pathofisgard.com.br/wiki/Caverna_do_Polvo" target="_blank">
-                <img src="assets/ui/polvinho.png" alt="" style="width:25px; height:25px; vertical-align:middle; margin-right:6px;">Caverna do Polvo</a>.
-        </p>
+      <h2>🔼 Pontos Fortes</h2>
+      <p>
+        • Escala muito bem graças aos buffs do milagre, união e outros da classe não sendo necessário gears end-game para ter um bom desempenho.<br><br>
+        • Classe extremamente móvel graças ao <img class="inline-icon" src="assets/ui/Chute_Aéreo.png" alt="Chute Aéreo">
+        <b>Chute Aéreo</b>.<br><br>
+        • Kit de habilidades muito completo, excelente para farmar conteúdos end-game ou Instâncias como
+        <a href="https://pathofisgard.com.br/wiki/Vila_dos_Porings" target="_blank">
+          <img class="inline-icon" src="assets/ui/poringão.png" alt="Vila Poring">Vila Poring</a> ou
+        <a href="https://pathofisgard.com.br/wiki/Caverna_do_Polvo" target="_blank">
+          <img class="inline-icon" src="assets/ui/polvinho.png" alt="Caverna do Polvo">Caverna do Polvo</a>.
+      </p>
     </section>
 
     <!-- PONTOS FRACOS -->
     <section>
-        <h2>🔻 Pontos Fracos</h2>
-        <p>
-            • Forte dependência de <b>recarga (1s)</b> para causar dano consistente.<br><br>
-            • Alto consumo de sustain (xaropes, itens de drain como <a href="https://www.pathofisgard.com.br/database/item/5208" target="_blank">
-                <img src="assets/ui/rideword.png" alt="" style="width:25px; height:25px; vertical-align:middle; margin-right:6px;">rideword</a>).<br><br>
-            • Ideal ter um dual para se auto-linkar.<br><br>
-            • Se tomar dispell, it's over. 💀
-        </p>
+      <h2>🔻 Pontos Fracos</h2>
+      <p>
+        • Forte dependência de <b>recarga (1s)</b> para causar dano consistente.<br><br>
+        • Alto consumo de sustain (xaropes, itens de drain como <a href="https://www.pathofisgard.com.br/database/item/5208" target="_blank">
+          <img class="inline-icon" src="assets/ui/rideword.png" alt="rideword">rideword</a>).<br><br>
+        • Ideal ter um dual para se auto-linkar.<br><br>
+        • Se tomar dispell, it's over. 💀
+      </p>
     </section>
 
     <!-- BUILD PROPOSTA -->
     <section>
-        <h2>Habilidades importantes</h2>
-        <p>
-            Abaixo, algumas das habilidades das quais serão mais utilizadas em sua jogatina.<br>
-            Nas seções de <a href="habilidades.html">📜 Habilidades</a>,
-            <a href="build.html">📊 Atributos</a> e <a href="equip/equipamentos.html">🛠️ Builds e Progressão</a>,
-             falarei mais sobre, com detalhes.<br>
-        </p>
+      <h2>Habilidades importantes</h2>
+      <p>
+        Abaixo, algumas das habilidades das quais serão mais utilizadas em sua jogatina.<br>
+        Nas seções de <a href="habilidades.html">📜 Habilidades</a>,
+        <a href="build.html">📊 Atributos</a> e <a href="equip/equipamentos.html">🛠️ Builds e Progressão</a>,
+        falarei mais sobre, com detalhes.
+      </p>
 
-        <div class="gif-row">
-            <div class="gif-box">
-                <h3>
-                <img src="assets/ui/Eclipse_Lunar.png" alt="" style="width:25px; height:25px; vertical-align:middle; margin-right:6px;">
-                 Eclipse Lunar
-                </h3>
-                <img src="https://browiki.org/images/a/ad/Eclipse_Lunar.gif" alt="Eclipse Lunar">
-                <div style="text-align: left; margin: 10px auto 0; line-height: 1.4; padding-left: 18px;">
-                <p>Habilidade inicial do combo, assim que utilizada, permite o uso de Chute Lunar.</p>
-                </div>
-            </div>
-
-            <div class="gif-box">
-                <h3>
-                <img src="assets/ui/Chute_Lunar.png" alt="" style="width:25px; height:25px; vertical-align:middle; margin-right:6px;">
-                Chute Lunar
-                </h3>
-                <img src="https://browiki.org/images/a/a2/Chute_Lunar.gif" alt="Chute Lunar">
-                <p>Habilidade principal causadora do dano na build.</p>
-            </div>
+      <div class="gif-row">
+        <div class="gif-box">
+          <h3>
+            <img class="inline-icon" src="assets/ui/Eclipse_Lunar.png" alt="Eclipse Lunar"> Eclipse Lunar
+          </h3>
+          <img src="https://browiki.org/images/a/ad/Eclipse_Lunar.gif" alt="Eclipse Lunar">
+          <div style="text-align:left; margin-top:6px; line-height:1.4;">
+            <p>Habilidade inicial do combo, assim que utilizada, permite o uso de Chute Lunar.</p>
+          </div>
         </div>
+
+        <div class="gif-box">
+          <h3>
+            <img class="inline-icon" src="assets/ui/Chute_Lunar.png" alt="Chute Lunar"> Chute Lunar
+          </h3>
+          <img src="https://browiki.org/images/a/a2/Chute_Lunar.gif" alt="Chute Lunar">
+          <div style="text-align:left; margin-top:6px; line-height:1.4;">
+            <p>Habilidade principal causadora do dano na build.</p>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- LINK e UNIÃO -->
     <section>
-        <div class="gif-row">
-            <div class="gif-box">
-                <h3>
-                <img src="assets/ui/Espírito_do_Mestre_Taekwon.png" alt="" style="width:25px; height:25px; vertical-align:middle; margin-right:6px;">
-                Espírito do Mestre Taekwon</h3>
-                <img src="https://browiki.org/images/4/45/Esp%C3%ADrito_do_Mestre_Taekwon.gif" alt="Espírito do Mestre">
-                <div style="text-align: left; margin: 10px auto 0; line-height: 1.4; padding-left: 18px;">
-                <p>Importante skill utilizada pelos Linkers, para poder utilizar União Solar, Lunar e Estelar.</p>
-                </div>
-            </div>
-
-            <div class="gif-box">
-                <h3>
-                <img src="assets/ui/União_Solar,_Lunar_e_Estelar.png" alt="" style="width:25px; height:25px; vertical-align:middle; margin-right:6px;">    
-                União Solar, Lunar e Estelar</h3>
-                <img src="https://browiki.org/images/6/66/Uni%C3%A3o_Solar%2C_Lunar_e_Estelar.gif" alt="União Solar, Lunar e Estelar">
-                <p>
-                    <div style="text-align: left; margin: 10px auto 0; line-height: 1.4; padding-left: 18px;">  
-                    <b>Quase que obrigatório</b>, pois é o que torna a classe versátil para lidar com
-                    monstros que possuem esquiva alta, AgiUp de MvPs, etc.<br>
-                    <b>Efeitos da União:</b><br>
-                    • Cura recebida -75%.<br>
-                    • Aumento da velocidade de movimento ao flutuar do chão.<br>
-                    • Ataques físicos ignoram a esquiva do alvo.<br>
-                    • Ataques físicos sempre serão críticos.<br>
-                    • Regeneração natural de HP e SP -100%.<br>
-                    • Ao realizar ataques físicos contra monstros, cada ataque drenará 2% do seu HP.<br>
-                    Ao morrer, não perde o efeito.<br>
-                    </div>
-            </div>
+      <div class="gif-row">
+        <div class="gif-box">
+          <h3>
+            <img class="inline-icon" src="assets/ui/Espírito_do_Mestre_Taekwon.png" alt="Espírito do Mestre Taekwon">
+            Espírito do Mestre Taekwon
+          </h3>
+          <img src="https://browiki.org/images/4/45/Esp%C3%ADrito_do_Mestre_Taekwon.gif" alt="Espírito do Mestre">
+          <div style="text-align:left; margin-top:6px; line-height:1.4;">
+            <p>Importante skill utilizada pelos Linkers, para poder utilizar União Solar, Lunar e Estelar.</p>
+          </div>
         </div>
+
+        <div class="gif-box">
+          <h3>
+            <img class="inline-icon" src="assets/ui/União_Solar,_Lunar_e_Estelar.png" alt="União">
+            União Solar, Lunar e Estelar
+          </h3>
+          <img src="https://browiki.org/images/6/66/Uni%C3%A3o_Solar%2C_Lunar_e_Estelar.gif" alt="União">
+          <div style="text-align:left; margin-top:6px; line-height:1.4;">
+            <p>
+              <b>Quase que obrigatório</b>, pois é o que torna a classe versátil para lidar com
+              monstros que possuem esquiva alta, AgiUp de MvPs, etc.
+            </p>
+            <p style="margin-top:6px;">
+              <b>Efeitos da União:</b><br>
+              • Cura recebida -75%.<br>
+              • Aumento da velocidade de movimento ao flutuar do chão.<br>
+              • Ataques físicos ignoram a esquiva do alvo.<br>
+              • Ataques físicos sempre serão críticos.<br>
+              • Regeneração natural de HP e SP -100%.<br>
+              • Ao realizar ataques físicos contra monstros, cada ataque drenará 2% do seu HP.
+            </p>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- LINK e UNIÃO -->
+    <!-- BRISA e MILAGRE -->
     <section>
-        <div class="gif-row">
-            <div class="gif-box">
-                <h3>
-                <img src="assets/ui/Brisa_Leve.png" alt="" style="width:25px; height:25px; vertical-align:middle; margin-right:6px;">
-                Brisa Leve</h3>
-                <img src="https://browiki.org/images/2/2e/Brisa_Leve.gif" alt="Brisa Leve">
-                <div style="text-align: left; margin: 10px auto 0; line-height: 1.4; padding-left: 18px;">
-                <p>Skill importantíssima, que permite escolher 1 dentre 7 elementos para atacar.</p>
-                </div>
-            </div>
-
-            <div class="gif-box">
-                <h3>
-                <img src="assets/ui/União_Solar,_Lunar_e_Estelar.png" alt="" style="width:25px; height:25px; vertical-align:middle; margin-right:6px;">    
-                Milagre Solar, Lunar e Estelar</h3>
-                <img src="https://browiki.org/images/c/cd/Milagre_Solar%2C_Lunar_e_Estelar.gif" alt="Milagre Solar, Lunar e Estelar">
-                <p>
-                    <div style="text-align: left; margin: 10px auto 0; line-height: 1.4; padding-left: 18px;">  
-                    Literalmente, <b>Milagre</b>, é o que torna o Mestre Estelar tão forte, praticamente dobrando seu dano, pois
-                    todos os inimigos no mapa se tornam alvos estelares (efeito da percepção).<br>
-                    Dura <b>1 hora</b> e se redefine com muita frequência.<br>
-                    <b>Porém, o efeito será perdido se você mudar de mapa. <br>
-                    Deslogar/morrer não interfere.</b>
-                    </div>
-            </div>
+      <div class="gif-row">
+        <div class="gif-box">
+          <h3>
+            <img class="inline-icon" src="assets/ui/Brisa_Leve.png" alt="Brisa Leve"> Brisa Leve
+          </h3>
+          <img src="https://browiki.org/images/2/2e/Brisa_Leve.gif" alt="Brisa Leve">
+          <div style="text-align:left; margin-top:6px; line-height:1.4;">
+            <p>Skill importantíssima, que permite escolher 1 dentre 7 elementos para atacar.</p>
+          </div>
         </div>
-    </section>      
 
+        <div class="gif-box">
+          <h3>
+            <img class="inline-icon" src="assets/ui/União_Solar,_Lunar_e_Estelar.png" alt="Milagre"> Milagre Solar, Lunar e Estelar
+          </h3>
+          <img src="https://browiki.org/images/c/cd/Milagre_Solar%2C_Lunar_e_Estelar.gif" alt="Milagre">
+          <div style="text-align:left; margin-top:6px; line-height:1.4;">
+            <p>
+              Literalmente, <b>Milagre</b>, é o que torna o Mestre Estelar tão forte, praticamente dobrando seu dano, pois
+              todos os inimigos no mapa se tornam alvos estelares (efeito da percepção). Dura <b>1 hora</b> e se redefine com muita frequência.
+            </p>
+            <p style="margin-top:6px;"><b>Porém, o efeito será perdido se você mudar de mapa. Deslogar/morrer não interfere.</b></p>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- RODAPÉ DE NAVEGAÇÃO -->
     <div class="page-nav">
-        <a class="prev" href="index.html">← Início</a>
-        <a class="next" href="jogabilidade.html">Leveling →</a>
+      <a class="prev" href="index.html">← Início</a>
+      <a class="next" href="jogabilidade.html">Leveling →</a>
     </div>
 
-</div> <!-- fim content -->
-
+  </div> <!-- fim content -->
 </body>
 </html>

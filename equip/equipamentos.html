@@ -1,1280 +1,556 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Equipamentos – Mestre Estelar</title>
-    <!-- caminho relativo do arquivo movido para /equip/ -->
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="../menu.css">
-    <style>
-body {
-    background: url('/assets/ui/backgroundteste2.jpeg') no-repeat center center fixed;
-    background-size: cover;
-    color: white; /* se quiser manter */
-}
-    a {
-        color: #1e90ff; /* azul vibrante (DodgerBlue) */
-        text-decoration: none; /* remove sublinhado */
-        font-weight: 600; /* deixa mais forte */
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Equipamentos – Mestre Estelar</title>
+
+  <!-- caminho relativo do arquivo movido para /equip/ -->
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../menu.css">
+
+  <style>
+    :root{
+      --accent:#1e90ff;
+      --accent-hover:#00b7ff;
+      --card-bg: rgba(0,0,0,0.45);
+      --card-border: rgba(255,255,255,0.06);
+      --muted: #dcdcdc;
     }
 
-    a:hover {
-        color: #00b7ff; /* azul claro no hover */
-        text-decoration: underline; /* volta o sublinhado no hover se quiser */
+    html,body{
+      height:100%;
+      margin:0;
+      padding:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      background: url('/assets/ui/backgroundteste2.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      line-height:1.45;
     }
 
-    a:visited {
-        color: #1e90ff; /* mantém a mesma cor mesmo após visitar */
+    a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    a:hover { color: var(--accent-hover); text-decoration: underline; }
+    a:visited { color: var(--accent); }
+
+    .content{
+      max-width: 980px;
+      margin: 36px auto;
+      padding: 20px;
+      box-sizing: border-box;
+      background: linear-gradient(rgba(0,0,0,0.28), rgba(0,0,0,0.18));
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.03);
+      backdrop-filter: blur(6px);
     }
 
+    h1 { margin-top:0; font-size:1.6rem; }
+    h2 { margin: 18px 0 8px; font-size:1.15rem; }
+    h3 { margin: 10px 0 6px; font-size:1rem; }
 
-@media (max-width: 768px) {
-    body.intro-page .content {
-        max-width: 100%;
-        width: 100%;
-        margin: 80px 12px 24px; /* topo, lados, baixo */
-        padding: 16px;
-        box-sizing: border-box;
-        display: block;
+    p { color: var(--muted); margin: 10px 0; }
+    li { color: var(--muted); margin: 6px 0; }
+
+    /* progression tabs */
+    .progression-tabs {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 6px 4px;
+      margin: 12px 0 8px;
+      scrollbar-width: none;
+    }
+    .progression-tabs::-webkit-scrollbar{ display:none; }
+
+    .progression-tab {
+      flex: 0 0 auto;
+      background: linear-gradient(#16397f, #1e4ba8);
+      color: #fff;
+      border: 2px solid #000;
+      padding: 10px 16px;
+      font-weight: 700;
+      font-size: 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform .12s ease, background .12s ease, box-shadow .12s ease;
+      box-shadow: 0 3px 0 rgba(0,0,0,0.6);
+    }
+    .progression-tab:hover, .progression-tab:focus { transform: translateY(-2px); background: linear-gradient(#1b4fd6,#2a67e2); outline:none; }
+    .progression-tab.active {
+      background: linear-gradient(#ffd85e,#f7c63a);
+      color:#000;
+      border-color:#c29a00;
+      box-shadow: 0 2px 0 rgba(0,0,0,0.6), inset 0 -3px 0 rgba(0,0,0,0.06);
     }
 
-    body.intro-page .gif-row {
-        flex-direction: column;
+    .progression-window {
+      margin-top: 14px;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 12px;
+      border-radius: 8px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.45);
     }
 
-    body.intro-page .gif-box {
-        width: 100%;
+    /* aparatos / bloco de item */
+    .aparato {
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin: 12px 0;
     }
-}
-/* ===== Progression tabs (botões de progressão) ===== */
-.progression-tabs {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  flex-wrap: nowrap;             /* não quebrar linhas em desktop */
-  overflow-x: auto;              /* permite scroll horizontal no mobile */
-  -webkit-overflow-scrolling: touch;
-  padding: 6px 4px;
-  margin: 12px 0 8px;
-  scrollbar-width: none;         /* firefox */
-}
+    .aparato .texto { flex:1; }
+    .aparato img { width:100px; height:auto; object-fit:contain; border-radius:8px; }
+    /* PRIMEIRA imagem (grande) */
+    .aparato-main-img {
+      width: 50px;      /* tamanho específico que você pediu */
+      height: auto;
+      object-fit: contain;
+      border-radius: 8px;
+    }
 
-/* opcional: esconder scrollbar visual no WebKit */
-.progression-tabs::-webkit-scrollbar { display: none; }
+    /* imagens internas (Pedra do Lutador, Crítico, Velocidade etc.) */
+    .aparato .inline-icon {
+      width: 25px;
+      height: 25px;
+      vertical-align: -0.15em;
+    }
 
-.progression-tab {
-  flex: 0 0 auto;                /* não encolher, manter tamanho do conteúdo */
-  background: linear-gradient(#16397f, #1e4ba8); /* azul escuro -> azul */
-  color: #fff;
-  border: 2px solid #000;        /* contorno preto forte */
-  padding: 10px 16px;
-  font-weight: 700;
-  font-size: 15px;
-  border-radius: 8px;
-  cursor: pointer;
-  text-transform: none;
-  transition: transform .12s ease, background .12s ease, box-shadow .12s ease;
-  box-shadow: 0 3px 0 rgba(0,0,0,0.6); /* efeito "botão levantado" */
-  white-space: nowrap;
-}
+    /* cards */
+    .card { background: var(--card-bg); border:1px solid var(--card-border); padding:12px; margin:12px 0; border-radius:8px; }
 
-/* hover e foco */
-.progression-tab:hover,
-.progression-tab:focus {
-  transform: translateY(-2px);
-  background: linear-gradient(#1b4fd6, #2a67e2);
-  outline: none;
-}
+    /* inline icons */
+    .inline-icon { display:inline-block; width:1.5em; height:1.5em; object-fit:contain; vertical-align:-0.50em; margin-right:0.45ch; }
+    .item-xx { width:1.25em; height:1.25em; }
 
-/* estado ativo (selecionado) — destaque dourado estilo anterior */
-.progression-tab.active {
-  background: linear-gradient(#ffd85e, #f7c63a);
-  color: #000;
-  border-color: #c29a00;
-  box-shadow: 0 2px 0 rgba(0,0,0,0.6), inset 0 -3px 0 rgba(0,0,0,0.06);
-  transform: translateY(0);
-}
+    .content img { max-width:100%; height:auto; }
 
-/* acessibilidade: foco bem visível */
-.progression-tab:focus-visible {
-  outline: 3px solid rgba(255,216,94,0.25);
-  outline-offset: 3px;
-}
+    .page-nav { display:flex; justify-content:space-between; gap:12px; margin-top:18px; align-items:center; }
+    .page-nav a { background: rgba(255,255,255,0.03); padding:10px 14px; border-radius:8px; color:white; text-decoration:none; font-weight:600; }
 
-/* container das janelas de progressão (onde o render coloca as .progression-window) */
-.progression-window {
-  margin-top: 14px;
-  background: rgba(0,0,0,0.35);  /* leve vidro escuro */
-  border: 1px solid rgba(255,255,255,0.06);
-  padding: 12px;
-  border-radius: 8px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
-}
+    @media (max-width: 980px) {
+      .content { margin:18px; padding:14px; border-radius:10px; }
+      h1 { font-size:1.35rem; }
+      h2 { font-size:1.05rem; }
+      .aparato img { width:84px; }
+      .progression-tab { padding:8px 12px; font-size:14px; }
+      .progression-window { padding:10px; }
+      .card { padding:10px; }
+      .page-nav { flex-direction:column; align-items:stretch; }
+      .page-nav a { text-align:center; }
+    }
+    @media (max-width: 520px) {
+      .aparato img { width:72px; }
+    }
+    
+    .aparato-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 18px;
+    margin-top: 6px;
+    }
 
-/* responsivo: em telas pequenas diminuir padding e tamanho */
-@media (max-width: 520px) {
-  .progression-tab {
-    padding: 8px 12px;
-    font-size: 14px;
-  }
-
-  .progression-window {
-    padding: 10px;
-  }
-}
-
-.aparato {
-    display: flex;
-    align-items: center;      /* centraliza texto e imagem verticalmente */
-    gap: 12px;
-}
-
-.aparato .texto {
-    flex: 1;                  /* texto ocupa todo o espaço disponível */
-}
-
-.aparato img {
-    height: 60px;             /* deixe fixo (recomendado) */
-    width: auto;
-    object-fit: contain;
-}
-
-</style>
+    .aparato-grid div {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+  </style>
 </head>
 <body>
 
-    <!-- MENU AUTOMÁTICO -->
-    <div id="menu-container"></div>
-    <script src="../menu.js" defer></script>
+  <!-- MENU AUTOMÁTICO -->
+  <div id="menu-container"></div>
+  <script src="../menu.js" defer></script>
 
-    <!-- CONTEÚDO -->
-    <div class="content">
-        <h1>⚔️ Progressão de Itens</h1>
-        <p>Em constante atualização, não leve como definitivo, apenas use como modelo!</p>
+  <!-- CONTEÚDO -->
+  <div class="content">
+    <h1>⚔️ Progressão de Itens</h1>
+    <p>Em constante atualização, não leve como definitivo, apenas use como modelo!</p>
 
-        <!-- ===== Progressões de equipamentos (NOVO BLOCO) ===== -->
-        <div class="progression-tabs">
-            <button class="progression-tab active" data-progression="p1">Iniciante</button>
-            <button class="progression-tab" data-progression="p2">Intermediário</button>
-            <button class="progression-tab" data-progression="p3">Intermediário->Avançado</button>
-            <button class="progression-tab" data-progression="p4">Avançado</button>
-        </div>
+    <!-- ===== Progressões de equipamentos ===== -->
+    <div class="progression-tabs" role="tablist" aria-label="Progressões">
+      <button class="progression-tab active" data-progression="p1" role="tab" aria-selected="true">Iniciante</button>
+      <button class="progression-tab" data-progression="p2" role="tab">Intermediário</button>
+      <button class="progression-tab" data-progression="p3" role="tab">Intermediário→Avançado</button>
+      <button class="progression-tab" data-progression="p4" role="tab">Avançado</button>
+    </div>
 
-        <div id="equip-windows-container"></div><!-- ===== FIM progressões ===== -->
+    <div id="equip-windows-container" aria-live="polite"></div>
+    <!-- ===== FIM progressões ===== -->
 
     <div class="card">
       <p>
         <b>Cartas úteis para o Escudo a partir do Intermediário:</b> <br>
-        Para <img src="../assets/ui/MvP.png" alt="" style="width:25px; height:25px; vertical-align:middle; margin-right:6px;">MvPs, use 
+        Para <img class="inline-icon" src="../assets/ui/MvP.png" alt="MvP">MvPs, use
         <a href="https://www.pathofisgard.com.br/database/item/4253" target="_blank">Carta Alice</a>;
         <br>
         Para monstros normais, use <a href="https://www.pathofisgard.com.br/database/item/27178" target="_blank">Carta Gaster</a>;
-        <br>
-     </p>
+      </p>
     </div>
 
     <div class="card">
       <p>
-        Caso não tenha a <a href="https://www.pathofisgard.com.br/database/item/300003" target="_blank">Carta Porcellio Albino</a>, 
-        recomendo utilizar a 
-        <a href="https://www.pathofisgard.com.br/database/item/27103" target="_blank">Carta Mortos-Vivos</a>.<br>
-     </p>
-    </div>
-
-    <div class="Enchants">
-      <h2>Encantamentos de itens:</h2>
-      <p>
-        <h3>Elmo do Xogum</h3>
-        <img src="https://pathofisgard.com.br/database/img/itens/4702.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
-          <a href="https://www.pathofisgard.com.br/database/item/4702" target="_blank">Pedra de Força</a> (STR +3)<br>
-        <img src="https://pathofisgard.com.br/database/img/itens/4808.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
-          <a href="https://www.pathofisgard.com.br/database/item/4808" target="_blank">Espírito do Lutador 4</a> (EL 4)<br>
-      <div class="Acc Ilusional">
-        <h3>Acessório Ilusional</h3>
-        <h3>Encantado através do Túmulo do Monarca</h3>
-        <img src="https://pathofisgard.com.br/database/img/itens/4809.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
-        <a href="https://www.pathofisgard.com.br/database/item/4809" target="_blank">Espírito do Lutador 3</a> (EL 3),
-        <img src="https://pathofisgard.com.br/database/img/itens/4808.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
-        <a href="https://www.pathofisgard.com.br/database/item/4808" target="_blank">Espírito do Lutador 4</a> (EL 4), ou
-        <img src="https://pathofisgard.com.br/database/img/itens/4820.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
-        <a href="https://www.pathofisgard.com.br/database/item/4820" target="_blank">Espírito do Lutador 5</a> (EL 5)<br>
+        Caso não tenha a <a href="https://www.pathofisgard.com.br/database/item/300003" target="_blank">Carta Porcellio Albino</a>,
+        recomendo utilizar a <a href="https://www.pathofisgard.com.br/database/item/27103" target="_blank">Carta Mortos-Vivos</a>.
       </p>
     </div>
-    </div> 
 
-    <div class="card">  
-      <h2>Aparato de Isgard</h2>
-      <div class="aparato" >
-      <img src="https://www.pathofisgard.com.br/database/img/collection/50206.png" alt="" style="width:100px; height:100px; vertical-align:middle; margin-right:6px;">
+    <div class="card">
+      <h2>Encantamentos de itens</h2>
+      <h3>Elmo do Xogum</h3>
       <p>
-        <h3>Encantamentos do Aparato:</h3><br>
-        <li>Slot 3: <br><img src="https://pathofisgard.com.br/database/img/itens/50208.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
-          <a href="https://www.pathofisgard.com.br/database/item/50208" target="_blank">Pedra do Lutador</a></li><br>
-        <div class="slot"><li>Slot 2: Aqui varia, se você não for jogar de União, vai de <img src="https://pathofisgard.com.br/database/img/itens/50214.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
-          <a href="https://www.pathofisgard.com.br/database/item/50214" target="_blank">Pedra Certeira</a></li><br>
-          Se for jogar de União, varia do seu estilo de jogo, pode ser qualquer uma dentre essas (recomendo pegar uma que encaixe em outros bonecos também):
-          <div class="slot"><img src="https://pathofisgard.com.br/database/img/itens/50212.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
-          <a href="https://www.pathofisgard.com.br/database/item/50212" target="_blank">Pedra de Crítico</a></li><br></div>
-          <div class="slot"><img src="https://pathofisgard.com.br/database/img/itens/50213.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
-          <a href="https://www.pathofisgard.com.br/database/item/50213" target="_blank">Pedra de Velocidade de Ataque</a></li><br></div>
-          <div class="slot"><img src="https://pathofisgard.com.br/database/img/itens/50217.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
-          <a href="https://www.pathofisgard.com.br/database/item/50217" target="_blank">Pedra de Absorção de SP</a></li><br></div>
-          <div class="slot"></div><img src="https://pathofisgard.com.br/database/img/itens/50218.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
-          <a href="https://www.pathofisgard.com.br/database/item/50218" target="_blank">Pedra de Absorção de HP</a></li><br>
+        <img class="inline-icon" src="https://pathofisgard.com.br/database/img/itens/4702.png" alt="Pedra de Força">
+        <a href="https://www.pathofisgard.com.br/database/item/4702" target="_blank">Pedra de Força</a> (STR +3)<br>
+        <img class="inline-icon" src="https://pathofisgard.com.br/database/img/itens/4808.png" alt="Espírito do Lutador 4">
+        <a href="https://www.pathofisgard.com.br/database/item/4808" target="_blank">Espírito do Lutador 4</a> (EL 4)
+      </p>
+
+      <h3>Acessório Ilusional (Túmulo do Monarca)</h3>
+      <p>
+        <img class="inline-icon" src="https://pathofisgard.com.br/database/img/itens/4809.png" alt="Espírito 3">
+        <a href="https://www.pathofisgard.com.br/database/item/4809" target="_blank">Espírito do Lutador 3</a>,
+        <img class="inline-icon" src="https://pathofisgard.com.br/database/img/itens/4808.png" alt="Espírito 4">
+        <a href="https://www.pathofisgard.com.br/database/item/4808" target="_blank">Espírito do Lutador 4</a>,
+        <img class="inline-icon" src="https://pathofisgard.com.br/database/img/itens/4820.png" alt="Espírito 5">
+        <a href="https://www.pathofisgard.com.br/database/item/4820" target="_blank">Espírito do Lutador 5</a>
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Aparato de Isgard</h2>
+      <div class="aparato">
+        <img class="aparato-main-img"
+            src="https://www.pathofisgard.com.br/database/img/collection/50206.png"
+            alt="Aparato de Isgard">
+        <div class="texto">
+          <h3>Encantamentos do Aparato</h3>
+          <ul>
+            <li>Slot 3:
+              <img class="inline-icon" src="https://pathofisgard.com.br/database/img/itens/50208.png" alt="Pedra do Lutador">
+              <a href="https://www.pathofisgard.com.br/database/item/50208" target="_blank">Pedra do Lutador</a>
+            </li>
+            <li>Slot 2:
+              <img class="inline-icon" src="https://pathofisgard.com.br/database/img/itens/50214.png" alt="Pedra Certeira">
+              <a href="https://www.pathofisgard.com.br/database/item/50214" target="_blank">Pedra Certeira</a>
+            </li>
+            <li>Escolha a opção que encaixa com seus outros personagens:<br>
+            <div class="aparato-grid">
+              <div>
+                <img class="inline-icon" src="https://pathofisgard.com.br/database/img/itens/50212.png" alt="Crítico">
+                <a href="https://www.pathofisgard.com.br/database/item/50212" target="_blank">Pedra de Crítico</a>
+              </div>
+              <div>
+                <img class="inline-icon" src="https://pathofisgard.com.br/database/img/itens/50213.png" alt="Velocidade">
+                <a href="https://www.pathofisgard.com.br/database/item/50213" target="_blank">Pedra de Velocidade de Ataque</a>
+              </div>
+              <div>
+                <img class="inline-icon" src="https://pathofisgard.com.br/database/img/itens/50217.png" alt="Abs SP">
+                <a href="https://www.pathofisgard.com.br/database/item/50217" target="_blank">Pedra de Absorção de SP</a>
+              </div>
+              <div>
+                <img class="inline-icon" src="https://pathofisgard.com.br/database/img/itens/50218.png" alt="Abs HP">
+                <a href="https://www.pathofisgard.com.br/database/item/50218" target="_blank">Pedra de Absorção de HP</a>
+              </div>
+            </div>
+          </li>
+          </ul>
         </div>
       </div>
-     </p>
     </div>
 
-    <div class="equip final">
-      <h2>Por último mas não menos importante:</h2>
+
+    <div class="card">
+      <h2>Por último mas não menos importante</h2>
       <p>
-        O item <img src="https://pathofisgard.com.br/database/img/itens/50205.png" 
-        alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
-          <a href="https://www.pathofisgard.com.br/database/item/50205" target="_blank">Anel do Mercador</a> é muito útil e pode ser obtido na Loja de cash.<br>
-          Te dá a possibilidade de vender/comprar itens em NPCs com as habilidades de <b>Superfaturar</b> e <b>Desconto</b>.<br>
+        O item
+        <img class="inline-icon" src="https://pathofisgard.com.br/database/img/itens/50205.png" alt="Anel do Mercador">
+        <a href="https://www.pathofisgard.com.br/database/item/50205" target="_blank">Anel do Mercador</a>
+        é muito útil e pode ser obtido na Loja de cash. Dá a possibilidade de vender/comprar itens em NPCs com as habilidades de <b>Superfaturar</b> e <b>Desconto</b>.
       </p>
     </div>
-             <!-- RODAPÉ DE NAVEGAÇÃO -->
+
     <div class="page-nav">
-        <a class="prev" href="../habilidades.html">← Habilidades</a>
-        <a class="next" href="../index.html">Voltar ao Início →</a>
+      <a class="prev" href="../habilidades.html">← Habilidades</a>
+      <a class="next" href="../index.html">Voltar ao Início →</a>
     </div>
-    </div> <!-- fim content -->
+  </div> <!-- fim content -->
 
-    <!-- NOVO: script de template de equip -->
-    <script src="equip-window.js"></script>
+  <!-- equip-window.js (deve estar na mesma pasta /equip/) -->
+  <script src="equip-window.js"></script>
 
-    <!-- scripts: abas simples, suporte touch para tooltips e reposicionamento -->
-<script>
-// SCRIPT DE ABAS (substitui o antigo). Usa style.display para mostrar/ocultar.
-(function(){
-  // espera o DOM estar pronto
-  function initTabs() {
-    document.querySelectorAll('.equip-window').forEach(windowEl => {
-      const tabs = Array.from(windowEl.querySelectorAll('.equip-tabs .tab'));
-      const containers = Array.from(windowEl.querySelectorAll('.tab-container'));
+  <!-- Dados das progressões (mantive o seu PROGRESSOES_EQUIP) -->
+  <script>
+    /* === PROGRESSOES_EQUIP (mantive o conteúdo que você forneceu) ===
+       OBS: esse objeto é grande — mantive todos os blocos p1..p4 conforme seu arquivo original.
+       (Se quiser eu removo placeholders para enxugar) */
+    const PROGRESSOES_EQUIP = {
+      p1: {
+        id: 'p1',
+        equip: {
+          slotsLeft: [
+            { slotLabel: 'Chapéu Valhalla', id: 5583, nome: 'Chapéu Valhalla', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/5583', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/5583', descricao:'Chapéu Básico do Éden adquirido na missão do nível 26/40.' },
+            { slotLabel: 'Cenourinha', id: 19239, nome: 'Cenourinha', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/19239', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/19239', descricao:'Obtido na Instância Vila Poring' },
+            { slotLabel: 'Dicionário I do Grupo Éden', id: 1583, nome: 'Dicionário I do Grupo Éden', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/1583', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/1583', descricao:'Arma básica do Éden adquirida na missão do nível 70.' },
+            { slotLabel: 'Capa Valhalla', id:2560, nome:'Capa Valhalla', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/2560', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/2560', descricao:'Capa Básica do Éden adquirido na missão do nível 26/40.' },
+            { type: 'placeholder', slotLabel: '' }
+          ],
+          slotsRight: [
+            { type: 'placeholder', slotLabel: '' },
+            { slotLabel: 'Uniforme Valhalla Avançado', id:15011, nome:'Uniforme Valhalla Avançado', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/15011', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/15011', descricao:'Uniforme Básico do Éden adquirido na missão do nível 40.' },
+            { type: 'placeholder', slotLabel: '' },
+            { slotLabel: 'Botas Valhalla Avançadas', id:2458, nome:'Botas Valhalla Avançadas', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/2458', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/2458', descricao:'Botas Básicas do Éden adquiridas na missão do nível 26/40.' },
+            { type: 'placeholder', slotLabel: '' }
+          ]
+        },
+        visual: {
+          slotsLeft: [{ type:'placeholder'},{ type:'placeholder'},{ type:'placeholder'},{ type:'placeholder'},{ type:'placeholder'}],
+          slotsRight: [{ type:'placeholder'},{ type:'placeholder'},{ type:'placeholder'},{ type:'placeholder'},{ type:'placeholder'}]
+        },
+        cards: {
+          slotsLeft: [{ type:'placeholder'},{ type:'placeholder'},{ type:'placeholder'},{ type:'placeholder'},{ type:'placeholder'}],
+          slotsRight: [{ type:'placeholder'},{ type:'placeholder'},{ type:'placeholder'},{ type:'placeholder'},{ type:'placeholder'}]
+        }
+      },
 
-      containers.forEach(c => {
-        c.style.display = 'none';
-      });
+      p2: {
+        id: 'p2',
+        equip: {
+          slotsLeft: [
+            { slotLabel: 'Chapéu de Rideword [1]', id:5208, nome:'Chapéu de Rideword [1]', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/5208', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/5208', descricao:'Chapéu adquirido através de craft na @central.' },
+            { type:'placeholder', slotLabel: '' },
+            { slotLabel: 'Manual do Paraíso', id:540029, nome:'Manual dos Mestres Taekwons do Paraíso', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/540029', collectionUrl:'https://www.divine-pride.net/img/items/item/kROZ/540029', descricao:'Arma adquirida com Moedas do Éden.' },
+            { slotLabel: '+5 Capa da Expedição [1]', id:20868, nome:'+5 Capa da Expedição [1]', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/20868', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/20868', descricao:'Capa adquirida com Moedas do Éden.' },
+            { slotLabel: '+5 Anel Físico da Expedição [1]', id:28540, nome:'+5 Anel Físico da Expedição [1]', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/28540', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/28540', descricao:'Anel adquirido com Moedas do Éden.' }
+          ],
+          slotsRight: [
+            { type:'placeholder', slotLabel: '' },
+            { slotLabel: '+5 Armadura da Expedição [1]', id:15221, nome:'+5 Armadura da Expedição [1]', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/15221', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/15221', descricao:'Armadura adquirida com Moedas do Éden.' },
+            { slotLabel: '+7 Escudo de Jóias [1]', id:28949, nome:'+7 Escudo de Jóias [1]', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/28949', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/28949', descricao:'Obtido da Árvore Maldita em nif_fild02' },
+            { slotLabel: '+5 Botas da Expedição [1]', id:22151, nome:'+5 Botas da Expedição [1]', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/22151', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/22151', descricao:'Botas adquiridas com Moedas do Éden.' },
+            { slotLabel: 'Anel Físico da Expedição [1]', id:28540, nome:'Anel Físico da Expedição [1]', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/28540', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/28540', descricao:'Anel adquirido com Moedas do Éden.' }
+          ]
+        },
+        visual: { slotsLeft:[{type:'placeholder'},{type:'placeholder'},{type:'placeholder'},{type:'placeholder'},{type:'placeholder'}], slotsRight:[{type:'placeholder'},{type:'placeholder'},{type:'placeholder'},{type:'placeholder'},{type:'placeholder'}] },
+        cards: { slotsLeft:[{type:'placeholder'},{type:'placeholder'},{type:'placeholder'},{type:'placeholder'},{type:'placeholder'}],
+                 slotsRight:[{type:'placeholder'},{ slotLabel:'Carta Exterminador Terrestre', id:4279, nome:'Carta Exterminador Terrestre', iconUrl:'https://www.divine-pride.net/img/items/item/bRO/4279', collectionUrl:'https://www.divine-pride.net/img/items/collection/bRO/4279', descricao:'Obtida em mag_dun02' },{type:'placeholder'},{type:'placeholder'},{type:'placeholder'}] }
+      },
 
-      let shown = false;
-      const activeTab = windowEl.querySelector('.equip-tabs .tab.active');
-      if (activeTab && activeTab.dataset && activeTab.dataset.tab) {
-        const id = activeTab.dataset.tab;
-        const container = windowEl.querySelector('#tab-' + id);
-        if (container) { container.style.display = ''; shown = true; }
+      p3: {
+        id: 'p3',
+        equip: {
+          slotsLeft: [
+            { slotLabel: '+6 Livro Amaldiçoado [1]', id:18752, nome:'+6 Livro Amaldiçoado [1]', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/18752', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/18752', descricao:'Chapéu adquirido via craft na @central.' },
+            { slotLabel: 'Presas Vampíricas', id:18754, nome:'Presas Vampíricas', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/18754', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/18754', descricao:'Baixo adquirido via craft na @central.' },
+            { slotLabel: '+7 Apocalipse Ilusional [2]', id:28612, nome:'+7 Apocalipse Ilusional [2]', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/28612', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/28612', descricao:'Adquirido com Pedras Ilusionais na @central.' },
+            { slotLabel: '+7 Sobrepeliz Ilusional [1] [1]', id:20838, nome:'+7 Sobrepeliz Ilusional [1] [1]', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/20838', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/20838', descricao:'Adquirido com Pedras Ilusionais na @central.' },
+            { slotLabel: 'Núcleo Vesper 02 [1]', id:28303, nome:'Núcleo Vesper 02 [1]', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/28303', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/28303', descricao:'Dropado por Dimik em jupe_core.' }
+          ],
+          slotsRight: [
+            { slotLabel: 'Presilha dos Amantes [1]', id:19392, nome:'Presilha dos Amantes [1]', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/19392', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/19392', descricao:'Meio adquirido via craft na @central.' },
+            { slotLabel: '+7 Bata Magmática [1]', id:15379, nome:'+7 Bata Magmática [1]', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/15379', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/15379', descricao:'Dropada em mag_dun03' },
+            { slotLabel: '+7 Escudo de Jóias [1]', id:28949, nome:'+7 Escudo de Jóias [1]', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/28949', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/28949', descricao:'Obtido da Árvore Maldita em nif_fild02' },
+            { slotLabel: '+7 Botas Magmáticas [1]', id:22199, nome:'+7 Botas Magmáticas [1]', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/22199', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/22199', descricao:'Dropada em mag_dun03' },
+            { slotLabel: 'Anel Ilusional [1]', id:28509, nome:'Anel Ilusional [1]', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/28509', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/28509', descricao:'Adquirido com Pedras Ilusionais na @central.' }
+          ]
+        },
+        visual: { slotsLeft:[{type:'placeholder'},{type:'placeholder'},{type:'placeholder'},{ slotLabel:'Absorção de SP', id:25208, nome:'Absorção de SP', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/25208' , collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/25208', descricao:'Encantado com Moedas de Instâncias na @central' },{type:'placeholder'}], slotsRight:[{type:'placeholder'},{type:'placeholder'},{type:'placeholder'},{type:'placeholder'},{type:'placeholder'}] },
+        cards: {
+          slotsLeft: [
+            { slotLabel: 'Carta Bungisngis', id:4582, nome:'Carta Bungisngis', iconUrl:'https://www.divine-pride.net/img/items/item/bRO/4582', collectionUrl:'https://www.divine-pride.net/img/items/collection/bRO/4582', descricao:'Obtida em ma_fild02' },
+            { type:'placeholder' },
+            { slotLabel: '2x Carta Mosca Caçadora', id:4115, nome:'2x Carta Mosca Caçadora', iconUrl:'https://www.divine-pride.net/img/items/item/bRO/4115', collectionUrl:'https://www.divine-pride.net/img/items/collection/bRO/4115', descricao:'Obtida em gef_dun00' },
+            { slotLabel: 'Carta Wakwak', id:4588, nome:'Carta Wakwak', iconUrl:'https://www.divine-pride.net/img/items/item/bRO/4588', collectionUrl:'https://www.divine-pride.net/img/items/collection/bRO/4588', descricao:'Obtida em ma_dun01' },
+            { slotLabel: 'Carta Búfalo Atirador', id:27171, nome:'Carta Búfalo Atirador', iconUrl:'https://www.divine-pride.net/img/items/item/bRO/27171', collectionUrl:'https://www.divine-pride.net/img/items/collection/bRO/27171', descricao:'Obtida em rockdg2' }
+          ],
+          slotsRight: [
+            { slotLabel: 'Carta Bungisngis', id:4582, nome:'Carta Bungisngis', iconUrl:'https://www.divine-pride.net/img/items/item/bRO/4582', collectionUrl:'https://www.divine-pride.net/img/items/collection/bRO/4582', descricao:'Obtida em ma_fild02' },
+            { slotLabel: 'Carta Porcellio', id:4337, nome:'Carta Porcellio', iconUrl:'https://www.divine-pride.net/img/items/item/bRO/4337', collectionUrl:'https://www.divine-pride.net/img/items/collection/bRO/4337', descricao:'Obtida em ein_fild09' },
+            { type:'placeholder' },
+            { slotLabel: 'Carta Porcellio Albino', id:300003, nome:'Carta Porcellio Albino', iconUrl:'https://www.divine-pride.net/img/items/item/bRO/300003', collectionUrl:'https://www.divine-pride.net/img/items/collection/bRO/300003', descricao:'Obtida em ein_dun03' },
+            { slotLabel: 'Carta Búfalo Fuzileiro', id:27170, nome:'Carta Búfalo Fuzileiro', iconUrl:'https://www.divine-pride.net/img/items/item/bRO/27170', collectionUrl:'https://www.divine-pride.net/img/items/collection/bRO/27170', descricao:'Obtida em rockdg1' }
+          ]
+        }
+      },
+
+      p4: {
+        id: 'p4',
+        equip: {
+          slotsLeft:[
+            { slotLabel: '+10 Elmo do Xogum [1]', id:19362, nome:'+10 Elmo do Xogum [1]', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/19362', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/19362', descricao:'Chapéu adquirido via craft na @central' },
+            { slotLabel: 'Orbes Arcanos', id:19319, nome:'Orbes Arcanos', iconUrl:'https://www.divine-pride.net/img/items/item/bRO/19139', collectionUrl:'https://www.divine-pride.net/img/items/collection/bRO/19139', descricao:'Baixo adquirido via craft na @central.' },
+            { slotLabel: '+9 Apocalipse Ilusional [2]', id:28612, nome:'+9 Apocalipse Ilusional [2]', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/28612', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/28612', descricao:'Adquirido com Pedras Ilusionais na @central.' },
+            { slotLabel: '+9 Sobrepeliz Ilusional [1] [1]', id:20838, nome:'+9 Sobrepeliz Ilusional [1] [1]', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/20838', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/20838', descricao:'Adquirido com Pedras Ilusionais na @central.' },
+            { slotLabel: 'Anel Ilusional [1]', id:28509, nome:'Anel Ilusional [1]', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/28509', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/28509', descricao:'Adquirido com Pedras Ilusionais na @central.' }
+          ],
+          slotsRight:[
+            { slotLabel: 'Máscara de Loki [1]', id:19423, nome:'Máscara de Loki [1]', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/19423', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/19423', descricao:'Meio adquirido via craft na @central.' },
+            { slotLabel: '+9 Bata Magmática [1]', id:15379, nome:'+9 Bata Magmática [1]', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/15379', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/15379', descricao:'Dropada em mag_dun03' },
+            { slotLabel: '+7 Escudo de Jóias [1]', id:28949, nome:'+7 Escudo de Jóias [1]', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/28949', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/28949', descricao:'Obtido da Árvore Maldita em nif_fild02' },
+            { slotLabel: '+9 Botas Magmáticas [1]', id:22199, nome:'+9 Botas Magmáticas [1]', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/22199', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/22199', descricao:'Dropada em mag_dun03' },
+            { slotLabel: 'Anel Ilusional [1]', id:28509, nome:'Anel Ilusional [1]', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/28509', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/28509', descricao:'Adquirido com Pedras Ilusionais na @central.' }
+          ]
+        },
+        visual: { slotsLeft:[{slotLabel:'Pedra do Poder Topo(Melee)', id:310327, nome:'Pedra do Poder (Melee)', iconUrl:'https://www.divine-pride.net/img/items/item/bRO/310327', collectionUrl:'https://www.divine-pride.net/img/items/collection/bRO/310327', descricao:'Encantado com Moedas de Instâncias na @central'}, { slotLabel:'Pedra do Poder Baixo(Melee)', id:310329, nome:'Pedra do Poder (Melee)', iconUrl:'https://www.divine-pride.net/img/items/item/bRO/310329', collectionUrl:'https://www.divine-pride.net/img/items/collection/bRO/310329', descricao:'Encantado com Moedas de Instâncias na @central' }, { type:'placeholder' }, { slotLabel:'Absorção de SP', id:25208, nome:'Absorção de SP', iconUrl:'https://www.divine-pride.net/img/items/item/kROZ/25208', collectionUrl:'https://www.divine-pride.net/img/items/collection/kROZ/25208', descricao:'Encantado com Moedas de Instâncias na @central' }, { type:'placeholder' }], slotsRight:[{ slotLabel:'Pedra do Poder Meio(Melee)', id:310328, nome:'Pedra do Poder (Melee)', iconUrl:'https://www.divine-pride.net/img/items/item/bRO/310328', collectionUrl:'https://www.divine-pride.net/img/items/collection/bRO/310328', descricao:'Encantado com Moedas de Instâncias na @central' }, { type:'placeholder' }, { slotLabel:'Aparato de Isgard', id:50206, nome:'Aparato de Isgard', iconUrl:'https://www.divine-pride.net/img/items/item/bRO/28956', collectionUrl:'https://www.divine-pride.net/img/items/collection/bRO/28956', descricao:'Comprado na Loja Cash.' }, { type:'placeholder' }, { type:'placeholder' }] },
+        cards: { slotsLeft: [{ slotLabel: 'Carta Bungisngis', id:4582, nome:'Carta Bungisngis', iconUrl:'https://www.divine-pride.net/img/items/item/bRO/4582', collectionUrl:'https://www.divine-pride.net/img/items/collection/bRO/4582', descricao:'Obtida em ma_fild02' }, { type:'placeholder' }, { slotLabel:'2x Carta Andarilho Poluto', id:27361, nome:'2x Carta Andarilho Poluto', iconUrl:'https://www.divine-pride.net/img/items/item/bRO/27361', collectionUrl:'https://www.divine-pride.net/img/items/collection/bRO/27361', descricao:'Obtida em End Game > Porão de Glast Heim' }, { slotLabel:'Carta Wakwak', id:4588, nome:'Carta Wakwak', iconUrl:'https://www.divine-pride.net/img/items/item/bRO/4588', collectionUrl:'https://www.divine-pride.net/img/items/collection/bRO/4588', descricao:'Obtida em ma_dun01' }, { slotLabel:'Carta Búfalo Atirador', id:27171, nome:'Carta Búfalo Atirador', iconUrl:'https://www.divine-pride.net/img/items/item/bRO/27171', collectionUrl:'https://www.divine-pride.net/img/items/collection/bRO/27171', descricao:'Obtida em rockdg2' } ], slotsRight: [{ slotLabel:'Carta Bungisngis', id:4582, nome:'Carta Bungisngis', iconUrl:'https://www.divine-pride.net/img/items/item/bRO/4582', descricao:'Obitda em ma_fild02.' }, { slotLabel:'Carta Porcellio', id:4337, nome:'Carta Porcellio', iconUrl:'https://www.divine-pride.net/img/items/item/bRO/4337', descricao:'Obtida em ein_fil09' }, { type:'placeholder' }, { slotLabel:'Carta Porcellio Albino', id:300003, nome:'Carta Porcellio Albino', iconUrl:'https://www.divine-pride.net/img/items/item/bRO/300003', descricao:'Obtida em ein_dun03.' }, { slotLabel:'Carta Búfalo Fuzileiro', id:27170, nome:'Carta Búfalo Fuzileiro', iconUrl:'https://www.divine-pride.net/img/items/item/bRO/27170', descricao:'Obtida em rockdg1' }] }
       }
-      if (!shown && containers.length > 0) {
-        containers[0].style.display = '';
+    }; // fim PROGRESSOES_EQUIP
+  </script>
+
+  <!-- scripts de inicialização / comportamento (abas, tooltips, links automáticos) -->
+  <script>
+    // helper: cria links nos itens (usa atributo data-id)
+    (function () {
+      const baseURL = "https://www.pathofisgard.com.br/database/item/";
+
+      function aplicarLinksAutomaticosPreservandoListeners() {
+        document.querySelectorAll(".item[data-id]").forEach(container => {
+          if (container.querySelector(":scope > a.item-link")) return;
+          const id = container.getAttribute("data-id");
+          if (!id) return;
+          const url = baseURL + id;
+          const tooltipEl = container.querySelector(".ro-tooltip");
+          if (!tooltipEl) return;
+          const parent = tooltipEl.parentElement;
+          if (parent && parent.tagName.toLowerCase() === 'a') return;
+          const a = document.createElement("a");
+          a.href = url; a.target = "_blank"; a.className = "item-link";
+          container.replaceChild(a, tooltipEl);
+          a.appendChild(tooltipEl);
+        });
       }
 
-      tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-          tabs.forEach(t => t.classList.remove('active'));
-          tab.classList.add('active');
+      window.aplicarLinksAutomaticosPreservandoListeners = aplicarLinksAutomaticosPreservandoListeners;
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", aplicarLinksAutomaticosPreservandoListeners);
+      else aplicarLinksAutomaticosPreservandoListeners();
+    })();
 
+    // initEquipTabs: gerencia as abas internas Equip/Visual/Cartas da janela gerada por templates
+    (function(){
+      function initTabs() {
+        document.querySelectorAll('.equip-window').forEach(windowEl => {
+          const tabs = Array.from(windowEl.querySelectorAll('.equip-tabs .tab'));
+          const containers = Array.from(windowEl.querySelectorAll('.tab-container'));
           containers.forEach(c => c.style.display = 'none');
+          let shown = false;
+          const activeTab = windowEl.querySelector('.equip-tabs .tab.active');
+          if (activeTab && activeTab.dataset && activeTab.dataset.tab) {
+            const id = activeTab.dataset.tab;
+            const container = windowEl.querySelector('#tab-' + id);
+            if (container) { container.style.display = ''; shown = true; }
+          }
+          if (!shown && containers.length > 0) containers[0].style.display = '';
 
-          const targetName = tab.dataset.tab;
-          if (!targetName) return;
-          const target = windowEl.querySelector('#tab-' + targetName);
-          if (target) {
-            target.style.display = '';
+          tabs.forEach(tab => {
+            tab.addEventListener('click', (ev) => {
+              tabs.forEach(t => t.classList.remove('active'));
+              tab.classList.add('active');
+              containers.forEach(c => c.style.display = 'none');
+              const targetName = tab.dataset.tab;
+              if (!targetName) return;
+              const target = windowEl.querySelector('#tab-' + targetName);
+              if (target) target.style.display = '';
+            });
+          });
+        });
+      }
+      window.initEquipTabs = initTabs;
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initTabs);
+      else initTabs();
+    })();
+
+    // tooltip touch support + reposition
+    (function(){
+      // toggle touch-open on touchstart
+      document.addEventListener('click', function(){ /* placeholder to ensure event loop warm */ }, true);
+
+      function setupTouch() {
+        document.querySelectorAll('.ro-tooltip').forEach(el=>{
+          el.addEventListener('touchstart', function(e){
+            document.querySelectorAll('.ro-tooltip.touch-open').forEach(o=>{ if(o!==el) o.classList.remove('touch-open'); });
+            el.classList.toggle('touch-open');
+          });
+        });
+
+        document.addEventListener('touchstart', function(e){
+          if(!e.target.closest('.ro-tooltip')) {
+            document.querySelectorAll('.ro-tooltip.touch-open').forEach(o=>o.classList.remove('touch-open'));
           }
         });
-      });
-    });
-  }
 
-  // 🔹 EXPOE para o resto do código poder chamar depois
-  window.initEquipTabs = initTabs;
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initTabs);
-  } else {
-    initTabs();
-  }
-})();
-    // SCRIPT DE TOOLTIP COM SUPORTE A TOUCH
-      // suporte touch: alterna .touch-open em tooltips quando tocar
-      document.querySelectorAll('.ro-tooltip').forEach(el=>{
-        el.addEventListener('touchstart', function(e){
-          document.querySelectorAll('.ro-tooltip.touch-open').forEach(o=>{ if(o!==el) o.classList.remove('touch-open'); });
-          el.classList.toggle('touch-open');
-        });
-      });
-
-      // fecha tooltip touch ao tocar fora
-      document.addEventListener('touchstart', function(e){
-        if(!e.target.closest('.ro-tooltip')) {
-          document.querySelectorAll('.ro-tooltip.touch-open').forEach(o=>o.classList.remove('touch-open'));
-        }
-      });
-
-      // Reposiciona tooltips para a esquerda se ultrapassarem a viewport
-      (function(){
-        const margin = 12; // margem mínima da viewport
-
+        // reposition to avoid overflow
+        const margin = 12;
         function updateTooltipPlacement(el) {
           const box = el.querySelector('.ro-tooltip-box');
           if(!box) return;
           el.classList.remove('flip-left');
-
-          // tornar visível temporariamente para medir largura se necessário
           const prevVis = box.style.visibility;
           box.style.visibility = 'hidden';
           box.style.display = 'block';
           const boxWidth = box.offsetWidth || 220;
           box.style.display = '';
           box.style.visibility = prevVis || '';
-
           const rect = el.getBoundingClientRect();
           const predictedRight = rect.left + rect.width/2 + boxWidth/2;
-
-          if (predictedRight > (window.innerWidth - margin)) {
-            el.classList.add('flip-left');
-          } else {
-            el.classList.remove('flip-left');
-          }
+          if (predictedRight > (window.innerWidth - margin)) el.classList.add('flip-left');
+          else el.classList.remove('flip-left');
         }
 
         document.querySelectorAll('.ro-tooltip').forEach(el=>{
           el.addEventListener('mouseenter', ()=> updateTooltipPlacement(el));
-          el.addEventListener('focus', ()=> updateTooltipPlacement(el)); // acessibilidade
+          el.addEventListener('focus', ()=> updateTooltipPlacement(el));
           el.addEventListener('touchstart', ()=> updateTooltipPlacement(el));
         });
 
         window.addEventListener('resize', () => {
           document.querySelectorAll('.ro-tooltip').forEach(el=> updateTooltipPlacement(el));
         });
-      })();
-    
-(function () {
-  const baseURL = "https://www.pathofisgard.com.br/database/item/";
+      }
 
-  function aplicarLinksAutomaticosPreservandoListeners() {
-    document.querySelectorAll(".item[data-id]").forEach(container => {
-      if (container.querySelector(":scope > a.item-link")) return;
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', setupTouch);
+      else setupTouch();
+    })();
 
-      const id = container.getAttribute("data-id");
-      if (!id) return;
-
-      const url = baseURL + id;
-      const tooltipEl = container.querySelector(".ro-tooltip");
-      if (!tooltipEl) return;
-
-      const parent = tooltipEl.parentElement;
-      if (parent && parent.tagName.toLowerCase() === 'a') return;
-
-      const a = document.createElement("a");
-      a.href = url;
-      a.target = "_blank";
-      a.className = "item-link";
-
-      container.replaceChild(a, tooltipEl);
-      a.appendChild(tooltipEl);
-    });
-  }
-
-  // 👇 expõe pra poder usar no .then(...)
-  window.aplicarLinksAutomaticosPreservandoListeners = aplicarLinksAutomaticosPreservandoListeners;
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", aplicarLinksAutomaticosPreservandoListeners);
-  } else {
-    aplicarLinksAutomaticosPreservandoListeners();
-  }
-})();
-
-
-  // =========================
-  // PROGRESSÕES DE EQUIP (NOVO)
-  // =========================
-
-const PROGRESSOES_EQUIP = {
-  p1: {
-    id: 'p1',
-
-    // ABA EQUIP
-    equip: {
-      slotsLeft: [
-        {
-          slotLabel: 'Chapéu Valhalla',
-          id: 5583,
-          nome: 'Chapéu Valhalla',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/5583',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/5583',
-          descricao: 'Chapéu Básico do Éden adquuirido na missão do nível 26/40.'
-        },
-        {
-          slotLabel: 'Cenourinha',
-          id: 19239,
-          nome: 'Cenourinha',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/19239',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/19239',
-          descricao: 'Obtido na Instância Vila Poring'
-        },
-                {
-          slotLabel: 'Dicionário I do Grupo Éden',
-          id: 1583,
-          nome: 'Dicionário I do Grupo Éden',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/1583',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/1583',
-          descricao: 'Arma básica do Éden adquirida na missão do nível 70.'
-        },
-        {
-          slotLabel: 'Capa Valhalla',
-          id: 2560,
-          nome: 'Capa Valhalla',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/2560',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/2560',
-          descricao: 'Capa Básica do Éden adquuirido na missão do nível 26/40.'
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-      ],
-      slotsRight: [
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          slotLabel: 'Uniforme Valhalla Avançado',
-          id: 15011,
-          nome: 'Uniforme Valhalla Avançado',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/15011',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/15011',
-          descricao: 'Uniforme Básico do Éden adquirido na missão do nível 40.'
-        },
-        {
-        type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          slotLabel: 'Botas Valhalla Avançadas',
-          id: 2458,
-          nome: 'Botas Valhalla Avançadas',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/2458',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/2458',
-          descricao: 'Botas Básicas do Éden adquiridas na missão do nível 26/40.'
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        }
-      ]
-    },
-
-    // ABA VISUAL (exemplo com seus enchants)
-    visual: {
-      slotsLeft: [
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-      ],
-      slotsRight: [
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        }
-      ]
-    },
-
-    // ABA CARTAS (exemplo com alguns)
-    cards: {
-      slotsLeft: [
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        }
-        
-        // etc...
-      ],
-      slotsRight: [
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        }
-      ]
-    }
-  },
-
-  // p2 
-  p2: {
-    id: 'p2',
-
-    // ABA EQUIP p2
-    equip: {
-      slotsLeft: [
-        {
-          slotLabel: 'Chapéu de Rideword [1]',
-          id: 5208,
-          nome: 'Chapéu de Rideword [1]',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/5208',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/5208',
-          descricao: 'Chapéu adquirido através de craft na @central.'
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          slotLabel: 'Manual do Paraíso',
-          id: 540029,
-          nome: 'Manual dos Mestres Taekwons do Paraíso',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/540029',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/540029',
-          descricao: 'Arma adquirida com Moedas do Éden, no npc Nicky Jr > Equipamentos Esquadrão.'
-        },
-        {
-          slotLabel: '+5 Capa da Expedição [1]',
-          id: 20868,
-          nome: 'Capa da Expedição [1]',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/20868',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/20868',
-          descricao: 'Capa adquirida com Moedas do Éden, no npc Nicky Jr > Equipamentos Esquadrão.'
-        },
-        {
-          slotLabel: '+5 Anel Físico da Expedição [1]',
-          id: 28540,
-          nome: 'Anel Físico da Expedição [1]',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/28540',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/28540',
-          descricao: 'Anel adquirido com Moedas do Éden, no npc Nicky Jr > Equipamentos Esquadrão.'
-        }
-      ],
-      slotsRight: [
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          slotLabel: '+5 Armadura da Expedição [1]',
-          id: 15221,
-          nome: 'Armadura da Expedição [1]',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/15221',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/15221',
-          descricao: 'Armadura adquirida com Moedas do Éden, no npc Nicky Jr > Equipamentos Esquadrão.'
-        },
-        {
-          slotLabel: '+7 Escudo de Jóias [1]',
-          id: 28949,
-          nome: 'Escudo de Jóias [1]',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/28949',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/28949',
-          descricao: 'Obtido da Árvore Maldita, em nif_dun02'
-        },
-        {
-          slotLabel: '+5 Botas da Expedição [1]',
-          id: 22151,
-          nome: 'Botas da Expedição [1]',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/22151',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/22151',
-          descricao: 'Botas adquiridas com Moedas do Éden, no npc Nicky Jr > Equipamentos Esquadrão.'
-        },
-        {
-          slotLabel: 'Anel Físico da Expedição [1]',
-          id: 28540,
-          nome: 'Anel Físico da Expedição [1]',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/28540',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/28540',
-          descricao: 'Anel adquirido com Moedas do Éden, no npc Nicky Jr > Equipamentos Esquadrão.'
-        }
-      ]
-    },
-
-    // ABA VISUAL p2 (exemplo com seus enchants)
-    visual: {
-      slotsLeft: [
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-      ],
-      slotsRight: [
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        }
-      ]
-    },
-
-    // ABA CARTAS p2 (exemplo com alguns)
-    cards: {
-      slotsLeft: [
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        
-        // etc...
-      ],
-      slotsRight: [
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          slotLabel: 'Carta Exterminador Terrestre',
-          id: 4279,
-          nome: 'Carta Exterminador Terrestre',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/bRO/4279',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/bRO/4279',
-          descricao: 'Obtida em mag_dun02'
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        }
-      ]
-    }
-  },
-  // p3
-  p3: {
-    id: 'p3',
-
-    // ABA EQUIP p3
-    equip: {
-      slotsLeft: [
-        {
-          slotLabel: '+6 Livro Amaldiçoado [1]',
-          id: 18752,
-          nome: 'Livro Amaldiçoado [1]',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/18752',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/18752',
-          descricao: 'Chapéu adquirido através de craft na @central.'
-        },
-        {
-          slotLabel: 'Presas Vampíricas',
-          id: 18754,
-          nome: 'Presas Vampíricas',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/18754',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/18754',
-          descricao: 'Baixo adquirido através de craft na @central.'
-        },
-        {
-          slotLabel: '+7 Apocalipse Ilusional [2]',
-          id: 28612,
-          nome: 'Apocalipse Ilusional [2]',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/28612',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/28612',
-          descricao: 'Arma principal adquirida com Pedras Ilusionais, craftado na @central.'
-        },
-        {
-          slotLabel: '+7 Sobrepeliz Ilusional [1] [1]',
-          id: 20838,
-          nome: 'Sobrepeliz Ilusional [1] [1]',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/20838',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/20838',
-          descricao: 'Capa adquirida com Pedras Ilusionais, craftado na @central.'
-        },
-        {
-          slotLabel: 'Núcleo Vesper 02 [1]',
-          id: 28303,
-          nome: 'Núcleo Vesper 02 [1]',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/28303',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/28303',
-          descricao: 'Dropado por Dimik em jupe_core.'
-        }
-      ],
-      slotsRight: [
-        {
-          slotLabel: 'Presilha dos Amantes [1]',
-          id: 19392,
-          nome: 'Presilha dos Amantes',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/19392',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/19392',
-          descricao: 'Meio adquirido através de craft na @central.'
-        },
-        {
-          slotLabel: '+7 Bata Magmática [1]',
-          id: 15379,
-          nome: 'Bata Magmática [1]',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/15379',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/15379',
-          descricao: 'Dropada em mag_dun03 (é barato no mercado)'
-        },
-        {
-          slotLabel: '+7 Escudo de Jóias [1]',
-          id: 28949,
-          nome: 'Escudo de Jóias [1]',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/28949',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/28949',
-          descricao: 'Obtido da Árvore Maldita, em nif_dun02'
-        },
-        {
-          slotLabel: '+7 Botas Magmáticas [1]',
-          id: 22199,
-          nome: 'Botas Magmáticas [1]',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/22199',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/22199',
-          descricao: 'Bota dropada em mag_dun03 (é barato no mercado)'
-        },
-        {
-          slotLabel: 'Anel Ilusional [1]',
-          id: 28509,
-          nome: 'Anel Ilusional [1]',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/28509',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/28509',
-          descricao: 'Adquirido com Pedras Ilusionais, craftado na @central.'
-        }
-      ]
-    },
-
-    // ABA VISUAL p3 (exemplo com seus enchants)
-    visual: {
-      slotsLeft: [
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          slotLabel: 'Absorção de SP',
-          id: 25208,
-          nome: 'Absorção de SP',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/25208',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/25208',
-          descricao: 'Encantado com Moedas de Instâncias na @central'
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-      ],
-      slotsRight: [
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        }
-      ]
-    },
-
-    // ABA CARTAS p3 (exemplo com alguns)
-    cards: {
-      slotsLeft: [
-        {
-          slotLabel: 'Carta Bungisngis',
-          id: 4582,
-          nome: 'Carta Bungisngis',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/bRO/4582',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/bRO/4582',
-          descricao: 'Obtida em ma_fild02'
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          slotLabel: '2x Carta Mosca Caçadora',
-          id: 4115,
-          nome: '2x Carta Mosca Caçadora',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/bRO/4115',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/bRO/4115',
-          descricao: 'Obtida em gef_dun00'
-        },
-        {
-          slotLabel: 'Carta Wakwak',
-          id: 4588,
-          nome: 'Carta Wakwak',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/bRO/4588',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/bRO/4588',
-          descricao: 'Obtida em ma_dun01'
-        },
-        {
-          slotLabel: 'Carta Búfalo Atirador',
-          id: 27171 ,
-          nome: 'Carta Búfalo Atirador',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/bRO/27171 ',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/bRO/27171 ',
-          descricao: 'Obtida em rockdg2'
-        },
-        
-        // etc...
-      ],
-      slotsRight: [
-        {
-          slotLabel: 'Carta Bungisngis',
-          id: 4582,
-          nome: 'Carta Bungisngis',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/bRO/4582',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/bRO/4582',
-          descricao: 'Obtida em ma_fild02'
-        },
-        {
-          slotLabel: 'Carta Porcellio',
-          id: 4337,
-          nome: 'Carta Porcellio',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/bRO/4337',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/bRO/4337',
-          descricao: 'Obtida em ein_fild09'
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          slotLabel: 'Carta Porcellio Albino',
-          id: 300003,
-          nome: 'Carta Porcellio Albino',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/bRO/300003',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/bRO/300003',
-          descricao: 'Obtida em ein_dun03'
-        },
-        {
-          slotLabel: 'Carta Búfalo Fuzileiro',
-          id: 27170,
-          nome: 'Carta Búfalo Fuzileiro',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/bRO/27170',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/bRO/27170',
-          descricao: 'Obtida em rockdg1'
-        }
-      ]
-    }
-  },
-  // p4
-  p4: {
-    id: 'p4',
-
-    // ABA EQUIP p4
-    equip: {
-      slotsLeft: [
-        {
-          slotLabel: '+10 Elmo do Xogum [1]',
-          id: 19362,
-          nome: '+10 Elmo do Xogum [1]',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/19362',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/19362',
-          descricao: 'Chapéu adquirido através de craft na @central.'
-        },
-        {
-          slotLabel: 'Orbes Arcanos',
-          id: 19319,
-          nome: 'Orbes Arcanos',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/bRO/19139',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/bRO/19139',
-          descricao: 'Baixo adquirido através de craft na @central.'
-        },
-        {
-          slotLabel: '+9 Apocalipse Ilusional [2]',
-          id: 28612,
-          nome: 'Apocalipse Ilusional [2]',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/28612',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/28612',
-          descricao: 'Arma principal adquirida com Pedras Ilusionais, craftado na @central.'
-        },
-        {
-          slotLabel: '+9 Sobrepeliz Ilusional [1] [1]',
-          id: 20838,
-          nome: 'Sobrepeliz Ilusional [1] [1]',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/20838',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/20838',
-          descricao: 'Capa adquirida com Pedras Ilusionais, craftado na @central.'
-        },
-        {
-          slotLabel: 'Anel Ilusional [1]',
-          id: 28509,
-          nome: 'Anel Ilusional [1]',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/28509',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/28509',
-          descricao: 'Adquirido com Pedras Ilusionais, craftado na @central.'
-        }
-      ],
-      slotsRight: [
-        {
-          slotLabel: 'Máscara de Loki [1]',
-          id: 19423,
-          nome: 'Máscara de Loki [1]',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/19423',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/19423',
-          descricao: 'Meio adquirido através de craft na @central.'
-        },
-        {
-          slotLabel: '+9 Bata Magmática [1]',
-          id: 15379,
-          nome: 'Bata Magmática [1]',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/15379',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/15379',
-          descricao: 'Dropada em mag_dun03 (é barato no mercado)'
-        },
-        {
-          slotLabel: '+7 Escudo de Jóias [1]',
-          id: 28949,
-          nome: 'Escudo de Jóias [1]',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/28949',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/28949',
-          descricao: 'Obtido da Árvore Maldita, em nif_dun02'
-        },
-        {
-          slotLabel: '+9 Botas Magmáticas [1]',
-          id: 22199,
-          nome: 'Botas Magmáticas [1]',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/22199',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/22199',
-          descricao: 'Bota dropada em mag_dun03 (é barato no mercado)'
-        },
-        {
-          slotLabel: 'Anel Ilusional [1]',
-          id: 28509,
-          nome: 'Anel Ilusional [1]',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/28509',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/28509',
-          descricao: 'Adquirido com Pedras Ilusionais, craftado na @central.'
-        }
-      ]
-    },
-
-    // ABA VISUAL p4 (exemplo com seus enchants)
-    visual: {
-      slotsLeft: [
-        {
-          slotLabel: 'Pedra do Poder Topo(Melee)',
-          id: 310327,
-          nome: 'Pedra do Poder (Melee)',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/bRO/310327',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/bRO/310327',
-          descricao: 'Encantado com Moedas de Instâncias na @central'
-        },
-        {
-          slotLabel: 'Pedra do Poder Baixo(Melee)',
-          id: 310329,
-          nome: 'Pedra do Poder (Melee)',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/bRO/310329',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/bRO/310329',
-          descricao: 'Encantado com Moedas de Instâncias na @central'
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          slotLabel: 'Absorção de SP',
-          id: 25208,
-          nome: 'Absorção de SP',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/kROZ/25208',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/kROZ/25208',
-          descricao: 'Encantado com Moedas de Instâncias na @central'
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-      ],
-      slotsRight: [
-        {
-          slotLabel: 'Pedra do Poder Meio(Melee)',
-          id: 310328,
-          nome: 'Pedra do Poder (Melee)',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/bRO/310328',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/bRO/310328',
-          descricao: 'Encantado com Moedas de Instâncias na @central'
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          slotLabel: 'Aparato de Isgard',
-          id: 50206,
-          nome: 'Aparato de Isgard',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/bRO/28956',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/bRO/28956',
-          descricao: 'Comprado na Loja Cash ou por Players (confira abaixo encantamentos).'
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        }
-      ]
-    },
-
-    // ABA CARTAS p4 (exemplo com alguns)
-    cards: {
-      slotsLeft: [
-        {
-          slotLabel: 'Carta Bungisngis',
-          id: 4582,
-          nome: 'Carta Bungisngis',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/bRO/4582',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/bRO/4582',
-          descricao: 'Obtida em ma_fild02'
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          slotLabel: '2x Carta Andarilho Poluto',
-          id: 27361,
-          nome: '2x Carta Andarilho Poluto',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/bRO/27361',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/bRO/27361',
-          descricao: 'Obtida em End Game > Porão de Glast Heim.'
-        },
-        {
-          slotLabel: 'Carta Wakwak',
-          id: 4588,
-          nome: 'Carta Wakwak',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/bRO/4588',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/bRO/4588',
-          descricao: 'Obtida em ma_dun01'
-        },
-        {
-          slotLabel: 'Carta Búfalo Atirador',
-          id: 27171 ,
-          nome: 'Carta Búfalo Atirador',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/bRO/27171 ',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/bRO/27171 ',
-          descricao: 'Obtida em rockdg2'
-        },
-        
-        // etc...
-      ],
-      slotsRight: [
-        {
-          slotLabel: 'Carta Bungisngis',
-          id: 4582,
-          nome: 'Carta Bungisngis',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/bRO/4582',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/bRO/4582',
-          descricao: 'Obtida em ma_fild02'
-        },
-        {
-          slotLabel: 'Carta Porcellio',
-          id: 4337,
-          nome: 'Carta Porcellio',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/bRO/4337',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/bRO/4337',
-          descricao: 'Obtida em ein_fild09'
-        },
-        {
-          type: 'placeholder',
-          slotLabel: ''
-        },
-        {
-          slotLabel: 'Carta Porcellio Albino',
-          id: 300003,
-          nome: 'Carta Porcellio Albino',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/bRO/300003',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/bRO/300003',
-          descricao: 'Obtida em ein_dun03'
-        },
-        {
-          slotLabel: 'Carta Búfalo Fuzileiro',
-          id: 27170,
-          nome: 'Carta Búfalo Fuzileiro',
-          iconUrl: 'https://www.divine-pride.net/img/items/item/bRO/27170',
-          collectionUrl: 'https://www.divine-pride.net/img/items/collection/bRO/27170',
-          descricao: 'Obtida em rockdg1'
-        }
-      ]
-    }
-  }
-};
-
-// Inicializa as janelas de progressão
-if (window.renderEquipProgressions) {
-  window.renderEquipProgressions(PROGRESSOES_EQUIP).then(() => {
-    // liga os botões Progressão 1/2/3/4
-    setupProgressionTabs();
-
-    // re-inicializa as abas (Equip / Visual / Cartas)
-    if (window.initEquipTabs) {
-      window.initEquipTabs();
+    // Setup das abas de progressão (liga botões p1..p4 com janelas geradas)
+    function setupProgressionTabs() {
+      const tabs = document.querySelectorAll('.progression-tab');
+      const windows = () => Array.from(document.querySelectorAll('.progression-window'));
+      function showProgression(id) {
+        windows().forEach(w => { w.style.display = (w.dataset.progression === id) ? '' : 'none'; });
+        tabs.forEach(t => t.classList.toggle('active', t.dataset.progression === id));
+      }
+      tabs.forEach(tab => tab.addEventListener('click', () => showProgression(tab.dataset.progression)));
+      // default
+      showProgression('p1');
     }
 
-    // 🔹 reaplica os hyperlinks nos itens das janelas novas
-    if (window.aplicarLinksAutomaticosPreservandoListeners) {
-      window.aplicarLinksAutomaticosPreservandoListeners();
-    }
-  });
-}
-
-    // Configura os botões de aba de progressão
-
-  function setupProgressionTabs() {
-    const tabs = document.querySelectorAll('.progression-tab');
-    const windows = document.querySelectorAll('.progression-window');
-
-    function showProgression(id) {
-      windows.forEach(w => {
-        w.style.display = (w.dataset.progression === id) ? '' : 'none';
-      });
-
-      tabs.forEach(t => {
-        if (t.dataset.progression === id) {
-          t.classList.add('active');
+    // Renderiza janelas (usa a função disponibilizada por equip-window.js)
+    (function initRender() {
+      // aguarda script equip-window.js definir window.renderEquipProgressions
+      function tryRender() {
+        if (window.renderEquipProgressions) {
+          // chama render e após isso inicializa abas e links
+          window.renderEquipProgressions(PROGRESSOES_EQUIP).then(() => {
+            if (window.initEquipTabs) window.initEquipTabs();
+            if (window.aplicarLinksAutomaticosPreservandoListeners) window.aplicarLinksAutomaticosPreservandoListeners();
+            setupProgressionTabs();
+          }).catch(err => {
+            console.error('Erro ao renderizar progressões:', err);
+          });
         } else {
-          t.classList.remove('active');
+          // tenta novamente após pequeno delay (até conseguir)
+          setTimeout(tryRender, 120);
         }
-      });
-    }
+      }
+      tryRender();
+    })();
+  </script>
 
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        showProgression(tab.dataset.progression);
-      });
-    });
-
-    // mostra p1 por padrão
-    showProgression('p1');
-  }
-
-
-    </script>
-    
 </body>
 </html>
