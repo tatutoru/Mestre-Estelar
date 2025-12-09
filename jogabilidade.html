@@ -1,308 +1,402 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jogabilidade</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="menu.css">
-    <style>
-body {
-    background: url('/assets/ui/backgroundteste2.jpeg') no-repeat center center fixed;
-    background-size: cover;
-    color: white; /* se quiser manter */
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jogabilidade</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="menu.css">
+  <style>
+    /* ---------- Base visual (mantive suas cores / imagem de fundo) ---------- */
+    :root{
+      --accent:#1e90ff;
+      --accent-hover:#00b7ff;
+      --card-bg: rgba(0,0,0,0.45);
+      --card-border: rgba(255,255,255,0.06);
+      --muted: #dcdcdc;
+    }
+
+    html,body{
+      height:100%;
+      margin:0;
+      padding:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    body {
+      background: url('/assets/ui/backgroundteste2.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      line-height:1.45;
+    }
+
     a {
-        color: #1e90ff; /* azul vibrante (DodgerBlue) */
-        text-decoration: none; /* remove sublinhado */
-        font-weight: 600; /* deixa mais forte */
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    a:hover { color: var(--accent-hover); text-decoration: underline; }
+    a:visited { color: var(--accent); }
+
+    /* ---------- Layout do conteúdo (centralizado com margem máxima) ---------- */
+    .content{
+      max-width: 980px;
+      margin: 36px auto;
+      padding: 20px;
+      box-sizing: border-box;
+      background: linear-gradient(rgba(0,0,0,0.28), rgba(0,0,0,0.18));
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.03);
+      backdrop-filter: blur(6px);
     }
 
-    a:hover {
-        color: #00b7ff; /* azul claro no hover */
-        text-decoration: underline; /* volta o sublinhado no hover se quiser */
+    .content h1 { margin-top:0; font-size:1.6rem; }
+    .content h2 { margin: 18px 0 8px; font-size:1.15rem; }
+    .content h3 { margin: 10px 0 6px; font-size:1rem; }
+
+    p { color: var(--muted); margin: 10px 0; }
+    li { color: var(--muted); margin: 6px 0; }
+
+    /* ---------- Cards ---------- */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 12px;
+      margin: 12px 0;
+      border-radius: 8px;
+      overflow: hidden;
     }
 
-    a:visited {
-        color: #1e90ff; /* mantém a mesma cor mesmo após visitar */
+    /* ---------- Botões de copiar (consistentes e responsivos) ---------- */
+    button[id^="btnCopiar"] {
+      display: inline-block;
+      vertical-align: middle;
+      padding: 6px 10px;
+      margin-left:8px;
+      margin-top:4px;
+      border-radius:6px;
+      border: none;
+      background: rgba(30,144,255,0.12);
+      color: var(--accent);
+      font-weight:700;
+      cursor: pointer;
+      white-space:nowrap;
+    }
+    button[id^="btnCopiar"]:active { transform: translateY(1px); }
+    button[id^="btnCopiar"][disabled] { opacity:0.6; cursor:default; }
+
+    /* ---------- Inline icons (escalam) ---------- */
+    .inline-icon {
+      width: 23px;
+      height: 23px;
+      vertical-align: middle;
+      margin-right: 6px;
+      display: inline-block;
+    }
+    .inline-icon.small { width:20px; height:20px; }
+
+    /* ---------- Video responsivo (iframe) ---------- */
+    .video-box {
+      margin: 12px 0;
+    }
+    .video-responsive {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 */
+      background: #000;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .video-responsive iframe {
+      position: absolute;
+      left:0; top:0; width:100%; height:100%;
+      border:0;
     }
 
-
-@media (max-width: 768px) {
-    body.intro-page .content {
-        max-width: 100%;
-        width: 100%;
-        margin: 80px 12px 24px; /* topo, lados, baixo */
-        padding: 16px;
-        box-sizing: border-box;
-        display: block;
+    /* ---------- Page nav (prev/next) ---------- */
+    .page-nav {
+      display:flex;
+      justify-content:space-between;
+      gap: 12px;
+      margin-top: 18px;
+      align-items:center;
+    }
+    .page-nav a {
+      background: rgba(255,255,255,0.03);
+      padding: 10px 14px;
+      border-radius: 8px;
+      color: white;
+      text-decoration:none;
+      font-weight:600;
     }
 
-    body.intro-page .gif-row {
-        flex-direction: column;
+    /* ---------- Small screens ---------- */
+    @media (max-width: 980px) {
+      .content {
+        margin: 18px;
+        padding: 14px;
+        border-radius: 10px;
+      }
+
+      /* Faz o conteúdo fluir em coluna única e reduz fontes */
+      .content h1 { font-size:1.35rem; }
+      .content h2 { font-size:1.05rem; }
+      .card { padding:10px; }
+
+      /* Botões ocupam a largura se muito longos (bom para copiar coordenadas) */
+      button[id^="btnCopiar"] {
+        padding: 8px 10px;
+        font-size: 0.95rem;
+      }
+
+      /* Se houver grupos de GIFs/imagens (ex.: .gif-row), empilha em coluna */
+      .gif-row { display:flex; flex-direction:column; gap:10px; }
+      .gif-box { width:100%; }
+
+      /* Page nav vira coluna em telas muito pequenas para evitar itens apertados */
+      .page-nav { flex-direction:column; align-items:stretch; }
+      .page-nav a { text-align:center; }
+
+      /* Certifica que imagens externas também não extrapolem (itens wiki) */
+      .content img, .card img {
+        max-width:100%;
+        height:auto;
+      }
     }
 
-    body.intro-page .gif-box {
-        width: 100%;
-    }
-}
+    /* ---------- Força quebra de palavras longas / evita overflow ---------- */
+    .content, .card { word-wrap: break-word; overflow-wrap:break-word; -webkit-font-smoothing:antialiased; }
+    pre, code { white-space: pre-wrap; word-break: break-word; }
 
-
-</style>
+  </style>
 </head>
 <body>
 
-    <!-- Sidebar → carregada pelo menu.js -->
-    <div id="menu-container"></div>
-    <script src="menu.js"></script>
-    
+  <!-- Sidebar → carregada pelo menu.js -->
+  <div id="menu-container"></div>
+  <script src="menu.js"></script>
 
-    <!-- Conteúdo -->
-    <div class="content">
-        <h1>Criando seu boneco e upando:</h1>
+  <!-- Conteúdo -->
+  <div class="content">
+    <h1>Criando seu boneco e upando:</h1>
 
-        <p>
-            Agora que você já tem/tinha noção do que a classe é capaz, vamos para a parte de leveling.<br><br>
-        </p>
+    <p>
+      Agora que você já tem/tinha noção do que a classe é capaz, vamos para a parte de leveling.
+    </p>
 
-        <h2>Pets!</h2>
-        <p>
-            No Path of Isgard, é essencial ter um pet para facilitar sua vida.<br>
-            Eles são os responsáveis pelo "autoloot" - pegar seus itens automáticamente do chão.<br>
-            Ao começar o jogo, você recebe um Ovo de Bebê Poring, para ajudar na sua jornada, 
-            mas você poderá obter outros pets da forma normal do jogo, com 100% de chance.<br>
-            Poderá também obter pets com condições especiais em pacotes promocionais limitados.<br>
-            Para mais informações sobre pets, acesse a <b><a href="https://pathofisgard.com.br/wiki/Mascotes" target="_blank">página na Wiki</a></b>.<br>
-        </p>
+    <h2>Pets!</h2>
+    <p>
+      No Path of Isgard, é essencial ter um pet para facilitar sua vida.
+      Eles são os responsáveis pelo "autoloot" - pegar seus itens automáticamente do chão.
+      Ao começar o jogo, você recebe um Ovo de Bebê Poring, para ajudar na sua jornada,
+      mas você poderá obter outros pets da forma normal do jogo, com 100% de chance.
+      Poderá também obter pets com condições especiais em pacotes promocionais limitados.
+      Para mais informações sobre pets, acesse a <b><a href="https://pathofisgard.com.br/wiki/Mascotes" target="_blank">página na Wiki</a></b>.
+    </p>
 
-        <h2>@eden</h2>
-        <p>
-            O Éden é seu ponto de partida, que te guiará até o nível máximo.<br>
-            Faça sua inscrição com a Secretária Lime Evenor 
-                <button id="btnCopiar" onclick="copiarTexto()">t_garden 113, 116</button>
-        <script>
-        function copiarTexto() {
-          const texto = "/navi t_garden 113/116";
-          const botao = document.getElementById("btnCopiar");
+    <h2>@eden</h2>
+    <p>
+      O Éden é seu ponto de partida, que te guiará até o nível máximo.
+      Faça sua inscrição com a Secretária Lime Evenor
+      <button id="btnCopiar" onclick="copiarTexto()">t_garden 113, 116</button>
+      <br>
+      Após, isso, você poderá fazer missões e comprar equipamentos com moedas recebidas fazendo as missões de caça.
+      Para ver as missões, itens e preço, acesse a <b><a href="https://pathofisgard.com.br/wiki/Grupo_Éden_de_Isgard" target="_blank">página na Wiki</a></b>.
+    </p>
 
-           navigator.clipboard.writeText(texto)
-               .then(() => {
-                  // muda o texto do botão
-                  botao.textContent = "Copiado";
-                
-                 // depois de 5 segundos volta ao normal
-                 setTimeout(() => {
-                  botao.textContent = "t_garden 113/116";
-                }, 3000);
-            })
-            .catch(err => console.error("Erro ao copiar:", err));
-        }
-        </script><br>
-            Após, isso, você poderá fazer missões e comprar equipamentos com moedas recebidas fazendo as missões de caça.<br>
-            Para ver as missões, itens e preço, acesse a <b><a href="https://pathofisgard.com.br/wiki/Grupo_Éden_de_Isgard" target="_blank">página na Wiki</a></b>.<br>
-        </p>
+    <div class="video-box">
+      <p>Assista também ao Guia do Éden, feito pelo Keke:</p>
+      <div class="video-responsive">
+        <iframe
+          src="https://www.youtube.com/embed/rFz6M2ScVyI"
+          title="Guia do Grupo Éden de Isgard"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
 
-        <div class="video-box">
-        <p>Assista também ao Guia do Éden, feito pelo Keke:</p>
-    <iframe 
-        width="560" 
-        height="315" 
-        src="https://www.youtube.com/embed/rFz6M2ScVyI"
-        title="Guia do Grupo Éden de Isgard"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen>
-    </iframe>
-</div>
+    <h2>Rota de Up:</h2>
+    <p>
+      Upar no Path of Isgard é simples, porém muito satisfatório.
+      A rota mais prática é a seguinte:
+    </p>
 
+    <div class="card">
+      <h3>Nível 1 e virando Taekwon:</h3>
+      <p>
+        <b>Teleportador -> Masmorras -> Formigueiro Infernal</b> - É o mapa mais tranquilo, sem apanhar, no início demora um tempo até matar um ovo.
+        Coloque seus pontos em STR para matá-los. Após virar Taekwon, continue nesse mapa até o nível 30.
+      </p>
+    </div>
 
-        
-        <h2>Rota de Up:</h2>
-        <p>
-            Upar no Path of Isgard é simples, porém muito satisfatório.
-            A rota mais prática é a seguinte:
-        </p>
+    <div class="card">
+      <h3>Nível 30 a 50:</h3>
+      <p>
+        <b>Teleportador -> Masmorras -> Caverna dos Orcs</b> (saia do mapa em direção ao mapa dos orcs)
+        <button id="btnCopiar2" onclick="copiarTexto2()">gef_fild10 65, 335</button>
+        <br>
+        Aqui você vai ter uma certa dificuldade inicial, porém, continue insistindo, morrer faz parte!
+        A melhor forma de upar, é usando o
+        <img class="inline-icon small" src="assets/ui/Chute_do_Tornado.png" alt="Chute do Tornado">
+        Chute do Tornado.
+        No nível 40, faça a missão do Éden de equipamentos da Instrutora Boya.
+      </p>
+    </div>
 
-        <div class="card">
-            <h3>Nível 1 e virando Taekwon:</h3>
-            <p>
-                <b>Teleportador -> Masmorras -> Formigueiro Infernal</b> - É o mapa mais tranquilo, sem apanhar, no início demora um tempo até matar um ovo.<br>
-                Coloque seus pontos em STR para matá-los<br>
-                Após virar Taekwon, continue nesse mapa até o nível 30.<br>
-            </p>
-        </div>
+    <div class="card">
+      <h3>Nível 50 a 70:</h3>
+      <p>
+        <b>Teleportador -> Masmorras -> Caverna dos Orcs</b> - Após virar Mestre-Taekwon, continue aqui até nível 70.
+        Existem outros mapas, porém esse é o mais tranquilo para upar.
+        De Mestre-Taekwon, o melhor para se upar é continuar no
+        <img class="inline-icon" src="assets/ui/Chute_do_Tornado.png" alt="Chute do Tornado">
+        Chute do Tornado.
+        Assim que chegar no nível 70, faça a missão do Éden de equipamentos do Instrutor Ur.
+        <br><br>
+        Os equipamentos do Éden podem ser obtidos no castelo, dentro do @eden, vá para:
+        <button id="btnCopiar6" onclick="copiarTexto6()">t_garden 118, 142</button>
+        <br><br>
+        <ul>
+          <li> Nível 40: Administrador Michael -
+            <button id="btnCopiar3" onclick="copiarTexto3()">moc_para01 112, 96</button>
+          </li>
+          <li> Nível 70: Ferreiro Thorn -
+            <button id="btnCopiar4" onclick="copiarTexto4()">moc_para01 111, 84</button>
+          </li>
+        </ul>
+      </p>
+    </div>
 
-        <div class="card">
-            <h3>Nível 30 a 50:</h3>
-            <p>
-                <b>Teleportador -> Masmorras -> Caverna dos Orcs (saia do mapa em direção ao mapa dos orcs
-                <button id="btnCopiar2" onclick="copiarTexto2()">gef_fild10 65, 335</button>
-        <script>
-        function copiarTexto2() {
-          const texto = "/navi gef_fild10 65/335";
-          const botao = document.getElementById("btnCopiar2");
+    <div class="card">
+      <h3>Nível 70 a 99:</h3>
+      <p>
+        <b>Teleportador -> End Game -> Caverna de Magma 3 (entre no portal!!!)</b> - Fique aqui até o nível 99.
+        Se atente ao dia (opcional) para receber bônus de EXP de acordo com a Bênção upada (Solar/Lunar/Estelar).
+        Use a <img class="inline-icon" src="assets/ui/Percepção_Solar,_Lunar_e_Estelar.png" alt="Percepção">
+        percepção no mapa, escolhendo o nível de acordo com o dia, para alinhar os monstros e use a habilidade de Calor do dia
+        <br>
+        <img class="inline-icon" src="assets/ui/Calor_Solar.png" alt="Calor Solar">
+        <img class="inline-icon" src="assets/ui/Calor_Lunar.png" alt="Calor Lunar">
+        <img class="inline-icon" src="assets/ui/Calor_Estelar.png" alt="Calor Estelar">
+        (Solar = pares, Lunar = ímpares, Estelar = múltiplos de 5).
+        <br><br>
+        Nesse ponto do jogo, já é esperado que você farme
+        <img class="inline-icon" src="https://www.pathofisgard.com.br/database/img/itens/25223.png" alt="Moedas do Éden">
+        Moedas do Éden para comprar sua arma Paradise.
+        As melhores missões para juntar Moedas nesse nível são:
+        <li>Missão de Caça 91-99 - Porcellio, Metaling e Jubileu.</li>
+      </p>
+    </div>
 
-           navigator.clipboard.writeText(texto)
-               .then(() => {
-                  // muda o texto do botão
-                  botao.textContent = "Copiado";
-                
-                 // depois de 5 segundos volta ao normal
-                 setTimeout(() => {
-                  botao.textContent = "gef_fild10 65/335";
-                }, 3000);
-            })
-            .catch(err => console.error("Erro ao copiar:", err));
-        }</script>)</b> 
-                Aqui você vai ter uma certa dificuldade inicial, porém, continue insistindo, morrer faz parte! 
-                A melhor forma de upar, é usando o 
-                <img src="assets/ui/Chute_do_Tornado.png" alt="" style="width:25px; height:25px; vertical-align:middle; margin-right:6px;">
-                Chute do Tornado.<br>
-                No nível 40, faça a missão do Éden de equipamentos da Instrutora Boya.
-            </p>
-        </div>
-        
-        <div class="card">
-            <h3>Nível 50 a 70:</h3>
-            <p>
-                <b>Teleportador -> Masmorras -> Caverna dos Orcs</b> - Após virar Mestre-Taekwon, continue aqui até nível 70.<br>
-                Existem outros mapas, porém esse é o mais tranquilo para upar.<br>
-                De Mestre-Taekwon, o melhor para se upar é continuar no 
-                <img src="assets/ui/Chute_do_Tornado.png" alt="" style="width:25px; height:25px; vertical-align:middle; margin-right:6px;">
-                Chute do Tornado.<br>
-                Assim que chegar no nível 70, faça a missão do Éden de equipamentos do Instrutor Ur.<br><br>
-                Os equipamentos do Éden podem ser obtidos no castelo, dentro do @eden, vá para:  
-                <button id="btnCopiar6" onclick="copiarTexto6()">t_garden 118, 142</button>
-        <script>
-        function copiarTexto6() {
-          const texto = "/navi t_garden 118/142";
-          const botao = document.getElementById("btnCopiar6");
+    <div class="card">
+      <h3>Nível 100+</h3>
+      <p>
+        A partir do nível 100, esqueça o rush para o 120, foque em:
+        <ul>
+          <li>Farmar moedas para equipamentos - na missão 100-111: Novus.</li>
+          <li>Farmar Zeny para craftar seus itens no <b><a href="https://pathofisgard.com.br/wiki/Chapeleiro" target="_blank">Chapeleiro</a></b>.</li>
+        </ul>
+        Caso queira rushar nível, sem itens, os mapas serão bem punks, sendo Caverna de Magma 2 / Juperos as melhores opções de xp/zeny.
+      </p>
+    </div>
 
-           navigator.clipboard.writeText(texto)
-               .then(() => {
-                  // muda o texto do botão
-                  botao.textContent = "Copiado";
-                
-                 // depois de 5 segundos volta ao normal
-                 setTimeout(() => {
-                  botao.textContent = "t_garden 118/142";
-                }, 3000);
-            })
-            .catch(err => console.error("Erro ao copiar:", err));
-        }</script></b> e clique na porta para entrar.<br><br>
-                <li> Nível 40: Administrador Michael - 
-                <button id="btnCopiar3" onclick="copiarTexto3()">moc_para01 112, 96</button>
-        <script>
-        function copiarTexto3() {
-          const texto = "/navi moc_para01 112/96";
-          const botao = document.getElementById("btnCopiar3");
+    <div class="card">
+      <h3>Dicas Finais:</h3>
+      <ul>
+        <li>Use as
+          <img class="inline-icon" src="https://www.pathofisgard.com.br/database/img/itens/25223.png" alt="Moedas do Éden">
+          Moedas do Éden para comprar
+          <img class="inline-icon" src="https://www.pathofisgard.com.br/database/img/itens/14545.png" alt="Diário de Aventuras">
+          Diário de Aventuras, <img class="inline-icon" src="https://www.pathofisgard.com.br/database/img/itens/12883.png" alt="Bolinho Divino">
+          Bolinho Divino e <img class="inline-icon" src="https://www.pathofisgard.com.br/database/img/itens/23012.png" alt="Poção Menor de Mana">
+          Poção Menor de Mana para facilitar seu up no NPC Assistente Noah
+          <button id="btnCopiar7" onclick="copiarTexto7()">t_garden 124, 114</button>
+        </li>
+        <li>Não se preocupe em usar a percepção nos mapas, assim que virar Mestre Estelar você poderá redefinir.</li>
+        <li>Abuse da <img class="inline-icon" src="assets/ui/Brisa_Leve.png" alt="Brisa Leve"> Brisa Leve nos mapas!</li>
+        <li>Divirta-se e aproveite a jornada — Ragnarok não é uma corrida, aproveite os momentos!</li>
+      </ul>
 
-           navigator.clipboard.writeText(texto)
-               .then(() => {
-                  // muda o texto do botão
-                  botao.textContent = "Copiado";
-                
-                 // depois de 5 segundos volta ao normal
-                 setTimeout(() => {
-                  botao.textContent = "moc_para01 112/96";
-                }, 3000);
-            })
-            .catch(err => console.error("Erro ao copiar:", err));
-        }</script></b></li><br>
-                <li>Nível 70: Ferreiro Thorn - 
-                <button id="btnCopiar4" onclick="copiarTexto4()">moc_para01 111, 84</button>
-        <script>
-        function copiarTexto4() {
-          const texto = "/navi moc_para01 111/84";
-          const botao = document.getElementById("btnCopiar4");
-
-           navigator.clipboard.writeText(texto)
-               .then(() => {
-                  // muda o texto do botão
-                  botao.textContent = "Copiado";
-                
-                 // depois de 5 segundos volta ao normal
-                 setTimeout(() => {
-                  botao.textContent = "moc_para01 111/84";
-                }, 3000);
-            })
-            .catch(err => console.error("Erro ao copiar:", err));
-        }</script></b></li>
-            </p>
-        </div>
-
-        <div class="card" >
-            <h3>Nível 70 a 99:</h3>
-            <p>
-                <b>Teleportador -> End Game -> Caverna de Magma 3 (entre no portal!!!)</b> - Fique aqui até o nível 99.<br>
-                Se atente ao dia (opcional) para receber bônus de EXP de acordo com a Bênção upada (Solar/Lunar/Estelar).<br>
-                Use a <img src="assets/ui/Percepção_Solar,_Lunar_e_Estelar.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
-                percepção no mapa, escolhendo o nível de acordo com o dia, para alinhar os monstros e use a habilidade de Calor do dia <br>
-                <img src="assets/ui/Calor_Solar.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
-                <img src="assets/ui/Calor_Lunar.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
-                <img src="assets/ui/Calor_Estelar.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
-                (Solar = pares, Lunar = ímpares, Estelar = múltiplos de 5).<br><br>
-                Nesse ponto do jogo, já é esperado que você farme <img src="https://www.pathofisgard.com.br/database/img/itens/25223.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
-                Moedas do Éden para comprar sua arma Paradise.<br>
-                As melhores missões para juntar Moedas nesse nível são:
-                <li>Missão de Caça 91-99 - Porcellio, Metaling e Jubileu. </li><br>
-                (Teleportador -> Cidades -> Einbech -> Desce; Nesse mapa Porcelio, no da esquerda Metalling).<br>
-        </div>
-
-        <div class="card" >
-            <h3>Nível 100+</h3>
-            <p>
-                A partir do nível 100, esqueça o rush para o 120, foque em:
-                • Farmar moedas para equipamentos - na missão 100-111: Novus. (Teleportador -> Campos -> Campos de Hugel);<br>
-                • Farmar Zeny para craftar seus itens no <b><a href="https://pathofisgard.com.br/wiki/Chapeleiro" target="_blank">Chapeleiro</a></b>,
-                na @central (até você juntar o zeny para o Rideword você já terá pegado 120).<br>
-                Caso queira rushar nível, sem itens, os mapas serão bem punks, sendo Caverna de Magma 2 / Juperos as melhores opções de xp/zeny.<br><br>
-                Se quiser tentar, pode ir para:<br>
-                <li><b>Teleportador -> End Game -> Caverna de Magma 3</b>.</li><br>
-                <li><b>Teleportador -> Ilusional -> Ilusão do Vampiro</b>.</li><br>
-            </p>
-        </div>
-
-        <div class="card" >
-            <h3>Dicas Finais:</h3>
-            <ul>
-                <li>Use as <img src="https://www.pathofisgard.com.br/database/img/itens/25223.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
-                    Moedas do Éden para comprar <img src="https://www.pathofisgard.com.br/database/img/itens/14545.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
-                    Diário de Aventuras, <img src="https://www.pathofisgard.com.br/database/img/itens/12883.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
-                    Bolinho Divino e <img src="https://www.pathofisgard.com.br/database/img/itens/23012.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
-                    Poção Menor de Mana para facilitar seu up no NPC Assistente Noah 
-                <button id="btnCopiar7" onclick="copiarTexto7()">t_garden 124, 114</button>
-        <script>
-        function copiarTexto7() {
-          const texto = "/navi t_garden 124/114";
-          const botao = document.getElementById("btnCopiar7");
-
-           navigator.clipboard.writeText(texto)
-               .then(() => {
-                  // muda o texto do botão
-                  botao.textContent = "Copiado";
-                
-                 // depois de 5 segundos volta ao normal
-                 setTimeout(() => {
-                  botao.textContent = "t_garden 124/114";
-                }, 3000);
-            })
-            .catch(err => console.error("Erro ao copiar:", err));
-        }</script></b></li>
-                <li>Não se preocupe em usar a percepção nos mapas, assim que virar Mestre Estelar você poderá redefinir.</li>
-                <li>Abuse da <img src="assets/ui/Brisa_Leve.png" alt="" style="width:23px; height:23px; vertical-align:middle; margin-right:6px;">
-                Brisa Leve nos mapas!</li>
-                <li>Divirta-se e aproveite a jornada, Ragnarok não é uma corrida, você não precisa rushar conteúdos, aproveite os momentos!</li>
-            </ul>
-        <!-- RODAPÉ DE NAVEGAÇÃO -->
-    <div class="page-nav">
+      <!-- RODAPÉ DE NAVEGAÇÃO -->
+      <div class="page-nav">
         <a class="prev" href="introdução.html">← Introdução</a>
         <a class="next" href="build.html">Atributos →</a>
+      </div>
     </div>
 
-    </div>
+  </div>
 
+  <!-- ---------- SCRIPTS DE COPIAR (mantidos com melhorias mínimas) ---------- -->
+  <script>
+    function copiarTexto() {
+      const texto = "/navi t_garden 113/116";
+      const botao = document.getElementById("btnCopiar");
+      navigator.clipboard.writeText(texto)
+        .then(() => {
+          botao.textContent = "Copiado";
+          setTimeout(() => { botao.textContent = "t_garden 113, 116"; }, 3000);
+        })
+        .catch(err => console.error("Erro ao copiar:", err));
+    }
 
-    
+    function copiarTexto2() {
+      const texto = "/navi gef_fild10 65/335";
+      const botao = document.getElementById("btnCopiar2");
+      navigator.clipboard.writeText(texto)
+        .then(() => {
+          botao.textContent = "Copiado";
+          setTimeout(() => { botao.textContent = "gef_fild10 65/335"; }, 3000);
+        })
+        .catch(err => console.error("Erro ao copiar:", err));
+    }
+
+    function copiarTexto3() {
+      const texto = "/navi moc_para01 112/96";
+      const botao = document.getElementById("btnCopiar3");
+      navigator.clipboard.writeText(texto)
+        .then(() => {
+          botao.textContent = "Copiado";
+          setTimeout(() => { botao.textContent = "moc_para01 112/96"; }, 3000);
+        })
+        .catch(err => console.error("Erro ao copiar:", err));
+    }
+
+    function copiarTexto4() {
+      const texto = "/navi moc_para01 111/84";
+      const botao = document.getElementById("btnCopiar4");
+      navigator.clipboard.writeText(texto)
+        .then(() => {
+          botao.textContent = "Copiado";
+          setTimeout(() => { botao.textContent = "moc_para01 111/84"; }, 3000);
+        })
+        .catch(err => console.error("Erro ao copiar:", err));
+    }
+
+    function copiarTexto6() {
+      const texto = "/navi t_garden 118/142";
+      const botao = document.getElementById("btnCopiar6");
+      navigator.clipboard.writeText(texto)
+        .then(() => {
+          botao.textContent = "Copiado";
+          setTimeout(() => { botao.textContent = "t_garden 118/142"; }, 3000);
+        })
+        .catch(err => console.error("Erro ao copiar:", err));
+    }
+
+    function copiarTexto7() {
+      const texto = "/navi t_garden 124/114";
+      const botao = document.getElementById("btnCopiar7");
+      navigator.clipboard.writeText(texto)
+        .then(() => {
+          botao.textContent = "Copiado";
+          setTimeout(() => { botao.textContent = "t_garden 124/114"; }, 3000);
+        })
+        .catch(err => console.error("Erro ao copiar:", err));
+    }
+  </script>
+
 </body>
 </html>
