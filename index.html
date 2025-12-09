@@ -159,62 +159,48 @@
       .page-nav { flex-direction:column; align-items:stretch; }
     }
 
-    /* Mobile estreito — empilha a hero (imagens + título) verticalmente somente em telas bem pequenas */
-    @media (max-width: 560px) {
-      .intro-hero {
-        flex-direction: column; /* empilha em telas muito pequenas */
-        align-items: center;
-        gap: 8px;
-        text-align: center;
-      }
-      .intro-hero .hero {
-        width: 90px; /* imagens ainda menores */
-      }
-      .hero-title { order: 2; width: 100%; }
-      .hero-title h1 { font-size: 1.25rem; margin: 0; }
-
-      /* garantir que o texto e a imagem na intro fiquem legíveis no mobile */
-      .intro-msg {
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-      }
-      .intro-msg p { text-align: center; }
-      .intro-msg img { width: 100px; }
-    }
-    /* --- Forçar images + título lado-a-lado em mobile usando grid --- */
-/* Corrigir posicionamento do título no centro absoluto */
+/* MOBILE ≤560px - TÍTULO ENTRE AS IMAGENS */
 @media (max-width: 560px) {
-
   .intro-hero {
     display: grid;
-    /* três colunas iguais visualmente: imagem | título | imagem */
-    grid-template-columns: auto 1fr auto;
-    gap: 10px;
+    grid-template-columns: 100px 1fr 100px; /* imagem | título | imagem */
+    gap: 8px;
     align-items: center;
     justify-items: center;
     text-align: center;
+    padding: 6px 0;
   }
 
-  /* imagens */
   .intro-hero .hero {
-    width: 64px;
+    width: 100px;
     height: auto;
     object-fit: contain;
+    margin: 0;
   }
 
-  /* título sempre na coluna central */
   .hero-title {
-    grid-column: 2;          /* força ficar na coluna do meio */
-    justify-self: center;    /* centraliza dentro da coluna */
+    grid-column: 2;          /* força título na coluna do meio */
+    justify-self: center;
     align-self: center;
+    padding: 0 6px;
   }
-
   .hero-title h1 {
     font-size: 1.25rem;
     margin: 0;
     line-height: 1.05;
   }
+
+  /* manter o texto principal centralizado e a logo próxima */
+  .intro-msg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .intro-msg p { text-align: center; margin:0; line-height:3; }
+  .intro-msg img { width: 100px; margin:0; border-radius:6px; }
+
+  .content { padding-left:12px; padding-right:12px; }
 }
   </style>
 </head>
