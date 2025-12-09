@@ -9,193 +9,200 @@
   <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="../menu.css">
 
-  <style>
-    :root{
-      --accent:#1e90ff;
-      --accent-hover:#00b7ff;
-      --card-bg: rgba(0,0,0,0.45);
-      --card-border: rgba(255,255,255,0.06);
-      --muted: #dcdcdc;
+<style>
+  :root{
+    --accent:#1e90ff;
+    --accent-hover:#00b7ff;
+    --card-bg: rgba(0,0,0,0.45);
+    --card-border: rgba(255,255,255,0.06);
+    --muted: #dcdcdc;
+  }
+
+  /* ---------------------------
+     RESET BÁSICO (sem background)
+     - removemos background direto de html/body para evitar conflitos
+     --------------------------- */
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: white;
+    line-height: 1.45;
+    background: none !important; /* garante que regras antigas não sobrescrevam o pseudo */
+  }
+
+  /* =================================================
+     FUNDO: elemento fixo independente (mais robusto)
+     - usa body::before para evitar problemas com transform/backdrop-filter
+     ================================================= */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;                       /* top:0; right:0; bottom:0; left:0 */
+    z-index: -9999;
+    pointer-events: none;
+    background-image: url('../assets/ui/backgroundteste2.jpeg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    /* não usamos background-attachment: fixed aqui porque o elemento é fixed por si só */
+    will-change: transform;
+    opacity: 1;
+  }
+
+  /* Mobile / tablet: ajusta a posição para top (comportamento leve) */
+  @media (max-width: 980px) {
+    body::before {
+      background-position: top center;
+      /* opcional: reduzir efeitos para performance */
+      /* opacity: 0.98; */
     }
+  }
 
-    html,body{
-      height:100%;
-      margin:0;
-      padding:0;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      background: url('../assets/ui/backgroundteste2.jpeg') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
-      line-height:1.45;
-    }
+  /* =================================================
+     SEU CSS DE LAYOUT (mantive todo o restante, só reorganizei)
+     ================================================= */
 
-    a { color: var(--accent); text-decoration: none; font-weight: 600; }
-    a:hover { color: var(--accent-hover); text-decoration: underline; }
-    a:visited { color: var(--accent); }
+  a { color: var(--accent); text-decoration: none; font-weight: 600; }
+  a:hover { color: var(--accent-hover); text-decoration: underline; }
+  a:visited { color: var(--accent); }
 
-    .content{
-      max-width: 980px;
-      margin: 36px auto;
-      padding: 20px;
-      box-sizing: border-box;
-      background: linear-gradient(rgba(0,0,0,0.28), rgba(0,0,0,0.18));
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.03);
-      backdrop-filter: blur(6px);
-    }
+  .content{
+    max-width: 980px;
+    margin: 36px auto;
+    padding: 20px;
+    box-sizing: border-box;
+    background: linear-gradient(rgba(0,0,0,0.28), rgba(0,0,0,0.18));
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.03);
+    backdrop-filter: blur(6px);
+  }
 
-    h1 { margin-top:0; font-size:1.6rem; }
-    h2 { margin: 18px 0 8px; font-size:1.15rem; }
-    h3 { margin: 10px 0 6px; font-size:1rem; }
+  h1 { margin-top:0; font-size:1.6rem; }
+  h2 { margin: 18px 0 8px; font-size:1.15rem; }
+  h3 { margin: 10px 0 6px; font-size:1rem; }
 
-    p { color: var(--muted); margin: 10px 0; }
-    li { color: var(--muted); margin: 6px 0; }
+  p { color: var(--muted); margin: 10px 0; }
+  li { color: var(--muted); margin: 6px 0; }
 
-    /* progression tabs */
-    .progression-tabs {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      padding: 6px 4px;
-      margin: 12px 0 8px;
-      scrollbar-width: none;
-    }
-    .progression-tabs::-webkit-scrollbar{ display:none; }
+  /* progression tabs */
+  .progression-tabs {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 6px 4px;
+    margin: 12px 0 8px;
+    scrollbar-width: none;
+  }
+  .progression-tabs::-webkit-scrollbar{ display:none; }
 
-    .progression-tab {
-      flex: 0 0 auto;
-      background: linear-gradient(#16397f, #1e4ba8);
-      color: #fff;
-      border: 2px solid #000;
-      padding: 10px 16px;
-      font-weight: 700;
-      font-size: 15px;
-      border-radius: 8px;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: transform .12s ease, background .12s ease, box-shadow .12s ease;
-      box-shadow: 0 3px 0 rgba(0,0,0,0.6);
-    }
-    .progression-tab:hover, .progression-tab:focus { transform: translateY(-2px); background: linear-gradient(#1b4fd6,#2a67e2); outline:none; }
-    .progression-tab.active {
-      background: linear-gradient(#ffd85e,#f7c63a);
-      color:#000;
-      border-color:#c29a00;
-      box-shadow: 0 2px 0 rgba(0,0,0,0.6), inset 0 -3px 0 rgba(0,0,0,0.06);
-    }
+  .progression-tab {
+    flex: 0 0 auto;
+    background: linear-gradient(#16397f, #1e4ba8);
+    color: #fff;
+    border: 2px solid #000;
+    padding: 10px 16px;
+    font-weight: 700;
+    font-size: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: transform .12s ease, background .12s ease, box-shadow .12s ease;
+    box-shadow: 0 3px 0 rgba(0,0,0,0.6);
+  }
+  .progression-tab:hover, .progression-tab:focus { transform: translateY(-2px); background: linear-gradient(#1b4fd6,#2a67e2); outline:none; }
+  .progression-tab.active {
+    background: linear-gradient(#ffd85e,#f7c63a);
+    color:#000;
+    border-color:#c29a00;
+    box-shadow: 0 2px 0 rgba(0,0,0,0.6), inset 0 -3px 0 rgba(0,0,0,0.06);
+  }
 
-    .progression-window {
-      margin-top: 14px;
-      background: rgba(0,0,0,0.35);
-      border: 1px solid rgba(255,255,255,0.06);
-      padding: 12px;
-      border-radius: 8px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.45);
-    }
+  .progression-window {
+    margin-top: 14px;
+    background: rgba(0,0,0,0.35);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+  }
 
-    /* aparatos / bloco de item */
-    .aparato {
-      display:flex;
-      align-items:center;
-      gap:12px;
-      margin: 12px 0;
-    }
-    .aparato .texto { flex:1; }
-    .aparato img { width:100px; height:auto; object-fit:contain; border-radius:8px; }
-    /* PRIMEIRA imagem (grande) */
-    .aparato-main-img {
-      width: 50px;      /* tamanho específico que você pediu */
-      height: auto;
-      object-fit: contain;
-      border-radius: 8px;
-    }
+  /* aparatos / bloco de item */
+  .aparato {
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin: 12px 0;
+  }
+  .aparato .texto { flex:1; }
+  .aparato img { width:100px; height:auto; object-fit:contain; border-radius:8px; }
+  /* PRIMEIRA imagem (grande) */
+  .aparato-main-img {
+    width: 50px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+  }
 
-    /* imagens internas (Pedra do Lutador, Crítico, Velocidade etc.) */
-    .aparato .inline-icon {
-      width: 25px;
-      height: 25px;
-      vertical-align: -0.15em;
-    }
+  /* imagens internas (Pedra do Lutador, Crítico, Velocidade etc.) */
+  .aparato .inline-icon {
+    width: 25px;
+    height: 25px;
+    vertical-align: -0.15em;
+  }
 
-    /* cards */
-    .card { background: var(--card-bg); border:1px solid var(--card-border); padding:12px; margin:12px 0; border-radius:8px; }
+  /* cards */
+  .card { background: var(--card-bg); border:1px solid var(--card-border); padding:12px; margin:12px 0; border-radius:8px; }
 
-    /* inline icons */
-    .inline-icon { display:inline-block; width:1.5em; height:1.5em; object-fit:contain; vertical-align:-0.50em; margin-right:0.45ch; }
-    .item-xx { width:1.25em; height:1.25em; }
+  /* inline icons */
+  .inline-icon { display:inline-block; width:1.5em; height:1.5em; object-fit:contain; vertical-align:-0.50em; margin-right:0.45ch; }
+  .item-xx { width:1.25em; height:1.25em; }
 
-    .content img { max-width:100%; height:auto; }
+  .content img { max-width:100%; height:auto; }
 
-    .page-nav { display:flex; justify-content:space-between; gap:12px; margin-top:18px; align-items:center; }
-    .page-nav a { background: rgba(255,255,255,0.03); padding:10px 14px; border-radius:8px; color:white; text-decoration:none; font-weight:600; }
+  .page-nav { display:flex; justify-content:space-between; gap:12px; margin-top:18px; align-items:center; }
+  .page-nav a { background: rgba(255,255,255,0.03); padding:10px 14px; border-radius:8px; color:white; text-decoration:none; font-weight:600; }
 
-    @media (max-width: 980px) {
-      .content { margin:18px; padding:14px; border-radius:10px; }
-      h1 { font-size:1.35rem; }
-      h2 { font-size:1.05rem; }
-      .aparato img { width:84px; }
-      .progression-tab { padding:8px 12px; font-size:14px; }
-      .progression-window { padding:10px; }
-      .card { padding:10px; }
-      .page-nav { flex-direction:column; align-items:stretch; }
-      .page-nav a { text-align:center; }
-    }
-    @media (max-width: 520px) {
-      .aparato img { width:72px; }
-    }
-    
-    .aparato-grid {
+  @media (max-width: 980px) {
+    .content { margin:18px; padding:14px; border-radius:10px; }
+    h1 { font-size:1.35rem; }
+    h2 { font-size:1.05rem; }
+    .aparato img { width:84px; }
+    .progression-tab { padding:8px 12px; font-size:14px; }
+    .progression-window { padding:10px; }
+    .card { padding:10px; }
+    .page-nav { flex-direction:column; align-items:stretch; }
+    .page-nav a { text-align:center; }
+  }
+  @media (max-width: 520px) {
+    .aparato img { width:72px; }
+  }
+
+  .aparato-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 6px 18px;
     margin-top: 6px;
-    }
-
-    .aparato-grid div {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-    }
-
-/* ==========================================================
-   1) FUNDO CORRIGIDO — FIXO NO DESKTOP / SCROLL NO MOBILE
-   ========================================================== */
-
-/* reset mínimo para garantir altura correta */
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
-
-/* Desktop: fundo fixo, centralizado e cobrindo a tela */
-@media (min-width: 981px) {
-  html, body {
-    /* usa a mesma imagem que você já tem */
-    background: url('../assets/ui/backgroundteste2.jpeg') no-repeat center center fixed !important;
-    background-size: cover !important;
-    background-attachment: fixed !important;
-    background-position: center center !important;
-    -webkit-background-size: cover !important;
-    -moz-background-size: cover !important;
   }
-}
-
-/* Mobile / Tablet: anula o fixed para evitar glitches e performance ruim */
-@media (max-width: 980px) {
-  html, body {
-    background: url('../assets/ui/backgroundteste2.jpeg') no-repeat top center scroll;
-    background-size: cover;
-    background-attachment: scroll;
-    background-position: top center;
+  .aparato-grid div {
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
-}
-  </style>
+
+  /* Remove o tooltip dos placeholders */
+  .slot-icon.placeholder + .ro-tooltip-box,
+  .slot-icon.placeholder ~ .ro-tooltip-box {
+    display: none !important;
+  }
+
+</style>
 </head>
 <body>
 
