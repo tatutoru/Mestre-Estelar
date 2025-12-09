@@ -1,0 +1,84 @@
+<!-- Template da janela de progressão -->
+<template id="equip-window-template">
+  <div class="equip-window progression-window">
+    <div class="equip-bar"></div>
+
+    <!-- MESMAS ABAS da sua janela original -->
+    <div class="equip-tabs">
+      <button class="tab active" data-tab="equip">Equip.</button>
+      <button class="tab" data-tab="visual">Visual</button>
+      <button class="tab" data-tab="cards">Cartas</button>
+    </div>
+
+    <!-- ===== Aba EQUIP ===== -->
+    <div class="tab-container" id="tab-equip">
+      <div class="equip-body">
+        <div class="slots-col equip-left"></div>
+
+        <div class="char-col">
+          <div class="char-frame">
+            <div class="char-sprite-bg"
+                 style="background-image:url('https://raw.githubusercontent.com/tatutoru/Mestre-Estelar/main/assets/Sprites/char-iddle.png');">
+            </div>
+          </div>
+        </div>
+
+        <div class="slots-col slots-col-right equip-right"></div>
+      </div>
+    </div>
+
+    <!-- ===== Aba VISUAL ===== -->
+    <div class="tab-container" id="tab-visual" style="display:none;">
+      <div class="equip-body">
+        <div class="slots-col visual-left"></div>
+
+        <div class="char-col">
+          <div class="char-frame">
+            <div class="char-sprite-bg"
+                 style="background-image:url('https://raw.githubusercontent.com/tatutoru/Mestre-Estelar/main/assets/Sprites/char-iddle.png');">
+            </div>
+          </div>
+        </div>
+
+        <div class="slots-col slots-col-right visual-right"></div>
+      </div>
+    </div>
+
+    <!-- ===== Aba CARTAS ===== -->
+    <div class="tab-container" id="tab-cards" style="display:none;">
+      <div class="equip-body">
+        <div class="slots-col cards-left"></div>
+
+        <div class="char-col">
+          <div class="char-frame">
+            <div class="char-sprite-bg"
+                 style="background-image:url('https://raw.githubusercontent.com/tatutoru/Mestre-Estelar/main/assets/Sprites/char-iddle.png');">
+            </div>
+          </div>
+        </div>
+
+        <div class="slots-col slots-col-right cards-right"></div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<!-- Template de UMA linha de slot -->
+<template id="equip-slot-row-template">
+  <div class="slot-row">
+    <div class="slot-label"></div>
+    <div class="slot-box">
+      <div class="item">
+        <div class="ro-tooltip">
+          <img class="slot-icon" src="" alt="">
+          <div class="ro-tooltip-box">
+            <img class="slot-collection-img" src="" alt="">
+            <div class="ro-tooltip-title"></div>
+            <div class="ro-tooltip-line"></div>
+            <p class="slot-description"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

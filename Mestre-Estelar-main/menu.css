@@ -1,0 +1,319 @@
+/* ===============================
+   menu.css - Mestre Estelar
+   Versão estável: menu horizontal no index,
+   hamburger + painel vertical nas internas.
+   =============================== */
+
+/* barra base */
+.ms-menu {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.6rem 1rem;
+  background: #ffffff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  position: relative;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+/* logo / nome */
+.ms-menu__brand {
+  font-weight: 700;
+  margin-right: auto;
+}
+
+.ms-menu__brand a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* botão hamburger */
+.ms-menu__toggle {
+  display: none; /* no index some por padrão */
+  width: 34px;
+  height: 34px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+.ms-menu__toggle .ms-menu__hamburger {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #222;
+  position: relative;
+}
+
+.ms-menu__toggle .ms-menu__hamburger::before,
+.ms-menu__toggle .ms-menu__hamburger::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #222;
+}
+
+.ms-menu__toggle .ms-menu__hamburger::before {
+  top: -8px;
+}
+
+.ms-menu__toggle .ms-menu__hamburger::after {
+  top: 8px;
+}
+
+/* lista padrão (horizontal no index) */
+.ms-menu__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.ms-menu__list li {
+  margin: 0;
+  padding: 0;
+}
+
+.ms-menu__list a {
+  text-decoration: none;
+  padding: 0.25rem 0.5rem;
+  font-weight: 500;
+  position: relative;
+}
+
+/* ===== Páginas internas (collapsed) =====
+   Mostra só logo + hamburger; esconde menu horizontal. */
+.ms-menu--collapsed {
+  justify-content: flex-start;
+}
+
+.ms-menu--collapsed .ms-menu__toggle {
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+.ms-menu--collapsed .ms-menu__brand {
+  margin-right: auto;
+}
+
+.ms-menu--collapsed .ms-menu__list {
+  display: none;
+}
+
+/* ===== Menu aberto (painel vertical) ===== */
+
+.ms-menu--open .ms-menu__list {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 8px;
+  width: 220px;
+  max-width: calc(100vw - 16px);
+  margin-top: 8px;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(6px);
+  border-radius: 10px;
+  padding: 6px 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+  box-sizing: border-box;
+  z-index: 1100;
+}
+
+.ms-menu--open .ms-menu__list li {
+  width: 100%;
+}
+
+/* links dentro do painel vertical */
+.ms-menu--open .ms-menu__list a {
+  display: block;
+  width: 80%;
+  padding: 10px 16px;
+  border-radius: 6px;
+}
+
+/* separadores leves */
+.ms-menu--open .ms-menu__list li + li {
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* hover / focus */
+.ms-menu__list a:hover,
+.ms-menu__list a:focus {
+  background: rgba(0, 0, 0, 0.06);
+  outline: none;
+}
+
+/* ===== garantir que o texto dos links seja visível ===== */
+
+.ms-menu__list a,
+.ms-menu__list a:link,
+.ms-menu__list a:visited {
+  color: #111 !important;
+  font-weight: 500 !important;
+  font-size: 15px !important;
+  line-height: 1.4 !important;
+
+  /* desmonta qualquer "truque" global de gradiente em <a> */
+  text-indent: 0 !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+
+  -webkit-text-fill-color: #111 !important;
+  -webkit-background-clip: border-box !important;
+  background-image: none !important;
+  background-clip: border-box !important;
+}
+
+/* se algum pseudo-elemento global estiver cobrindo o link, some com ele */
+.ms-menu__list a::before,
+.ms-menu__list a::after {
+  content: "" !important;
+  display: none !important;
+}
+
+/* ===== Backdrop quando o menu está aberto ===== */
+
+.ms-menu-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.05);
+  z-index: 900;
+  pointer-events: auto;
+}
+
+/* animação bem levinha */
+.ms-menu--open .ms-menu__list {
+  animation: ms-menu-slide 0.22s ease-out;
+}
+
+@keyframes ms-menu-slide {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* acessibilidade: foco */
+.ms-menu__list a:focus {
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.12) inset;
+}
+
+/* mobile – se quiser forçar sempre hamburger em telas pequenas */
+@media (max-width: 520px) {
+  .ms-menu__toggle {
+    display: inline-block;
+  }
+
+  .ms-menu__list {
+    display: none;
+  }
+
+  .ms-menu--open .ms-menu__list {
+    left: 8px;
+    right: 8px;
+    width: auto;
+    max-width: calc(100vw - 16px);
+  }
+}
+
+/* remove qualquer estilo automático do navegador */
+.ms-menu__list a {
+  outline: none !important;
+  border: none !important;
+  text-decoration: none !important;
+  background: none !important;
+}
+
+/* estilo do hover personalizado */
+.ms-menu__list a:hover {
+  background: rgba(0,0,0,0.05);
+  border-radius: 6px;
+  box-shadow: 0 0 4px rgba(0,0,0,0.15);
+  transition: 180ms ease;
+}
+
+/* ========== CUSTOMIZAÇÃO ESTÉTICA DO MENU - TEMA AZUL ESTELAR ========== */
+
+/* barra principal */
+.ms-menu {
+  background: rgba(10, 16, 32, 0.82); /* azul cósmico escuro */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(120, 150, 255, 0.18);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* logo / nome */
+.ms-menu__brand a {
+  color: #e8eeff;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.65);
+}
+
+/* links horizontais */
+.ms-menu__list a,
+.ms-menu__list a:link,
+.ms-menu__list a:visited {
+  color: #dde6ff !important;
+  font-weight: 500 !important;
+  font-size: 15px !important;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: 0.15s ease;
+  background: none !important;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+}
+
+/* hover/focus */
+.ms-menu__list a:hover,
+.ms-menu__list a:focus {
+  background: rgba(60, 100, 200, 0.45) !important; /* azul translúcido */
+  box-shadow: 0 0 8px rgba(120, 150, 255, 0.4);     /* glow estelar */
+  backdrop-filter: blur(6px);
+}
+
+/* painel vertical aberto (hamburger) */
+.ms-menu--open .ms-menu__list {
+  background: rgba(15, 25, 55, 0.96); /* azul profundo */
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius: 12px;
+  border: 1px solid rgba(120,150,255,0.22);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.6);
+}
+
+/* links dentro do menu mobile */
+.ms-menu--open .ms-menu__list a:hover {
+  background: rgba(80, 120, 230, 0.30) !important;
+  box-shadow: 0 0 12px rgba(120,150,255,0.35);
+}
+
+/* botão hamburger */
+.ms-menu__toggle .ms-menu__hamburger,
+.ms-menu__toggle .ms-menu__hamburger::before,
+.ms-menu__toggle .ms-menu__hamburger::after {
+  background: #e8eeff; /* azul clarinho */
+}
+
+/* força links brancos no menu */
+.ms-menu .ms-menu__list a,
+.ms-menu .ms-menu__list a:link,
+.ms-menu .ms-menu__list a:visited {
+    color: #f5f7ff !important;  /* branco azulado */
+    -webkit-text-fill-color: #f5f7ff !important;
+}
