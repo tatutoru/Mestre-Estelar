@@ -182,6 +182,61 @@
       .intro-msg p { text-align: center; }
       .intro-msg img { width: 100px; }
     }
+    /* --- Forçar images + título lado-a-lado em mobile usando grid --- */
+    @media (max-width: 560px) {
+      /* transforma a hero em grid: imagem | título | imagem */
+      .intro-hero {
+        display: grid;
+        grid-template-columns: 64px minmax(140px, 1fr) 64px;
+        gap: 10px;
+        align-items: center;
+        justify-items: center;
+        text-align: center;
+        padding: 6px 0;
+      }
+
+      .intro-hero .hero {
+        width: 64px;       /* largura das imagens no mobile; ajuste se quiser menor/maior */
+        height: auto;
+        object-fit: contain;
+        display: block;
+        margin: 0;
+      }
+
+      .hero-title {
+        /* título centralizado verticalmente */
+        align-self: center;
+        justify-self: center;
+        padding: 0 6px;
+      }
+      .hero-title h1 {
+        font-size: 1.25rem;
+        margin: 0;
+        line-height: 1.05;
+      }
+
+      /* Ajustes na intro-msg (texto + logo) para reduzir espaçamento e centralizar */
+      .intro-msg {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+      .intro-msg p {
+        margin: 0;
+        text-align: center;
+        flex: none;        /* evita que o texto ocupe espaço extra */
+        line-height: 1.4;
+      }
+      .intro-msg img {
+        width: 100px;      /* tamanho da logo do servidor no mobile */
+        margin: 0;         /* remove espaço extra acima/abaixo */
+        border-radius: 6px;
+      }
+
+      /* caso o conteúdo precise de um pouco mais de "aperto", reduza paddings */
+      .content { padding-left: 12px; padding-right: 12px; }
+    }
   </style>
 </head>
 
@@ -210,7 +265,6 @@
           e verifique os guias atualizados de conteúdos e informações do servidor. Se quiser começar bem, acesse o guia do
           <b><a href="https://docs.google.com/document/d/1kl8WQtTl5p-qu3gKxHCGLR4TcIq0LxLYuAfk7IzngBc/edit?tab=t.0" target="_blank">Apple</a></b>!
         </p>
-
         <img src="https://pathofisgard.com.br/wiki/resources/assets/change-your-logo.jpg?e2854g" alt="logo servidor">
       </div>
     </section>
