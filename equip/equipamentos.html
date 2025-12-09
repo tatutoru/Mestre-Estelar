@@ -257,6 +257,40 @@
 @media (max-width: 420px) {
   .progression-window, .equip-window { padding-left: 8px; padding-right: 8px; }
 }
+/* ==========================================================
+   AJUSTE DE TAMANHO DA TABELA NO MOBILE (sem quebrar colunas)
+   ========================================================== */
+@media (max-width: 980px) {
+
+  /* Reduz a largura geral da janela */
+  .progression-window,
+  .equip-window {
+    transform: scale(0.92);
+    transform-origin: top center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Reduz ainda mais em telas bem pequenas */
+  @media (max-width: 600px) {
+    .progression-window,
+    .equip-window {
+      transform: scale(0.82);
+    }
+  }
+
+  @media (max-width: 420px) {
+    .progression-window,
+    .equip-window {
+      transform: scale(0.75);
+    }
+  }
+
+  /* Evitar qualquer corte horizontal */
+  body {
+    overflow-x: hidden;
+  }
+}
 </style>
 </head>
 <body>
