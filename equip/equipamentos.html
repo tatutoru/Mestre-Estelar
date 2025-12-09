@@ -162,13 +162,18 @@
         gap: 6px;
     }
 
-/* ===== FUNDO CORRIGIDO (SEM ALTERAR DESKTOP) ===== */
+/* ==========================================================
+   1) FUNDO CORRIGIDO — FIXO NO DESKTOP / SCROLL NO MOBILE
+   ========================================================== */
+
 html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
   background: url('/assets/ui/backgroundteste2.jpeg') no-repeat center center fixed;
   background-size: cover;
 }
 
-/* Mobile: corrige “desgrudar” e travamentos */
 @media (max-width: 980px) {
   html, body {
     background-attachment: scroll !important;
@@ -176,15 +181,19 @@ html, body {
   }
 }
 
-/* ===== AJUSTE DE PROPORÇÃO DO PROGRESSION-WINDOW (SEM ALTERAR DESKTOP) ===== */
+/* ==========================================================
+   2) RESTAURAÇÃO DO LAYOUT DO PROGRESSION-WINDOW NO DESKTOP
+   ========================================================== */
+
+/* Mantém exatamente o layout bonito que você já tinha */
 .progression-window .equip-body {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 160px minmax(260px, 1fr) 160px;
+  gap: 18px;
   align-items: flex-start;
-  gap: 14px;
 }
 
-/* colunas permanecem lado a lado */
+/* colunas permanecem verticais e alinhadas */
 .progression-window .slots-col,
 .progression-window .slots-col-right {
   display: flex;
@@ -192,40 +201,64 @@ html, body {
   gap: 8px;
 }
 
-/* Centraliza o char-frame corretamente */
+/* centraliza o personagem corretamente */
 .progression-window .char-col {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Mobile: não quebra, apenas reduz um pouco a largura */
+/* ==========================================================
+   3) MOBILE: REDUZ TAMANHO SEM DEFORMAR A TABELA
+   ========================================================== */
+
 @media (max-width: 720px) {
+
+  /* mantém estrutura, só reduz um pouco */
   .progression-window .equip-body {
-    gap: 6px;
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
 
-  /* não esconde, não empilha — só diminui */
-  .progression-window .slots-col,
+  /* coluna direita escondida como antes */
   .progression-window .slots-col-right {
-    transform: scale(0.85);
-    transform-origin: top center;
+    display: none;
   }
 
+  /* slots menores */
+  .progression-window .slots-col {
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .progression-window .slot-row {
+    width: calc(50% - 10px);
+  }
+
+  /* labels somem para economizar espaço */
+  .progression-window .slot-label {
+    display: none;
+  }
+
+  /* char reduzido */
   .progression-window .char-frame {
-    transform: scale(0.85);
-    transform-origin: top center;
+    width: 200px;
+    height: 260px;
+    margin: 0 auto;
   }
 }
 
-/* ===== TOOLTIP PLACEHOLDER ===== */
+/* ==========================================================
+   4) REMOVER TOOLTIP DE PLACEHOLDER
+   ========================================================== */
+
 .slot-icon.placeholder + .ro-tooltip-box,
 .slot-icon.placeholder ~ .ro-tooltip-box {
   display: none !important;
   pointer-events: none !important;
   visibility: hidden !important;
 }
-
   </style>
 </head>
 <body>
@@ -237,7 +270,7 @@ html, body {
   <!-- CONTEÚDO -->
   <div class="content">
     <h1>⚔️ Progressão de Itens</h1>
-    <p>Em constante atualização, não leve como definitivo, apenas use como modelo!</p>
+    <p>Em constante atualização, não leve como definitivo, apenas use como modelo!<br>(ao usar pelo celular, marcar opção "Site para Computador" para melhor funcionamento).</p>
 
     <!-- ===== Progressões de equipamentos ===== -->
     <div class="progression-tabs" role="tablist" aria-label="Progressões">
