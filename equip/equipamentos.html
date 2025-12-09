@@ -166,98 +166,34 @@
    1) FUNDO CORRIGIDO — FIXO NO DESKTOP / SCROLL NO MOBILE
    ========================================================== */
 
+/* reset mínimo para garantir altura correta */
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background: url('/assets/ui/backgroundteste2.jpeg') no-repeat center center fixed;
-  background-size: cover;
 }
 
+/* Desktop: fundo fixo, centralizado e cobrindo a tela */
+@media (min-width: 981px) {
+  html, body {
+    /* usa a mesma imagem que você já tem */
+    background: url('/assets/ui/backgroundteste2.jpeg') no-repeat center center fixed !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
+    background-position: center center !important;
+    -webkit-background-size: cover !important;
+    -moz-background-size: cover !important;
+  }
+}
+
+/* Mobile / Tablet: anula o fixed para evitar glitches e performance ruim */
 @media (max-width: 980px) {
   html, body {
-    background-attachment: scroll !important;
+    background: url('/assets/ui/backgroundteste2.jpeg') no-repeat top center scroll;
+    background-size: cover;
+    background-attachment: scroll;
     background-position: top center;
   }
-}
-
-/* ==========================================================
-   2) RESTAURAÇÃO DO LAYOUT DO PROGRESSION-WINDOW NO DESKTOP
-   ========================================================== */
-
-/* Mantém exatamente o layout bonito que você já tinha */
-.progression-window .equip-body {
-  display: grid;
-  grid-template-columns: 160px minmax(260px, 1fr) 160px;
-  gap: 18px;
-  align-items: flex-start;
-}
-
-/* colunas permanecem verticais e alinhadas */
-.progression-window .slots-col,
-.progression-window .slots-col-right {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-/* centraliza o personagem corretamente */
-.progression-window .char-col {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* ==========================================================
-   3) MOBILE: REDUZ TAMANHO SEM DEFORMAR A TABELA
-   ========================================================== */
-
-@media (max-width: 720px) {
-
-  /* mantém estrutura, só reduz um pouco */
-  .progression-window .equip-body {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  /* coluna direita escondida como antes */
-  .progression-window .slots-col-right {
-    display: none;
-  }
-
-  /* slots menores */
-  .progression-window .slots-col {
-    flex-wrap: wrap;
-    flex-direction: row;
-    gap: 10px;
-  }
-
-  .progression-window .slot-row {
-    width: calc(50% - 10px);
-  }
-
-  /* labels somem para economizar espaço */
-  .progression-window .slot-label {
-    display: none;
-  }
-
-  /* char reduzido */
-  .progression-window .char-frame {
-    width: 200px;
-    height: 260px;
-    margin: 0 auto;
-  }
-}
-
-/* ==========================================================
-   4) REMOVER TOOLTIP DE PLACEHOLDER
-   ========================================================== */
-
-.slot-icon.placeholder + .ro-tooltip-box,
-.slot-icon.placeholder ~ .ro-tooltip-box {
-  display: none !important;
-  pointer-events: none !important;
-  visibility: hidden !important;
 }
   </style>
 </head>
