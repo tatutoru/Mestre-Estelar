@@ -201,7 +201,62 @@
   .slot-icon.placeholder ~ .ro-tooltip-box {
     display: none !important;
   }
+/* ---------- Correção overflow mobile: evita cortar a direita ---------- */
+@media (max-width: 980px) {
+  /* remove qualquer margem esquerda fixa (caso style.css esteja aplicando) */
+  .content { margin-left: 0 !important; box-sizing: border-box; }
 
+  /* permite que a janela de progressão role horizontalmente se necessário */
+  .progression-window,
+  .equip-window {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px; /* dá espaço para scroll touch */
+  }
+
+  /* garante que a grid vire 1 coluna e as colunas laterais encolham */
+  .progression-window .equip-body,
+  .equip-body {
+    grid-template-columns: 1fr !important;
+    gap: 10px;
+  }
+
+  /* colunas laterais: ficam flexíveis e não forçam largura */
+  .slots-col,
+  .slots-col-right {
+    min-width: 0 !important;
+    width: 100% !important;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* cada linha de slot torna-se responsiva */
+  .slot-row {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .slot-label { max-width: 60%; white-space: normal; }
+
+  /* reduz caixas de slot para caber melhor */
+  .slot-box { width: 48px; height: 48px; }
+  .slot-icon { width: 30px; height: 30px; }
+
+  /* evita que abas/progression-tabs aumentem além da viewport */
+  .progression-tabs { padding-left: 8px; padding-right: 8px; box-sizing: border-box; }
+
+  /* opcional: garante que imagens grandes não estiquem o layout */
+  .content img, .aparato img { max-width: 100%; height: auto; }
+}
+
+/* extra: se quiser forçar um fallback com scroll horizontal em telas bem pequenas */
+@media (max-width: 420px) {
+  .progression-window, .equip-window { padding-left: 8px; padding-right: 8px; }
+}
 </style>
 </head>
 <body>
